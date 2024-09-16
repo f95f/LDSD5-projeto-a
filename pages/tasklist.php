@@ -1,12 +1,12 @@
 <?php
 
-    require_once('../database/conn.php');
+    require_once('database/conn.php');
 
     $tasks = [];
     $sql = $pdo->query('select * from tb_task');
 
     if($sql -> rowCount() > 0) {
-        $tasks -> $sql -> fetchAll(PDO::FETCH_ASSOC);
+        $tasks = $sql -> fetchAll(PDO::FETCH_ASSOC);
     }
 ?>
 
@@ -17,16 +17,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
     <link rel="stylesheet" href="../styles/global.css">
-    <title>Tarefas | </title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <title>Tarefas | Journalling </title>
     <style src></style>
 </head>
 <body>
     <h1>Gerenciamento de Tarefas</h1>
-    <form action="GET" id="addTaskForm">
+    <form action="../controllers/create.php" method="POST" id="addTaskForm">
         <div class="input-row">
             <input 
                 type="text"
-                id="taskName"
+                id="taskDescription"
+                name="taskDescription"
                 class="inline-input"
                 placeholder="O que deseja fazer?"
             >
@@ -43,8 +45,14 @@
         <?php foreach($tasks as $item): ?>
             <li class="task-item">
                 <i class="fa-solid fa-circle-info"></i>
+                <input 
+                    type="checkbox"
+                    id="taskProgress"
+                    class=""
+                    <?= $item['completed']? 'checked' : ''?>
+                    >
                 <span>
-                    <?= $task['description'] ?>
+                    <?= $item['description'] ?>
                 </span>
                 <div class="task-actions-wrapper">
                     <button
@@ -65,5 +73,7 @@
             </li>
         <?php endforeach ?>
     </ul>
+    
+    <script src="../scripts/script.js"></script>
 </body>
 </html>

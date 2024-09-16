@@ -16,10 +16,6 @@ try {
     }
 
     $tasks = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-    foreach ($tasks as $task) {
-        echo $task['id'] . ': ' . $task['name'] . '<br>';
-    }
 }
 catch (PDOException $e) {
     echo "Erro: $e -> getMessage()";
