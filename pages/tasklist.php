@@ -81,7 +81,7 @@
             <?php endforeach ?>
         </ul>
     </div>
-    
+                
     <script src="../scripts/script.js"></script>
 </body>
 </html>
