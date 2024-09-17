@@ -1,13 +1,14 @@
 <?php
+    require_once('controllers/task-controller.php');
 
     require_once('database/conn.php');
+    $controller = new TaskController();
+    $tasks = $controller->getTasks();
+    // $sql = $pdo->query('select * from tb_task');
 
-    $tasks = [];
-    $sql = $pdo->query('select * from tb_task');
-
-    if($sql -> rowCount() > 0) {
-        $tasks = $sql -> fetchAll(PDO::FETCH_ASSOC);
-    }
+    // if($sql -> rowCount() > 0) {
+    //     $tasks = $sql -> fetchAll(PDO::FETCH_ASSOC);
+    // }
 ?>
 
 <!DOCTYPE html>

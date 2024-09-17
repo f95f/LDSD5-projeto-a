@@ -1,6 +1,6 @@
 <?php
 
-$database = 'db_todo';
+$database = 'tb_todo';
 $host = 'localhost';
 $user = 'admin';
 $pass = 'senha';
@@ -20,3 +20,5 @@ try {
 catch (PDOException $e) {
     echo "Erro: $e -> getMessage()";
 }
+
+return $pdo;
