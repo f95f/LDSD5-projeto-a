@@ -1,3 +1,141 @@
-li.task-item {
-    display: flex
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+
+:root {
+
+}
+
+* {
+    font-family: 'Inter', sans-serif;
+    font-weight: 300;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    background: #10101d;
+}
+
+.wrapper {
+    padding: 24px;
+    margin: 24px;
+    border-radius: 16px;
+    border: 1px solid #252557;
+    background-color: #25255722;
+    backdrop-filter: blur(16px);
+    box-shadow: 2px 2px 4px #1113;
+}
+
+.inline-input {
+    border: unset;
+    border-bottom: 1px solid #252557;
+    background-color: unset;
+    color: #c8c8ff;
+    padding: 12px;
+    margin: 6px;
+    letter-spacing: 2px;
+    transition: all .2s ease-in-out;
+}
+
+.pill-button {
+    border: unset;
+    cursor: pointer;
+    background-color: #6e6eff;
+    color: #10101d;
+    padding: 12px;
+    line-height: 12px;
+    border-radius: 6px;
+    transition: all .2s ease-in-out;
+}
+
+.inline-input:active,
+.inline-input:focus {
+    border-bottom: #6e6eff
+}
+
+#to_do {
+    display: flex;
+    gap: 25px;
+    padding: 18px;
+    border-radius: 8px;
+    width: 430px;
+}
+
+h1 {
+    color: #e5f9ff;
+    font-size: 28px;
+    text-transform: uppercase;
+}
+
+#tasks {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    max-height: 400px;
+    overflow: auto;
+}
+
+.task {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: #262626;
+    background-color: #191933;
+    outline: 0 solid #0000;
+    padding: 8px 12px;
+    margin-top: 12px;
+    border-radius: 6px;
+    box-shadow: 2px 2px 4px #1118;
+    transition: all .2s ease-in-out;
+}
+.task:hover {
+    outline: 1px solid #252557;
+}
+
+.task .progress {
+    margin-right: 10px;
+}
+
+.task .progress.done + .task-description {
+    text-decoration: line-through;
+    color: #e5f9ffa7;
+}
+
+.task .task-description {
+    font-size: 16px;
+    color: #fff;
+    padding: 4px 0px;
+    width: 100%;
+}
+
+.task .task-actions {
+    display: flex;
+    gap: 16px;
+}
+
+.action-button {
+    font-size: 16px;
+}
+
+.action-button.edit-button {
+    color: #6c9bbc;
+}
+
+.action-button.delete-button {
+    color: #ee9ca7;
+}
+
+.hidden {
+    display: none !important;
+}
+
+@media screen and (max-width: 600px) {
+    #to_do {
+        width: 300px;
+    }
 }
