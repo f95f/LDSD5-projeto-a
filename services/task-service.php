@@ -13,20 +13,51 @@ class TaskService {
     public function getAllTasks() {
         $tasks = [];
         $query = 'select * from tb_task';
-        
-        $this -> sql = $this->pdo->query($query);
-        if($this -> sql -> rowCount() > 0) {
-            $tasks = $this -> sql -> fetchAll(PDO::FETCH_ASSOC);
+        try{
+            $this -> sql = $this->pdo->query($query);
+            if($this -> sql -> rowCount() > 0) {
+                $tasks = $this -> sql -> fetchAll(PDO::FETCH_ASSOC);
+            }
+            return $tasks;
+        } catch (PDOException $e) {
+            throw new Exception("Error fetching tasks: " . $e->getMessage());
         }
-        return $tasks;
     }
 
     public function createTask($taskDescription) {
-        $query = 'insert into tb_task (description) values (:description)';
-        $sql = $this->pdo->prepare($query);
-        $sql->bindValue(':description', $taskDescription);
-        $sql->execute();
+        $query = 'INSERT INTO tb_task (description) VALUES (:description)';
+        try {
+            $sql = $this->pdo->prepare($query);
+            $sql->bindValue(':description', $taskDescription);
+            return $sql->execute();
+        } catch (PDOException $e) {
+            throw new Exception("Error creating task: " . $e->getMessage());
+        }
     }
+
+    public function updateTask($taskId, $taskDescription) {
+        $query = 'update tb_task set description = :description where id = :id';
+        try{
+            $sql = $this->pdo->prepare($query);
+            $sql->bindValue(':description', $taskDescription);
+            $sql->bindValue(':id', $taskId);
+            return $sql->execute();
+        } catch (PDOException $e) {
+            throw new Exception("Error updating task: " . $e->getMessage());
+        }
+    }
+
+    public function deleteTask($taskId) {
+        try{
+            $query = 'delete from tb_task where id = :id';
+            $sql = $this->pdo->prepare($query);
+            $sql->bindValue(':id', $taskId);
+            return $sql->execute();
+        } catch (PDOException $e) {
+            throw new Exception("Error deleting task: " . $e->getMessage());
+        }
+    }
+
 }
 
 return new TaskService();

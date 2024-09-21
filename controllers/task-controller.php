@@ -18,4 +18,17 @@ class TaskController{
             $this -> service -> createTask($taskDescription);
         }
     }
+
+    public function updateTask($taskId, $taskDescription) {
+        if($taskDescription) {
+            $this -> service -> updateTask($taskId, $taskDescription);
+        }
+    }
+
+    public function deleteTask($taskId) {
+        if($taskId) {
+            $this -> service -> deleteTask($taskId);
+        }
+    }
+
 }

@@ -6,7 +6,30 @@
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $taskDescription = isset($_POST['taskDescription']) ? $_POST['taskDescription'] : '';
         $controller->createTask($taskDescription);
-        $tasks = $controller->getTasks();
+
+        header("Location: " . $_SERVER['PHP_SELF']);
+        exit(); 
+    }
+
+    if ($_SERVER['REQUEST_METHOD'] === 'PUT') {
+        parse_str(file_get_contents("php://input"), $_PUT);
+        $taskId = isset($_PUT['id']) ? $_PUT['id'] : '';
+        $taskDescription = isset($_PUT['description']) ? $_PUT['description'] : '';
+        $controller->updateTask($taskId, $taskDescription);
+    
+        // Return a JSON response
+        echo json_encode(['success' => true]);
+        exit(); 
+    }
+    
+    if ($_SERVER['REQUEST_METHOD'] === 'DELETE') {
+        parse_str(file_get_contents("php://input"), $_DELETE);
+        $taskId = isset($_DELETE['id']) ? $_DELETE['id'] : '';
+        $controller->deleteTask($taskId);
+    
+        // Return a JSON response
+        echo json_encode(['success' => true]);
+        exit(); 
     }
 ?>
 
@@ -19,12 +42,11 @@
     <link rel="stylesheet" href="../styles/global.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <title>Tarefas | Journalling </title>
-    <style src></style>
 </head>
 <body>
     <h1>Gerenciamento de Tarefas</h1>
     <div class="wrapper">
-        <form action="" method="POST" id="addTaskForm" name="addTaskForm">
+        <form method="POST" id="addTaskForm" name="addTaskForm">
             <div class="input-row">
                 <input
                     type="text"
@@ -59,11 +81,11 @@
                         <a class="action-button edit-button">
                             <i class="fa-regular fa-pen-to-square"></i>
                         </a>
-                        <a href="../controllers/delete.php?id=<?= $task['id']?>" class="action-button delete-button">
+                        <a role="button" class="action-button delete-button">
                             <i class="fa-regular fa-trash-can"></i>
                         </a>
                     </div>
-                    <form action="../controllers/update.php" method="POST" class="to-do-form edit-task hidden">
+                    <form method="PUT" class="to-do-form edit-task hidden">
                         <input type="text" class="hidden" name="id" value="<?= $task['id']?>">
                         <input
                             class="inline-input"
@@ -81,6 +103,6 @@
         </ul>
     </div>
                 
-    <script src="../scripts/script.js"></script>
+    <script src="../scripts/task.js"></script>
 </body>
 </html> 
