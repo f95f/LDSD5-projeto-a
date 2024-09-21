@@ -1,13 +1,12 @@
 <?php
     require_once('controllers/task-controller.php');
-
-    require_once('database/conn.php');
     $controller = new TaskController();
     $tasks = $controller->getTasks();
 
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $taskDescription = isset($_POST['taskDescription']) ? $_POST['taskDescription'] : '';
         $controller->createTask($taskDescription);
+        $tasks = $controller->getTasks();
     }
 ?>
 
@@ -25,7 +24,7 @@
 <body>
     <h1>Gerenciamento de Tarefas</h1>
     <div class="wrapper">
-        <form action="" method="POST" id="addTaskForm">
+        <form action="" method="POST" id="addTaskForm" name="addTaskForm">
             <div class="input-row">
                 <input
                     type="text"
