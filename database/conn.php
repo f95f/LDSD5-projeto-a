@@ -1,6 +1,6 @@
 <?php
 
-$database = 'tb_todo';
+$database = 'db_todo';
 $host = 'localhost';
 $user = 'admin';
 $pass = 'senha';

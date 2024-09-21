@@ -20,6 +20,13 @@ class TaskService {
         }
         return $tasks;
     }
+
+    public function createTask($taskDescription) {
+        $query = 'insert into tb_task (description) values (:description)';
+        $sql = $pdo->prepare($query);
+        $sql->bindValue(':description', $taskDescription);
+        $sql->execute();
+    }
 }
 
 return new TaskService();

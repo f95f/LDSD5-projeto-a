@@ -12,4 +12,10 @@ class TaskController{
         $tasks = $this -> service -> getAllTasks();
         return $tasks;
     }
+
+    public function createTask($taskDescription) {
+        if($taskDescription) {
+            $this -> service -> createTask($taskDescription);
+        }
+    }
 }

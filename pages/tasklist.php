@@ -4,11 +4,11 @@
     require_once('database/conn.php');
     $controller = new TaskController();
     $tasks = $controller->getTasks();
-    // $sql = $pdo->query('select * from tb_task');
 
-    // if($sql -> rowCount() > 0) {
-    //     $tasks = $sql -> fetchAll(PDO::FETCH_ASSOC);
-    // }
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        $taskDescription = isset($_POST['taskDescription']) ? $_POST['taskDescription'] : '';
+        $controller->createTask($taskDescription);
+    }
 ?>
 
 <!DOCTYPE html>
@@ -18,7 +18,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
     <link rel="stylesheet" href="../styles/global.css">
-    <meta http-equiv="refresh" content="5">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <title>Tarefas | Journalling </title>
     <style src></style>
@@ -26,7 +25,7 @@
 <body>
     <h1>Gerenciamento de Tarefas</h1>
     <div class="wrapper">
-        <form action="../controllers/create.php" method="POST" id="addTaskForm">
+        <form action="" method="POST" id="addTaskForm">
             <div class="input-row">
                 <input
                     type="text"
@@ -85,4 +84,4 @@
                 
     <script src="../scripts/script.js"></script>
 </body>
-</html>
+</html> 
