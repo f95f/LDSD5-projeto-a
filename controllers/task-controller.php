@@ -31,4 +31,9 @@ class TaskController{
         }
     }
 
+    public function changeTaskStatus($taskId) {
+        if($taskId) {
+            $this -> service -> changeTaskStatus($taskId);
+        }
+    }
 }

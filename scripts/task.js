@@ -30,7 +30,7 @@ $(document).ready(function () {
     });
 
     $('.edit-task').submit(function(event) {
-        event.preventDefault(); // Prevent the default form submission
+        event.preventDefault();
     
         var form = $(this);
         var taskId = form.find('input[name="id"]').val();
@@ -83,32 +83,54 @@ $(document).ready(function () {
         });
     });
 
-    // $('.progress').on('click', function () {
-    //     if ($(this).is(':checked')) {
-    //         $(this).addClass('done');
-    //     } else {
-    //         $(this).removeClass('done');
-    //     }
-    // });
+    $('.progress').on('click', function () {
+        if ($(this).is(':checked')) {
+            $(this).addClass('done');
+        } else {
+            $(this).removeClass('done');
+        }
+    });
 
-    // $('.progress').on('change', function () {
-    //     const id = $(this).data('task-id');
-    //     const completed = $(this).is(':checked') ? 'true' : 'false';
-    //     $.ajax({
-    //         url: '../controllers/update-progress.php',
-    //         method: 'POST',
-    //         data: {id: id, completed: completed},
-    //         dataType: 'json',
-    //         success: function (response) {
-    //             if (response.success) {
+    $('.progress').on('change', function () {
 
-    //             } else {
-    //                 alert('Erro ao editar a tarefa');
-    //             }
-    //         },
-    //         error: function () {
-    //             alert('Ocorreu um erro');
-    //         }
-    //     });
-    // })
+        var taskId = $(this).closest('.task').find('.progress').data('task-id');
+        const completed = $(this).is(':checked') ? 'true' : 'false';
+    
+        $.ajax({
+            url: '',
+            type: 'PUT',
+            data: {
+                id: taskId,
+                completed: completed
+            },
+            success: function(response) {
+                // if (response.success) { alert(1)
+                    location.reload();
+                // }
+            }.bind(this), // Bind 'this' to access the delete button
+            error: function(xhr, status, error) {
+                console.error('Error deleting task:', error);
+            }
+        });
+
+
+        // const id = $(this).data('task-id');
+        // const completed = $(this).is(':checked') ? 'true' : 'false';
+        // $.ajax({
+        //     url: '../controllers/update-progress.php',
+        //     method: 'POST',
+        //     data: {id: id, completed: completed},
+        //     dataType: 'json',
+        //     success: function (response) {
+        //         if (response.success) {
+
+        //         } else {
+        //             alert('Erro ao editar a tarefa');
+        //         }
+        //     },
+        //     error: function () {
+        //         alert('Ocorreu um erro');
+        //     }
+        // });
+    })
 });

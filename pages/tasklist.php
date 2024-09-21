@@ -13,13 +13,23 @@
 
     if ($_SERVER['REQUEST_METHOD'] === 'PUT') {
         parse_str(file_get_contents("php://input"), $_PUT);
-        $taskId = isset($_PUT['id']) ? $_PUT['id'] : '';
-        $taskDescription = isset($_PUT['description']) ? $_PUT['description'] : '';
-        $controller->updateTask($taskId, $taskDescription);
-    
-        // Return a JSON response
-        echo json_encode(['success' => true]);
-        exit(); 
+        if (isset($_PUT['completed'])) {
+            $taskId = isset($_PUT['id']) ? $_PUT['id'] : '';
+            $completed = isset($_PUT['completed']) ? $_PUT['completed'] : '';
+            $controller->changeTaskStatus($taskId, $completed);
+            
+            // Return a JSON response
+            echo json_encode(['success' => true]);
+            exit(); 
+        } else {
+            $taskId = isset($_PUT['id']) ? $_PUT['id'] : '';
+            $taskDescription = isset($_PUT['description']) ? $_PUT['description'] : '';
+            $controller->updateTask($taskId, $taskDescription);
+        
+            // Return a JSON response
+            echo json_encode(['success' => true]);
+            exit(); 
+        }
     }
     
     if ($_SERVER['REQUEST_METHOD'] === 'DELETE') {
@@ -33,17 +43,6 @@
     }
 ?>
 
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
-    <link rel="stylesheet" href="../styles/global.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <title>Tarefas | Journalling </title>
-</head>
-<body>
     <h1>Gerenciamento de Tarefas</h1>
     <div class="wrapper">
         <form method="POST" id="addTaskForm" name="addTaskForm">
@@ -103,6 +102,6 @@
         </ul>
     </div>
                 
-    <script src="../scripts/task.js"></script>
-</body>
-</html> 
+    <footer>
+        <script src="../scripts/task.js"></script>
+    </footer>

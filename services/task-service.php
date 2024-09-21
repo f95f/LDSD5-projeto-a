@@ -24,6 +24,20 @@ class TaskService {
         }
     }
 
+    public function getTaskById($taskId) {
+        $query = 'SELECT * FROM tb_task WHERE id = :id';
+        try {
+            $stmt = $this->pdo->prepare($query);
+            $stmt->bindValue(':id', $taskId, PDO::PARAM_INT);
+            $stmt->execute();
+            $tasks = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            
+            return $tasks;
+        } catch (PDOException $e) {
+            throw new Exception("Error fetching tasks: " . $e->getMessage());
+        }
+    }
+
     public function createTask($taskDescription) {
         $query = 'INSERT INTO tb_task (description) VALUES (:description)';
         try {
@@ -51,6 +65,21 @@ class TaskService {
         try{
             $query = 'delete from tb_task where id = :id';
             $sql = $this->pdo->prepare($query);
+            $sql->bindValue(':id', $taskId);
+            return $sql->execute();
+        } catch (PDOException $e) {
+            throw new Exception("Error deleting task: " . $e->getMessage());
+        }
+    }
+
+    public function changeTaskStatus($taskId) {
+        $task = $this -> getTaskById($taskId);
+            
+        error_log(json_encode($tasks)); // Log the fetched tasks
+        try {
+            $query = 'update tb_task set completed = :status where id = :id';
+            $sql = $this->pdo->prepare($query);
+            $sql->bindValue(':status', $task->completed);
             $sql->bindValue(':id', $taskId);
             return $sql->execute();
         } catch (PDOException $e) {

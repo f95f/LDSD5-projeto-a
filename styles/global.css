@@ -18,7 +18,7 @@ body {
     align-items: center;
     justify-content: center;
     min-height: 100vh;
-    background: #10101d;
+    background-image: linear-gradient(to right top, #252557, #1e204b, #181b3e, #131533, #0f0f27);
 }
 
 .wrapper {
