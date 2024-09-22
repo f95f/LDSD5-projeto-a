@@ -23,12 +23,20 @@
         <div class="side-menu-body">
             <ul>
                 <li class="menu-item">
+                    <i class="fa-solid fa-calendar-days"></i>
+                    Calendário Pessoal
+                </li>
+                <li class="menu-item">
                     <i class="fa-solid fa-diagram-project"></i>
-                    Projetos
+                    Gestão de Projetos
                 </li>
                 <li class="menu-item active">
                     <i class="fa-solid fa-list-check"></i>
                     Tarefas
+                </li>
+                <li class="menu-item">
+                    <i class="fa-solid fa-book"></i>
+                    Diário Digital
                 </li>
                 <li class="menu-item">
                     <i class="fa-regular fa-user"></i>
