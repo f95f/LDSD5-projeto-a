@@ -42,22 +42,27 @@
         exit(); 
     }
 ?>
-
-    <h1>Gerenciamento de Tarefas</h1>
+<header>
+    <div class="title">
+        <i class="fa-solid fa-list-check"></i>
+        <h1>Gerenciamento de Tarefas</h1>
+    </div>
+</header>
+<main>
     <div class="wrapper">
         <form method="POST" id="addTaskForm" name="addTaskForm">
-            <div class="input-row">
+            <div class="add-task-row">
                 <input
                     type="text"
                     id="taskDescription"
                     name="taskDescription"
-                    class="inline-input"
+                    class="inline-input add-task-input"
                     placeholder="O que deseja fazer?"
                 >
                 <button
                     type="submit"
                     id="submitTask"
-                    class="pill-button"
+                    class="pill-button add-task-button"
                 >
                     <i class="fa-solid fa-plus"></i>
                 </button>
@@ -73,6 +78,7 @@
                         data-task-id="<?= $task['id']?>"
                         <?= $task['completed'] ? 'checked' : '' ?>
                     >
+                    <span class="light-text">|</span>
                     <p class="task-description">
                         <?= $task['description'] ?>
                     </p>
@@ -87,7 +93,7 @@
                     <form method="PUT" class="to-do-form edit-task hidden">
                         <input type="text" class="hidden" name="id" value="<?= $task['id']?>">
                         <input
-                            class="inline-input"
+                            class="inline-input edit-input"
                             type="text"
                             name="description"
                             placeholder="Edit your task here"
@@ -101,7 +107,8 @@
             <?php endforeach ?>
         </ul>
     </div>
-                
-    <footer>
-        <script src="../scripts/task.js"></script>
-    </footer>
+</main>
+            
+<footer>
+    <script src="../scripts/task.js"></script>
+</footer>

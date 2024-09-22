@@ -2,9 +2,17 @@
 @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400..900&display=swap');
 
 :root {
+    --primary: #6e6eff;
+    --secondary: #ee9ca7;
+
     --border-color: #353577;
+
     --text-color: #f0f3fd;
     --text-light: #adbcf4;
+
+    --shadow-color: #0e0d1f66;
+
+    --heading-font: 'Cinzel', serif;
 }
 
 * {
@@ -20,9 +28,6 @@
 
 body {
     display: flex;
-    /* flex-direction: column;
-    align-items: center;
-    justify-content: center; */
     min-height: 100vh;
     background-image: linear-gradient(to right top, #312d59, #27264c, #1e1e3f, #161733, #0f0f27);
 }
@@ -42,7 +47,7 @@ body {
 .logo span {
     font-weight: 200;
     font-size: 1.6em;
-    font-family: 'Cinzel', serif;
+    font-family: var(--heading-font);
     color: var(--text-light);
 }
 .logo img {
@@ -55,11 +60,15 @@ hr.light-separator {
     width: 100%;
 
 }
+
+/************************* 
+    Menu Lateral 
+**************************/
 .side-menu {
-    width: 300px;
+    width: 380px;
     background-color: #161733aa;
     border-right: 1px solid var(--border-color);
-    box-shadow: 4px 0px 8px #3336;
+    box-shadow: 4px 0px 8px var(--shadow-color);;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -92,8 +101,7 @@ hr.light-separator {
     gap: 12px;
     align-items: center;
     cursor: pointer;
-    /* border-radius: 8px; */
-    padding: 16px;
+    padding: 16px 24px;
     margin: 4px 0;
     font-size: 1.2em;
     color: var(--text-light);
@@ -109,46 +117,104 @@ hr.light-separator {
     
 }
 .menu-item.active {
-    background-color: var(--border-color);
+    background-color: var(--primary);
     color: var(--text-color);
 }
+
+/************************* 
+    Layout
+**************************/
+.content {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+header {
+    width: min(100%, 1640px);
+    margin:auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+header i {
+    font-size: 1.6em;
+    opacity: .4;
+}
+.title {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin: 16px 24px;
+    margin-top: 24px;
+    font-family: var(--heading-font);
+}
+
+main {
+    flex-grow: 1;
+    width: min(100%, 1640px);
+    margin:auto;
+}
+
+
+
+/************************* 
+    Página Tarefas
+**************************/
 
 .wrapper {
     padding: 24px;
     margin: 24px;
-    border-radius: 16px;
+    border-radius: 8px;
     border: 1px solid var(--border-color);
     background-color: #25255722;
     backdrop-filter: blur(16px);
-    box-shadow: 2px 2px 4px #1113;
+    box-shadow: 2px 2px 4px var(--shadow-color);
+}
+
+.add-task-row {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 32px;
+}
+.add-task-input {
+    width: min(100%, 800px);
+    padding: 8px 20px;
+    font-size: 1.2em;
+}
+.add-task-button {
+    font-size: 1.6em;
+    width: 48px;
+    height: 48px;
 }
 
 .inline-input {
     border: unset;
     border-bottom: 1px solid var(--border-color);
     background-color: unset;
-    color: #c8c8ff;
+    outline: unset;
     padding: 12px;
     margin: 6px;
     letter-spacing: 2px;
     transition: all .2s ease-in-out;
 }
+.inline-input:active,
+.inline-input:focus {
+    border-bottom: 1px solid var(--primary);
+}
 
 .pill-button {
     border: unset;
     cursor: pointer;
-    background-color: #6e6eff;
-    color: #10101d;
+    background-color: var(--primary);
     padding: 12px;
     line-height: 12px;
-    border-radius: 6px;
+    border-radius: 2px;
     transition: all .2s ease-in-out;
 }
 
-.inline-input:active,
-.inline-input:focus {
-    border-bottom: #6e6eff
-}
+
 
 #to_do {
     display: flex;
@@ -158,11 +224,7 @@ hr.light-separator {
     width: 430px;
 }
 
-h1 {
-    color: #e5f9ff;
-    font-size: 28px;
-    text-transform: uppercase;
-}
+
 
 #tasks {
     display: flex;
@@ -176,7 +238,6 @@ h1 {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    color: #262626;
     background-color: #191933;
     outline: 0 solid #0000;
     padding: 8px 12px;
@@ -186,7 +247,7 @@ h1 {
     transition: all .2s ease-in-out;
 }
 .task:hover {
-    outline: 1px solid var(--border-color);
+    outline: 1px solid var(--secondary);
 }
 
 .task .progress {
@@ -199,9 +260,9 @@ h1 {
 }
 
 .task .task-description {
-    font-size: 16px;
-    color: #fff;
+    font-size: 1.2em;
     padding: 4px 0px;
+    margin: 0px 8px;
     width: 100%;
 }
 
@@ -211,23 +272,59 @@ h1 {
 }
 
 .action-button {
+    cursor: pointer;
     font-size: 16px;
+    padding: 8px;
+}
+.action-button .fa-pen-to-square,
+.action-button .fa-trash-can {
+    transition: all .2s ease;
+}
+.action-button:hover .fa-pen-to-square {
+    color: var(--primary);
+}
+.action-button:hover .fa-trash-can {
+    color: var(--secondary);
 }
 
-.action-button.edit-button {
-    color: #6c9bbc;
+.to-do-form {
+    width: 100%;
+    display: flex;
+    align-items: center;
+}
+.edit-input {
+    flex-grow: 1;
+    font-size: 1.2em;
+    padding: 16px 8px;
 }
 
-.action-button.delete-button {
-    color: #ee9ca7;
+.confirm-button {
+    /* font-size: 1.2em; */
+    width: 36px;
+    height: 36px;
+    line-height: 8px;
 }
 
-.hidden {
-    display: none !important;
-}
+
 
 @media screen and (max-width: 600px) {
     #to_do {
         width: 300px;
     }
+}
+
+
+
+
+
+/************************* 
+    Misc
+**************************/
+
+.light-text {
+    color: var(--text-light);
+}
+
+.hidden {
+    display: none !important;
 }
