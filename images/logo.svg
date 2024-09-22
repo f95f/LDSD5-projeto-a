@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="52.916664mm"
+   height="53.147675mm"
+   viewBox="0 0 52.916664 53.147675"
+   version="1.1"
+   id="svg5"
+   inkscape:version="1.2.2 (b0a8486541, 2022-12-01)"
+   sodipodi:docname="logo.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview7"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:document-units="mm"
+     showgrid="false"
+     inkscape:zoom="0.69664703"
+     inkscape:cx="137.80293"
+     inkscape:cy="655.99936"
+     inkscape:window-width="1920"
+     inkscape:window-height="1011"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1" />
+  <defs
+     id="defs2">
+    <linearGradient
+       inkscape:collect="always"
+       id="linearGradient357">
+      <stop
+         style="stop-color:#312d59;stop-opacity:1;"
+         offset="0"
+         id="stop353" />
+      <stop
+         style="stop-color:#adbcf4;stop-opacity:1;"
+         offset="1"
+         id="stop355" />
+    </linearGradient>
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient357"
+       id="linearGradient359"
+       x1="155.92677"
+       y1="63.519295"
+       x2="45.824688"
+       y2="179.37617"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(0.44837748,0,0,0.44837748,0.10294365,47.703521)" />
+  </defs>
+  <g
+     inkscape:label="Camada 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(-19.790001,-75.99687)">
+    <!--!Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
+    <path
+       d="m 72.706667,81.691265 v 5.694394 c 0,2.099811 -1.696455,3.796265 -3.796263,3.796265 h -1.898131 -5.694394 v -9.490659 c 0,-3.143781 2.550613,-5.694394 5.694394,-5.694394 3.143781,0 5.694394,2.550613 5.694394,5.694394 z M 59.419751,75.996871 c -1.186336,1.589684 -1.898134,3.558997 -1.898134,5.694394 v 36.064495 c 0,4.18776 -3.404772,7.59253 -7.592525,7.59253 -4.187751,0 -7.592526,-3.40477 -7.592526,-7.59253 v -0.62875 c 0,-3.84372 -3.12005,-6.96378 -6.963767,-6.96378 H 31.178788 V 87.385659 c 0,-6.287559 5.101225,-11.388788 11.388787,-11.388788 z M 33.076919,129.14455 c -7.343394,0 -13.286919,-5.94353 -13.286919,-13.28692 0,-1.04397 0.854158,-1.89813 1.898131,-1.89813 h 13.684668 c 1.743906,0 3.167505,1.41173 3.167505,3.16751 v 0.62875 c 0,6.28756 5.101232,11.38879 11.388788,11.38879 h -5.463386 z"
+       id="path9"
+       style="fill:url(#linearGradient359);fill-opacity:1;stroke-width:0.118633"
+       sodipodi:nodetypes="sssccssscsssssscsscssssssccs"
+       inkscape:export-filename="logo.png"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96" />
+  </g>
+</svg>

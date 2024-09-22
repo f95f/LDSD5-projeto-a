@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="210mm"
+   height="297mm"
+   viewBox="0 0 210 297"
+   version="1.1"
+   id="svg5"
+   inkscape:version="1.2.2 (b0a8486541, 2022-12-01)"
+   sodipodi:docname="logo-full.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview7"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:document-units="mm"
+     showgrid="false"
+     inkscape:zoom="0.69664703"
+     inkscape:cx="137.80293"
+     inkscape:cy="655.99936"
+     inkscape:window-width="1920"
+     inkscape:window-height="1011"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1" />
+  <defs
+     id="defs2">
+    <linearGradient
+       inkscape:collect="always"
+       id="linearGradient357">
+      <stop
+         style="stop-color:#312d59;stop-opacity:1;"
+         offset="0"
+         id="stop353" />
+      <stop
+         style="stop-color:#adbcf4;stop-opacity:1;"
+         offset="1"
+         id="stop355" />
+    </linearGradient>
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient357"
+       id="linearGradient359"
+       x1="155.92677"
+       y1="63.519295"
+       x2="45.824688"
+       y2="179.37617"
+       gradientUnits="userSpaceOnUse" />
+  </defs>
+  <g
+     inkscape:label="Camada 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <!--!Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
+    <path
+       d="m 161.92545,75.80163 v 12.7 c 0,4.683125 -3.78354,8.466666 -8.46667,8.466666 h -4.23333 -12.7 V 75.80163 c 0,-7.011459 5.68854,-12.7 12.7,-12.7 7.01146,0 12.7,5.688541 12.7,12.7 z m -29.63333,-12.7 c -2.64584,3.545416 -4.23334,7.9375 -4.23334,12.7 v 80.43334 c 0,9.33979 -7.59354,16.93333 -16.93333,16.93333 -9.33979,0 -16.933333,-7.59354 -16.933333,-16.93333 v -1.40229 c 0,-8.57251 -6.95854,-15.53105 -15.53104,-15.53105 h -9.35375 v -50.8 c 0,-14.022917 11.37708,-25.4 25.4,-25.4 z M 73.540657,181.63497 c -16.3777,0 -29.63333,-13.25563 -29.63333,-29.63334 0,-2.32833 1.905,-4.23333 4.23333,-4.23333 h 30.52042 c 3.88937,0 7.06437,3.14854 7.06437,7.06438 v 1.40229 c 0,14.02292 11.37709,25.4 25.400003,25.4 H 98.940657 Z"
+       id="path9"
+       style="stroke-width:0.264583;fill-opacity:1;fill:url(#linearGradient359)"
+       sodipodi:nodetypes="sssccssscsssssscsscssssssccs" />
+  </g>
+</svg>
