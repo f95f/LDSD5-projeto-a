@@ -50,7 +50,7 @@ class TaskService {
     }
 
     public function updateTask($taskId, $taskDescription) {
-        $query = 'update tb_task set description = :description where id = :id';
+        $query = 'update tb_task set task_description = :description where id = :id';
         try{
             $sql = $this->pdo->prepare($query);
             $sql->bindValue(':description', $taskDescription);
@@ -77,7 +77,7 @@ class TaskService {
             
         error_log(json_encode($tasks)); // Log the fetched tasks
         try {
-            $query = 'update tb_task set completed = :status where id = :id';
+            $query = 'update tb_task set task_completed = :status where id = :id';
             $sql = $this->pdo->prepare($query);
             $sql->bindValue(':status', $task->completed);
             $sql->bindValue(':id', $taskId);
