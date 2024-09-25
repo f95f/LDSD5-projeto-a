@@ -28,6 +28,7 @@ create table tb_project (
     project_name varchar(50) not null,
     project_priority varchar(50) DEFAULT('BAIXA'),
     project_status varchar(20) default('BACKLOG'),
+    user_id integer null,
     created_at date,
     deadline date
 );
@@ -42,6 +43,7 @@ INSERT INTO tb_status (status) VALUES
 ('EM_PROGRESSO'),
 ('CONCLUIDO'),
 ('PARADO'),
+('ATRASADO'),
 ('CANCELADO');
 
 -- PRIORIDADES DE PROJETOS ----
