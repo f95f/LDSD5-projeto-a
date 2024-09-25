@@ -52,8 +52,8 @@
     </div>
 
     <div class="content">
-        <?php //include('pages/tasklist.php'); ?>
-        <?php include('pages/projects.php'); ?>
+        <?php include('pages/tasklist.php'); ?>
+        <?php //include('pages/projects.php'); ?>
     </div>
 </body>
 
