@@ -5,7 +5,7 @@ class TaskController{
     private $service;
 
     function __construct() {
-        $this -> service = require 'services/task-service.php';
+        $this -> service = require '../services/task-service.php';
     }
 
     public function getTasks() {

@@ -1,5 +1,5 @@
 <?php
-require_once 'services/priority-service.php';
+require_once  __DIR__  . '/../services/priority-service.php';
 
 class PriorityController {
 

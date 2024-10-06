@@ -1,15 +1,24 @@
 $(document).ready(function () {
 
-    $('#showFormModal').click(function() {
-        $('#modal').fadeIn();
-        $('#overlay').fadeIn();
+    $(document).on('click', '#showFormModal', function() {
+        $('#createModal').fadeIn();
+        $('.overlay').fadeIn(); // Show overlay for create modal
     });
-
-    $(document).on('click', '#closeModal', function(){
-        $('#overlay').fadeOut();
-        $('#modal').fadeOut();
+    
+    $(document).on('click', '#closeCreateModal', function() {
+        $('#createModal').fadeOut();
+        $('.overlay').fadeOut(); // Hide overlay when create modal is closed
     });
-
+    
+    $(document).on('click', '.showDetailsModal', function() {
+        $('#detailsModal').fadeIn();
+        $('.overlay').fadeIn(); // Show overlay for details modal
+    });
+    
+    $(document).on('click', '#closeDetailsModal', function() {
+        $('#detailsModal').fadeOut();
+        $('.overlay').fadeOut(); // Hide overlay when details modal is closed
+    });
 
     $('#addProjectForm').submit(function(event) {
         event.preventDefault();

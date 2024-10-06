@@ -1,5 +1,5 @@
 <?php
-require_once 'services/status-service.php';
+require_once __DIR__  . '/../services/status-service.php';
 
 class StatusController {
 

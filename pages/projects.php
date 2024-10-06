@@ -1,23 +1,37 @@
 <?php
-    require_once('controllers/project-controller.php');
-    require_once('controllers/status-controller.php');
-    require_once('controllers/priority-controller.php');
+    require_once __DIR__ . '/../controllers/project-controller.php';
+    require_once __DIR__ . '/../controllers/status-controller.php';
+    require_once __DIR__ . '/../controllers/priority-controller.php';
+    require_once __DIR__ . '/../controllers/task-controller.php';
+
 
     $controller = new ProjectController();
     $statusController = new StatusController();
     $priorityController = new PriorityController();
+    $taskController = new TaskController();
 
     $projects = $controller->getAllProjects();
     $status = $statusController->getAllStatus();
     $priorities = $priorityController->getAllPriorities();
 
+    $selectedProject;
+    function setItem($itemId) {
+        global $projects, $selectedProject;
+        foreach($projects as $item) {
+            if ($item->id == $itemId) {
+                $selectedProject = $item;
+                break;
+            }
+        }   
+    }
+    
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $request = $_POST;
         $controller->createProject($request);
         // header("Location: " . $_SERVER['PHP_SELF']);
         // exit(); 
     }
-    // if ($_SERVER['REQUEST_METHOD'] === 'PUT') {
+    // if ($_SERVER['REQUEST_METHOD'] === 'PUT') {  
     //     parse_str(file_get_contents("php://input"), $_PUT);
 
     //     if (isset($_PUT['status'])) {
@@ -51,6 +65,10 @@
     //     exit(); 
     // }
 
+    define("TITLE", "Projetos | Journalling");
+    include __DIR__ . '/../layout/side-menu.php'; 
+    include __DIR__ . '/../layout/header.php';
+
 ?>
 
 <header>
@@ -79,15 +97,19 @@
                 </div> -->
                 <div class="card-row">
                     <span><?= $item['deadline']?></span>
-                    <span><?= $item['project_priority']?></span>
+            <button 
+                type="button"
+                class="showDetailsModal inline-button"
+                >Ver mais...
+            </button>
                 </div>
             </li>
         <?php endforeach ?>
         </ul>
     </div>
 
-    <div id="overlay"></div>
-    <div id="modal">
+    <div class="overlay"></div>
+    <!-- <div class="modal" id="createModal">
 
         <div class="modal-wrapper">
             <div class="modal-header">
@@ -129,7 +151,7 @@
                 <div class="modal-footer">
                     <button
                         type="button"
-                        id="closeModal"
+                        id="closeCreateModal"
                         class="pill-button secondary"
                     >
                         Cancelar
@@ -146,27 +168,31 @@
             </form>
         </div>
 
+    </div>  -->
+
+
+    <div class="modal" id="detailsModal">
+
+        <div class="modal-wrapper">
+            <div class="modal-header">
+                <h2>Projeto</h2>
+            </div>
+            <div class="modal-body">
+                Lorem, ipsum dolor sit amet consectetur adipisicing elit. Voluptatem corrupti rerum magnam maiores voluptatibus suscipit sapiente recusandae incidunt et delectus odit iure eveniet repellendus quisquam deserunt, natus molestiae vero accusamus.
+            </div>
+
+            <div class="modal-footer">
+                <button
+                    type="button"
+                    id="closeDetailsModal"
+                    class="pill-button secondary"
+                >
+                    Fechar
+                </button>
+            </div>
+        </div>
+
     </div> 
-
-
-
-    <!-- <? /*
-    <div class="wrapper">
-        <span>Status</span>
-        <?php foreach($status as $item): ?>
-            <ul>
-                <li><?= $item['status']?></li>
-            </ul>
-        <?php endforeach ?>
-        <hr>
-
-        <span>Priorities</span>
-        <?php foreach($priorities as $item): ?>
-            <ul>
-                <li><?= $item['priority']?></li>
-            </ul>
-        <?php endforeach ?>
-    </div> ?*/?> -->
 </main>
 
 <footer>

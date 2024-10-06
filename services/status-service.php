@@ -1,13 +1,13 @@
 <?php
 
-require_once('database/conn.php');
+require_once __DIR__ . '/../database/conn.php';
 
 class StatusService {
     private $sql;
     private $pdo;
     
     function __construct() {
-        $this->pdo = require 'database/conn.php';
+        $this->pdo = require __DIR__ . '/../database/conn.php';
     }
 
     public function getAllStatus() {

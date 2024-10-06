@@ -1,6 +1,6 @@
 <?php
-require_once 'services/project-service.php';
-require_once 'models/project-model.php';
+require_once  __DIR__  . '/../services/project-service.php';
+require_once  __DIR__  . '/../models/project-model.php';
 
 class ProjectController {
 

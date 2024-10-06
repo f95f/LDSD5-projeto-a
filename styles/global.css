@@ -356,7 +356,7 @@ main {
 
 
 
-#overlay {
+.overlay {
     display: none;
     position: fixed;
     top: 0;
@@ -367,9 +367,11 @@ main {
     backdrop-filter: blur(12px);
     z-index: 1000;
 }
-
-#modal {
+#detailsModal,
+#createModal {
     display: none;
+}
+.modal {
     position: fixed;
     top: 50%;
     left: 50%;
