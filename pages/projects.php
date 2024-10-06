@@ -62,11 +62,12 @@
 <main>
     <div class="wrapper">
         <div class="menubar">
-            <button id="showFormModal">
+            <button id="showFormModal" class="pill-button">
+                <i class="fa-solid fa-plus"></i>
                 Novo Projeto
             </button>
         </div>
-        <ul>
+        <ul class="card-grid">
         <?php foreach($projects as $item): ?>
             <li class="card-item">
                 <div class="card-row">
@@ -85,11 +86,13 @@
         </ul>
     </div>
 
-    <div id="overlay" style="display: none; background: rgba(0,0,0,0.5); position: fixed; top: 0; left: 0; width: 100%; height: 100%;"></div>
+    <div id="overlay"></div>
     <div id="modal">
 
-        <div>
-            <h2>Adicionar Projeto</h2>
+        <div class="modal-wrapper">
+            <div class="modal-header">
+                <h2>Adicionar Projeto</h2>
+            </div>
             <div class="modal-body">
                 
             <form method="POST" id="addProjectForm" name="addProjectForm">
@@ -123,13 +126,23 @@
                     <?php endforeach ?>
                     </select>
                 </div>
-                <button
-                    type="submit"
-                    id="submitProject"
-                    class="pill-button add-task-button"
-                >
-                    <i class="fa-solid fa-plus"></i>
-                </button>
+                <div class="modal-footer">
+                    <button
+                        type="button"
+                        id="closeModal"
+                        class="pill-button secondary"
+                    >
+                        Cancelar
+                    </button>
+                    <button
+                        type="submit"
+                        id="submitProject"
+                        class="pill-button"
+                    >
+                        <i class="fa-solid fa-plus"></i>
+                        Adicionar
+                    </button>
+                </div>
             </form>
         </div>
 

@@ -1,3 +1,19 @@
+
+.menubar {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    padding: 16px 6px;
+}
+
+.card-grid {
+    width: 100%;
+    display: grid;
+    gap: 8px;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+}
+
+
 .card-item {
     display: flex;
     flex-direction: column;
