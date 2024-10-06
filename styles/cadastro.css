@@ -1,0 +1,66 @@
+.login-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    background-image: linear-gradient(to right top, #312d59, #27264c, #1e1e3f, #161733, #0f0f27);
+}
+
+.login-box {
+    background-color: white;
+    border: 1px solid var(--border-color);
+    backdrop-filter: blur(16px);
+    padding: 32px;
+    border-radius: 8px;
+    box-shadow: 2px 2px 4px var(--shadow-color);
+    width: 320px;
+    text-align: center;
+}
+
+.login-form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-top: 24px;
+}
+
+.input-group {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+}
+
+.input-group label {
+    font-size: 1em;
+    margin-bottom: 8px;
+    color: var(--text-light);
+}
+
+.inline-input {
+    padding: 12px;
+    font-size: 1em;
+    border: 1px solid var(--border-color);
+    background-color: unset;
+    outline: unset;
+    color: var(--text-color);
+    transition: border-color .2s ease;
+}
+
+.inline-input:focus {
+    border-color: var(--primary);
+}
+
+.pill-button {
+    background-color: var(--primary);
+    color: var(--text-color);
+    border: none;
+    padding: 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.pill-button:hover {
+    background-color: var(--secondary);
+}
