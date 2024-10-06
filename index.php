@@ -1,3 +1,10 @@
+<?php
+
+    include('../models/protect.php');
+
+    echo $_SESSION['name'];
+
+?>
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -55,6 +62,7 @@
         <?php include('pages/tasklist.php'); ?>
         <?php //include('pages/projects.php'); ?>
     </div>
+        <p><a href="login.php">Logout</a></p>
 </body>
 
 </html> 
