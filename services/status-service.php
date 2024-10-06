@@ -10,7 +10,7 @@ class StatusService {
         $this->pdo = require 'database/conn.php';
     }
 
-    public function getAllPriorities() {
+    public function getAllStatus() {
         $tasks = [];
         $query = 'select * from tb_status';
         try{

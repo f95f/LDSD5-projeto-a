@@ -1,15 +1,15 @@
 <?php
+require_once 'services/status-service.php';
 
 class StatusController {
 
     private $service;
 
     function __construct() {
-        $this -> service = require 'services/status-service.php';
-        $this -> project = new Project();
+        $this -> service = new StatusService();
     }
 
-    public function getStatus() {
+    public function getAllStatus() {
         $status = $this -> service -> getAllStatus();
         return $status;
     }

@@ -1,16 +1,16 @@
 <?php
+require_once 'services/priority-service.php';
 
 class PriorityController {
 
     private $service;
 
     function __construct() {
-        $this -> service = require 'services/status-service.php';
-        $this -> project = new Project();
+        $this -> service = new PriorityService();
     }
 
-    public function getPriority() {
-        $priority = $this -> service -> getAllPriority();
+    public function getAllPriorities() {
+        $priority = $this -> service -> getAllPriorities();
         return $priority;
     }
 }

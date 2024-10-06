@@ -39,10 +39,22 @@ class ProjectService {
     }
 
     public function createProject($project) {
-        $query = 'INSERT INTO tb_project (description) VALUES (:description)';
+
+        print_r($project);
+        print_r($project -> getProjectName());
+        $query = '
+            INSERT INTO tb_project 
+                (project_name, project_priority, project_status, created_at, deadline) 
+            VALUES 
+                (:name, :priority, :status, :createdAt, :deadline)';
+
         try {
             $sql = $this->pdo->prepare($query);
-            // $sql->bindValue(':description', $project['description']);
+            $sql->bindValue(':name', $project -> getProjectName());
+            $sql->bindValue(':priority', $project -> getProjectPriority());
+            $sql->bindValue(':status', $project -> getProjectStatus());
+            $sql->bindValue(':createdAt', $project -> getCreatedAt());
+            $sql->bindValue(':deadline', $project -> getDeadline());
             return $sql->execute();
         } catch (PDOException $e) {
             throw new Exception("Error creating project: " . $e->getMessage());

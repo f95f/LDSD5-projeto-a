@@ -1,27 +1,29 @@
 <?php
-require_once('models/project-model.php');
+require_once 'services/project-service.php';
+require_once 'models/project-model.php';
 
 class ProjectController {
 
     private $service;
 
     function __construct() {
-        $this -> service = require 'services/project-service.php';
-        $this -> project = new Project();
+        // $this -> service = require 'services/project-service.php';
+
+        $this->service = new ProjectService();
     }
 
-    public function getProjects() {
+    public function getAllProjects() {
         $projects = $this -> service -> getAllProjects();
         return $projects;
     }
 
-    public function createProject($project) {
+    public function createProject($projectData) {
         $project = new Project(
-            $projectData['id'],
-            $projectData['project_name'],
-            $projectData['project_priority'],
-            $projectData['project_status'],
-            $projectData['created_at'],
+            0,
+            $projectData['projectName'],
+            $projectData['projectPriority'],
+            0,
+            date("Y-m-d"),
             $projectData['deadline']
         );
         $this->service->createProject($project);
