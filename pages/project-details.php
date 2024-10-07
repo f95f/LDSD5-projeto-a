@@ -135,7 +135,8 @@
                 </button>
             </form>
 
-
+        </div>
+        <div class="info-row">
             <?php foreach($tasks as $item): ?>
                 <span><?= $item['task_description'] ?></span>
             <?php endforeach ?>

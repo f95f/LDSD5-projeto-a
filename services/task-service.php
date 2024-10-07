@@ -82,19 +82,35 @@ class TaskService {
         }
     }
 
-    public function changeTaskStatus($projectId) {
+    public function changeTaskStatus($taskId) {
+        $task = $this -> getTaskById($taskId);
+            
         try {
-            $query = 'select * from tb_task where project_id = :id';
+            $query = 'update tb_task set task_completed = :status where id = :id';
             $sql = $this->pdo->prepare($query);
-            $sql->bindValue(':id', $projectId);
+            $sql->bindValue(':status', $task->completed);
+            $sql->bindValue(':id', $taskId);
             return $sql->execute();
         } catch (PDOException $e) {
-            throw new Exception("Error fetching tasks: " . $e->getMessage());
+            throw new Exception("Error deleting task: " . $e->getMessage());
         }
     }
 
     public function getTasksFromProject($projectId) {
-
+        $tasks = [];
+        $query = 'SELECT * FROM tb_task WHERE project_id = :id';
+        try {
+            $sql = $this->pdo->prepare($query);
+            $sql->bindValue(':id', $projectId, PDO::PARAM_INT);
+            $sql->execute();
+    
+            if ($sql->rowCount() > 0) {
+                $tasks = $sql->fetchAll(PDO::FETCH_ASSOC);
+            }
+            return $tasks;
+        } catch (PDOException $e) {
+            throw new Exception("Error fetching tasks: " . $e->getMessage());
+        }
     }
 }
 

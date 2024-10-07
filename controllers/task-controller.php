@@ -49,7 +49,7 @@ class TaskController{
 
     public function getTasksFromProject($projectId) {
         if($projectId) {
-            $this->service->getTasksFromProject($projectId);
+            return $this->service->getTasksFromProject($projectId);
         }
     }
 }
