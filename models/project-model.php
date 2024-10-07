@@ -8,7 +8,6 @@ class Project {
     private $created_at;
     private $deadline;
 
-    // Constructors
     public function __construct($id, $project_name, $project_priority, $project_status, $created_at, $deadline) {
         $this->id = $id;
         $this->project_name = $project_name;
@@ -18,7 +17,6 @@ class Project {
         $this->deadline = $deadline;
     }
 
-    // Getters e Setters
     public function getId() {
         return $this->id;
     }

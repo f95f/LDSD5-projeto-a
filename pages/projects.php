@@ -157,7 +157,7 @@
                 </div>
             </form>
         </div>
-    </div> 
+    </div>
 <!-- TODO Fechar modal ao adicionar  -->
 
     <!-- <div class="modal" id="detailsModal">

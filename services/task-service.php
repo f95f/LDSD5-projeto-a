@@ -38,11 +38,21 @@ class TaskService {
         }
     }
 
-    public function createTask($taskDescription) {
-        $query = 'INSERT INTO tb_task (description) VALUES (:description)';
+    public function createTask($task) {
+        $query = '
+            INSERT INTO tb_task
+                (task_description, task_priority, task_completed, project_id, created_at, deadline) 
+            VALUES 
+                (:description, :priority, :completed, :project, :createdAt, :deadline)';
+
         try {
             $sql = $this->pdo->prepare($query);
-            $sql->bindValue(':description', $taskDescription);
+            $sql->bindValue(':description', $task -> getTaskDescription());
+            $sql->bindValue(':priority', $task -> getTaskPriority());
+            $sql->bindValue(':completed', 0);
+            $sql->bindValue(':project', $task -> getProjectId());
+            $sql->bindValue(':createdAt', $task -> getCreatedAt());
+            $sql->bindValue(':deadline', $task -> getDeadline());
             return $sql->execute();
         } catch (PDOException $e) {
             throw new Exception("Error creating task: " . $e->getMessage());
@@ -72,21 +82,20 @@ class TaskService {
         }
     }
 
-    public function changeTaskStatus($taskId) {
-        $task = $this -> getTaskById($taskId);
-            
-        error_log(json_encode($tasks)); // Log the fetched tasks
+    public function changeTaskStatus($projectId) {
         try {
-            $query = 'update tb_task set task_completed = :status where id = :id';
+            $query = 'select * from tb_task where project_id = :id';
             $sql = $this->pdo->prepare($query);
-            $sql->bindValue(':status', $task->completed);
-            $sql->bindValue(':id', $taskId);
+            $sql->bindValue(':id', $projectId);
             return $sql->execute();
         } catch (PDOException $e) {
-            throw new Exception("Error deleting task: " . $e->getMessage());
+            throw new Exception("Error fetching tasks: " . $e->getMessage());
         }
     }
 
+    public function getTasksFromProject($projectId) {
+
+    }
 }
 
 return new TaskService();

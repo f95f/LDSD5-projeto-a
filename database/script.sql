@@ -8,7 +8,7 @@ create table tb_task (
     task_completed boolean default false,
     task_priority varchar(20) null,
     project_id integer null,
-    user_id integer null,
+    deadline date null,
     created_at date
 );
 select * from tb_task;
