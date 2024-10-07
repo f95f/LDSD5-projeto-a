@@ -14,17 +14,6 @@
     $status = $statusController->getAllStatus();
     $priorities = $priorityController->getAllPriorities();
 
-    $selectedProject;
-    function setItem($itemId) {
-        global $projects, $selectedProject;
-        foreach($projects as $item) {
-            if ($item->id == $itemId) {
-                $selectedProject = $item;
-                break;
-            }
-        }   
-    }
-    
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $request = $_POST;
         $controller->createProject($request);
@@ -66,6 +55,7 @@
     // }
 
     define("TITLE", "Projetos | Journalling");
+    define("PAGE", "PROJETOS");
     include __DIR__ . '/../layout/side-menu.php'; 
     include __DIR__ . '/../layout/header.php';
 
@@ -97,11 +87,12 @@
                 </div> -->
                 <div class="card-row">
                     <span><?= $item['deadline']?></span>
-            <button 
+                    <a href="project-details.php?id=<?= $item['id']?>">Ver mais...</a>
+            <!-- <button 
                 type="button"
                 class="showDetailsModal inline-button"
                 >Ver mais...
-            </button>
+            </button> -->
                 </div>
             </li>
         <?php endforeach ?>
@@ -109,8 +100,7 @@
     </div>
 
     <div class="overlay"></div>
-    <!-- <div class="modal" id="createModal">
-
+    <div class="modal" id="createModal">
         <div class="modal-wrapper">
             <div class="modal-header">
                 <h2>Adicionar Projeto</h2>
@@ -167,11 +157,10 @@
                 </div>
             </form>
         </div>
+    </div> 
+<!-- TODO Fechar modal ao adicionar  -->
 
-    </div>  -->
-
-
-    <div class="modal" id="detailsModal">
+    <!-- <div class="modal" id="detailsModal">
 
         <div class="modal-wrapper">
             <div class="modal-header">
@@ -192,7 +181,7 @@
             </div>
         </div>
 
-    </div> 
+    </div>  -->
 </main>
 
 <footer>

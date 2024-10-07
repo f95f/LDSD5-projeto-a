@@ -1,5 +1,6 @@
 <?php
-    require_once('controllers/task-controller.php');
+    require_once __DIR__ . '/../controllers/task-controller.php';
+
     $controller = new TaskController();
     $tasks = $controller->getTasks();
 
@@ -41,6 +42,11 @@
         echo json_encode(['success' => true]);
         exit(); 
     }
+
+    define("TITLE", "Tasks | Journalling");
+    define("PAGE", "TASKS");
+    include __DIR__ . '/../layout/side-menu.php'; 
+    include __DIR__ . '/../layout/header.php';
 ?>
 <header>
     <div class="title">

@@ -7,7 +7,6 @@ class ProjectController {
     private $service;
 
     function __construct() {
-        // $this -> service = require 'services/project-service.php';
 
         $this->service = new ProjectService();
     }
@@ -15,6 +14,11 @@ class ProjectController {
     public function getAllProjects() {
         $projects = $this -> service -> getAllProjects();
         return $projects;
+    }
+
+    public function getProjectById($projectId) {
+        $project = $this -> service -> getProjectById($projectId);
+        return $project;
     }
 
     public function createProject($projectData) {

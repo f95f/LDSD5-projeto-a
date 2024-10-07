@@ -1,33 +1,46 @@
+<?php 
+
+    function isActive($item) {
+        return (PAGE == $item)? 'active' : '';
+    }
+
+?>
 
 <div class="side-menu">
     <div class="side-menu-header">
         <div class="logo">
-            <img src="../images/logo.svg" alt="logo: journalling">
-            <span>Journalling</span>
+            <a href="inicio.php">
+                <img src="../images/logo.svg" alt="logo: journalling">
+                <span>Journalling</span>
+            </a>
         </div>
         <hr class="light-separator">
     </div>
     <div class="side-menu-body">
         <ul>
-            <li class="menu-item">
-                <i class="fa-solid fa-calendar-days"></i>
-                Calendário Pessoal
+            <li class="menu-item <?= isActive('CALENDARIO'); ?>">
+                <a href="calendario.php">
+                    <i class="fa-solid fa-calendar-days"></i>
+                    Calendário Pessoal
+                </a>
             </li>
-            <li class="menu-item">
-                <i class="fa-solid fa-diagram-project"></i>
-                Gestão de Projetos
+            <li class="menu-item <?= isActive('PROJETOS'); ?>">
+                <a href="projects.php">
+                    <i class="fa-solid fa-diagram-project"></i>
+                    Gestão de Projetos
+                </a>
             </li>
-            <li class="menu-item active">
-                <i class="fa-solid fa-list-check"></i>
-                Tarefas
+            <li class="menu-item <?= isActive('TASKS'); ?>">
+                <a href="tasklist.php">
+                    <i class="fa-solid fa-list-check"></i>
+                    Tarefas
+                </a>
             </li>
-            <li class="menu-item">
-                <i class="fa-solid fa-book"></i>
-                Diário Digital
-            </li>
-            <li class="menu-item">
-                <i class="fa-regular fa-user"></i>
-                Usuários
+            <li class="menu-item <?= isActive('DIARIO'); ?>">
+                <a href="diario.php">
+                    <i class="fa-solid fa-book"></i>
+                    Diário Digital
+                </a>
             </li>
         </ul>
     </div>
