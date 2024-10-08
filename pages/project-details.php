@@ -35,11 +35,56 @@
     }
 
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        $request = $_POST;
-        $taskController->createTask($request);
+        $action = isset($_POST['action']) ? $_POST['action'] : '';
+
+
+        switch ($action) {
+            case 'DELETE':
+                $taskId = $_POST['id'];
+                $taskController->deleteTask($taskId);
+                echo json_encode(['success' => true, 'message' => 'Task deleted']);
+                break;
+
+            case 'ADD':
+                $request = $_POST;
+                $taskController->createTask($request);
+                echo json_encode(['success' => true, 'message' => 'Task added']);
+                break;
+
+            case 'UPDATE':
+                $taskId = $_POST['id'];
+                $newDescription = $_POST['description'];
+                $newDeadline = $_POST['deadline'];
+                
+                $taskController->updateTask($taskId, $newDescription, $newDeadline);
+                echo json_encode(['success' => true, 'message' => 'Task updated']);
+                break;
+    
+            default:
+                $taskController->createTask($request);
+                echo json_encode(['success' => true, 'message' => 'Task added']);
+                break;
+            // default:
+            //     echo json_encode(['success' => false, 'message' => 'Invalid action']);
+            //     break;
+        }
+
+
+        exit;
+
+
+        // $taskController->createTask($request);
         // header("Location: " . $_SERVER['PHP_SELF']);
         // exit(); 
     }
+    // if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    //     print_r(' >> ');
+    //     $request = $_POST;
+    //     print_r($request);
+    //     // $taskController->deleteTask($request['id']);
+    //     // header("Location: " . $_SERVER['PHP_SELF']);
+    //     // exit(); 
+    // }
 
     define("TITLE", "Projetos | Journalling");
     define("PAGE", "PROJETOS");
@@ -56,10 +101,13 @@
 </header>
 <main>
     <div class="wrapper">
-        <?= $selectedProject['project_name']; ?>
         <h3 class="project-title">
+            <i class="fa-solid fa-diagram-project icon"></i>
             <?= $selectedProject['project_name']; ?>
         </h3>
+
+        <hr class="light-separator form-separator">
+
         <div class="info-row">
             <span class="label">Status:</span>
             <span><?= getStatus($selectedProject['project_status'], $status);?></span>
@@ -76,18 +124,26 @@
             <span class="label">Prazo:</span>
             <span><?= $selectedProject['deadline'];?></span>
         </div>
+
+        <hr class="light-separator form-separator">
+
         <div class="info-row">
-            <span class="label">Tasks:</span>
-            <button class="inline-button">
-                Adicionar Task
-            </button>
+            <div class="add-task-row">
+                <h4>Tasks</h4>
+                <span class="light-text">|</span>
+                <button class="inline-button"
+                        id="toggleTaskButton">
+                    <i class="fa-solid fa-plus"></i>
+                    Adicionar
+                </button>
+            </div>
             
             <form method="POST" 
                 id="addTaskForm" 
                 name="addTaskForm" 
                 class="form-row">
 
-                <div class="input-group">
+                <div class="input-row">
                     <label for="projectName">Descrição da task:</label>
                     <input
                         type="text"
@@ -96,7 +152,7 @@
                         placeholder="O que você quer fazer?"
                     >
                 </div>
-                <div class="input-group">
+                <div class="input-row small">
                     <label for="deadline">Deadline</label>
                     <input
                         type="date"
@@ -104,7 +160,7 @@
                         name="deadline"
                     >
                 </div>
-                <div class="input-group">
+                <div class="input-row small">
                     <label for="taskPriority">Prioridade</label>
                     <select
                         id="taskPriority"
@@ -118,28 +174,52 @@
                     </select>
                 </div>
                 <input type="hidden" name="projectId" value="<?= $projectId ?>">
-                <button
-                    type="button"
-                    id="closeCreateModal"
-                    class="pill-button secondary"
-                >
-                    Cancelar
-                </button>
-                <button
-                    type="submit"
-                    id="submitProject"
-                    class="pill-button"
-                >
-                    <i class="fa-solid fa-plus"></i>
-                    Adicionar
+     
+                <!-- <button type="button"
+                        id="closeForm"
+                        class="pill-button secondary">
+                    <i class="fa-solid fa-xmark"></i>
+                </button> -->
+                <button type="submit"
+                        id="submitTask"
+                        class="pill-button">
+                    <i class="fa-solid fa-check"></i>
                 </button>
             </form>
 
         </div>
         <div class="info-row">
             <?php foreach($tasks as $item): ?>
-                <span><?= $item['task_description'] ?></span>
+                <div class="task-card">
+                    <div class="left-card-wrapper">
+                        <i class="fa-solid fa-list-check light-text"></i>
+                        <span class="light-text">|</span>
+                        <span><?= $item['task_description'] ?></span>
+                    </div>
+                    <div class="right-card-wrapper">
+                        <?php /*
+                        <span><?= getStatus($selectedProject['project_status'], $status); ?></span>
+                        <span class="light-text">|</span>
+                        <span><?= getPriority($selectedProject['project_priority'], $priority); ?></span>
+                        <span class="light-text">|</span>
+                        */?>
+                        <span class="light-text">até</span>
+                        <span><?= $item['deadline'] ?></span>
+                        <span class="light-text">|</span>
+                        <i class="fa-solid fa-edit light-text"></i>
+                        <a  role="button"
+                            class="inline-button deleteTaskButton"
+                            data-task-id="<?= $item['id'] ?>">
+                            <i class="fa-solid fa-trash light-text"></i>
+                        </a>
+                    </div>
+                </div>
             <?php endforeach ?>
+            <?php if(!is_array($tasks)): ?>
+                <span class="light-text large">
+                    Nenhuma task adicionada ao projeto...
+                </span>
+            <?php endif?>
         </div>
     </div>
 

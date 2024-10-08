@@ -16,7 +16,6 @@ class TaskController{
     }
 
     public function createTask($taskData) {
-        print_r($taskData);
         $task = new Task(
             0,
             $taskData['taskDescription'],

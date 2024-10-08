@@ -13,7 +13,6 @@
     grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
 }
 
-
 .card-item {
     display: flex;
     flex-direction: column;
@@ -43,8 +42,85 @@
     font-size: 1.2em;
     color: var(--text-light);
 }
+i.icon {
+    opacity: .4;
+    margin-right: 8px;
+}
 
 .card-body {
     width: 100%;
+}
 
+.project-title {
+    font-size: 2em;
+    font-family: var(--heading-font);
+    /* margin-bottom: 16px; */
+}
+
+.info-row {
+    width: 100%;
+    margin: 16px 0;
+}
+
+h4 {
+    font-size: 1.4em;
+    font-family: var(--heading-font);
+}
+
+hr.form-separator {
+    margin: 32px 0;
+}
+
+.add-task-row {
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    gap: 16px;
+    align-items: center;
+    margin-bottom: 8px;
+}
+.form-row {
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    gap: 16px;
+    align-items: flex-end;
+}
+
+.form-row button {
+    margin-bottom: 24px;
+}
+
+.pill-button {
+    font-size: 1.5em;
+}
+
+.task-card {
+    width: 100%;
+    padding: 12px 16px;
+    border: 1px solid var(--border-color);
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 8px;
+    gap: 8px;
+    background-color: var(--background);
+    border-radius: 8px;
+    box-shadow: 2px 2px 6px #3333;
+    transition: all .2s ease;
+}
+
+.task-card:hover {
+    border: 1px solid var(--secondary);
+}
+
+.left-card-wrapper {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+.right-card-wrapper {
+    display: flex;
+    gap: 8px;
+    align-items: center;
 }
