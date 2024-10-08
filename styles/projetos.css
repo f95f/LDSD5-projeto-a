@@ -10,7 +10,7 @@
     width: 100%;
     display: grid;
     gap: 8px;
-    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(480px, 1fr));
 }
 
 .card-item {
@@ -18,7 +18,7 @@
     flex-direction: column;
     gap: 8px;
     padding: 8px;
-    max-width: 240px;
+    max-width: 480px;
     border-radius: 8px;
     border: 1px solid var(--border-color);
     cursor: pointer;
@@ -52,11 +52,24 @@ i.icon {
 }
 
 .project-title {
-    font-size: 2em;
-    font-family: var(--heading-font);
-    /* margin-bottom: 16px; */
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 16px;
 }
 
+.project-title h3 {
+    font-size: 2em;
+    font-family: var(--heading-font);
+}
+.project-title a i {
+    opacity: .4;
+    font-size: .8em;
+    transition: all .2s ease;
+}
+.project-title:hover a i {
+    opacity: 1;
+}
 .info-row {
     width: 100%;
     margin: 16px 0;

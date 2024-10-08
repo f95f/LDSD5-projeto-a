@@ -39,13 +39,19 @@
 
 
         switch ($action) {
-            case 'DELETE':
+
+            case 'DELETE_PROJECT':
+                $controller->deleteProject($projectId);
+                echo json_encode(['success' => true, 'message' => 'Project deleted']);
+                break;
+
+            case 'DELETE_TASK':
                 $taskId = $_POST['id'];
                 $taskController->deleteTask($taskId);
                 echo json_encode(['success' => true, 'message' => 'Task deleted']);
                 break;
 
-            case 'ADD':
+            case 'ADD_TASK':
                 $request = $_POST;
                 $taskController->createTask($request);
                 echo json_encode(['success' => true, 'message' => 'Task added']);
@@ -67,20 +73,7 @@
 
 
         exit;
-
-
-        // $taskController->createTask($request);
-        // header("Location: " . $_SERVER['PHP_SELF']);
-        // exit(); 
     }
-    // if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    //     print_r(' >> ');
-    //     $request = $_POST;
-    //     print_r($request);
-    //     // $taskController->deleteTask($request['id']);
-    //     // header("Location: " . $_SERVER['PHP_SELF']);
-    //     // exit(); 
-    // }
 
     define("TITLE", "Projetos | Journalling");
     define("PAGE", "PROJETOS");
@@ -92,16 +85,26 @@
 
 <header>
     <div class="title">
-        <i class="fa-solid fa-project"></i>
+        <i class="fa-solid fa-diagram-project"></i>
         <h1>Detalhes do Projeto</h1>
     </div>
 </header>
 <main>
     <div class="wrapper">
-        <h3 class="project-title">
-            <i class="fa-solid fa-diagram-project icon"></i>
-            <?= $selectedProject['project_name']; ?>
-        </h3>
+        <div class="project-title">
+            <h3>
+                <i class="fa-solid fa-diagram-project icon"></i>
+                <?= $selectedProject['project_name']; ?>
+            </h3>
+            <span class="light-text">|</span>
+            <a  role="button">
+                <i class="fa-solid fa-edit light-text"></i>
+            </a>
+            <a  role="button"
+                class="inline-button deleteProjectButton">
+                <i class="fa-solid fa-trash light-text"></i>
+            </a>
+        </div>
 
         <hr class="light-separator form-separator">
 

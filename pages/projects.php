@@ -14,6 +14,22 @@
     $status = $statusController->getAllStatus();
     $priorities = $priorityController->getAllPriorities();
 
+    function getStatus($id, $status) {
+        $filtered = array_filter($status, function($item) use ($id) {
+            return $item['id'] == $id;
+        });
+    
+        return !empty($filtered) ? array_values($filtered)[0]['status'] : 'Desconhecido';
+    }
+
+    function getPriority($id, $priorities) {
+        $filtered = array_filter($priorities, function($item) use ($id) {
+            return $item['id'] == $id;
+        });
+
+        return !empty($filtered)? array_values($filtered)[0]['priority'] : 'Desconhecida'; 
+    }
+
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $request = $_POST;
         $controller->createProject($request);
@@ -29,7 +45,7 @@
 
 <header>
     <div class="title">
-        <i class="fa-solid fa-project"></i>
+        <i class="fa-solid fa-diagram-project"></i>
         <h1>Gerenciamento de Projetos</h1>
     </div>
 </header>
@@ -46,7 +62,7 @@
             <li class="card-item">
                 <div class="card-row">
                     <h3><?= $item['project_name']?></h3>
-                    <span><?= $item['project_status']?></span>
+                    <span><?= getStatus($item['project_status'], $status);?></span>
                 </div>
                 <!-- <div class="card-body">
                     Project Description

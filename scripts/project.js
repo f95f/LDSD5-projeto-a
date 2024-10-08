@@ -30,7 +30,7 @@ $(document).ready(function () {
             type: 'POST',
             data: formData,
             success: function(response) {
-                // location.reload();
+                location.reload();
                 $('#taskDescription').val('');
             },
             error: function(xhr, status, error) {
