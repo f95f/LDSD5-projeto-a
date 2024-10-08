@@ -1,25 +1,6 @@
 $(document).ready(function () {
 
     $('#addTaskForm').hide();
-    // $(document).on('click', '#showTaskModal', function() {
-    //     $('#taskModal').fadeIn();
-    //     $('.overlay').fadeIn();
-    // });
-    
-    // $(document).on('click', '#closeTaskModal', function() {
-    //     $('#taskModal').fadeOut();
-    //     $('.overlay').fadeOut();
-    // });
-    
-    // $(document).on('click', '.showDetailsModal', function() {
-    //     $('#detailsModal').fadeIn();
-    //     $('.overlay').fadeIn(); // Show overlay for details modal
-    // });
-    
-    // $(document).on('click', '#closeDetailsModal', function() {
-    //     $('#detailsModal').fadeOut();
-    //     $('.overlay').fadeOut(); // Hide overlay when details modal is closed
-    // });
 
     $('#addTaskForm').submit(function(event) {
         event.preventDefault();
@@ -31,7 +12,8 @@ $(document).ready(function () {
             type: 'POST',
             data: `${formData}&action=ADD`,
             success: function(response) {
-                // location.reload();
+                clearForm('#addTaskForm');
+                location.reload();
             },
             error: function(xhr, status, error) {
                 console.error('Error adding task:', error);
@@ -55,9 +37,10 @@ $(document).ready(function () {
                 type: 'TASK',
             },
             success: function(response) {
+                location.reload();
                 if (response.success) {
                     console.log('Received data:', response.received_data);
-                    $(this).hide();
+                    
                 }
             }.bind(this),
             error: function(xhr, status, error) {
@@ -66,3 +49,12 @@ $(document).ready(function () {
         });
     });
 });
+
+
+let clearForm = function(formId) {
+    $(formId).find(
+        'input[type=text], ' + 
+        'input[type=email], ' +
+        'textarea, ' +
+        'input[type=date]').val('');
+}

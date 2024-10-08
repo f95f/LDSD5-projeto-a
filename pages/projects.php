@@ -17,45 +17,11 @@
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $request = $_POST;
         $controller->createProject($request);
-        // header("Location: " . $_SERVER['PHP_SELF']);
-        // exit(); 
     }
-    // if ($_SERVER['REQUEST_METHOD'] === 'PUT') {  
-    //     parse_str(file_get_contents("php://input"), $_PUT);
-
-    //     if (isset($_PUT['status'])) {
-    //         $taskId = isset($_PUT['id']) ? $_PUT['id'] : '';
-    //         $completed = isset($_PUT['project_status']) ? $_PUT['project_status'] : '';
-    //         $controller->changeTaskStatus($taskId, $completed);
-
-    //     }
-    //     else {
-    //         $taskId = isset($_PUT['id']) ? $_PUT['id'] : '';
-    //         $status = isset($_PUT['project_status']) ? $_PUT['project_status'] : '';
-    //         $priority = isset($_PUT['project_priority']) ? $_PUT['project_priority'] : '';
-    //         $user_id = isset($_PUT['user_id']) ? $_PUT['user_id'] : '';
-    //         $created_at = isset($_PUT['created_at']) ? $_PUT['created_at'] : '';
-    //         $created_at = isset($_PUT['created_at']) ? $_PUT['created_at'] : '';
-    //         $controller->changeTaskStatus($taskId, $completed);
-
-    //     }
-
-    //     echo json_encode(['success' => true]);
-    //     exit(); 
-    // }
-
-    // // Delete a project
-    // if ($_SERVER['REQUEST_METHOD'] === 'DELETE') {
-    //     parse_str(file_get_contents("php://input"), $_DELETE);
-
-    //     $projectId = isset($_DELETE['id'])? $_DELETE['id'] : '';
-    //     $controller -> deleteProject($projectId);
-    //     echo json_encode(['success' => true]);
-    //     exit(); 
-    // }
 
     define("TITLE", "Projetos | Journalling");
     define("PAGE", "PROJETOS");
+    define("STYLESHEET", "projetos");
     include __DIR__ . '/../layout/side-menu.php'; 
     include __DIR__ . '/../layout/header.php';
 

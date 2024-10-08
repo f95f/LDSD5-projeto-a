@@ -59,14 +59,10 @@
                 $taskController->updateTask($taskId, $newDescription, $newDeadline);
                 echo json_encode(['success' => true, 'message' => 'Task updated']);
                 break;
-    
+                
             default:
-                $taskController->createTask($request);
-                echo json_encode(['success' => true, 'message' => 'Task added']);
+                echo json_encode(['success' => false, 'message' => 'Invalid action']);
                 break;
-            // default:
-            //     echo json_encode(['success' => false, 'message' => 'Invalid action']);
-            //     break;
         }
 
 
@@ -88,6 +84,7 @@
 
     define("TITLE", "Projetos | Journalling");
     define("PAGE", "PROJETOS");
+    define("STYLESHEET", "projetos");
     include __DIR__ . '/../layout/side-menu.php'; 
     include __DIR__ . '/../layout/header.php';
 
@@ -182,7 +179,7 @@
                 </button> -->
                 <button type="submit"
                         id="submitTask"
-                        class="pill-button">
+                        class="pill-button add-task-button">
                     <i class="fa-solid fa-check"></i>
                 </button>
             </form>
