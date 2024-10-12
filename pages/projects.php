@@ -44,8 +44,9 @@
 
             case 'SEARCH':
                 $query = $_POST;
-                $controller->createProject($request);
-                echo json_encode(['success' => true, 'message' => 'Task deleted']);
+                $projects = [];
+                $projects = $controller->searchProjects($query);
+                echo json_encode(['success' => true, 'message' => $projects]);
                 break;
                 
             default:
@@ -76,7 +77,7 @@
         
 
         <div class="menubar">
-            <form   method="PUT"
+            <form   method="POST"
                     id="searchForm"
                     class="searchbar">
                 <input  type="text" 
@@ -96,7 +97,7 @@
         </div>
 
 
-        <ul class="card-grid">
+        <ul class="card-grid" id="projectList">
         <?php foreach($projects as $item): ?>
             <li class="card-item">
                 <div class="card-row">
@@ -116,11 +117,6 @@
                         <i class="fa-solid fa-circle-info"></i>
                         Mais detalhes...
                     </a>
-            <!-- <button 
-                type="button"
-                class="showDetailsModal inline-button"
-                >Ver mais...
-            </button> -->
                 </div>
             </li>
         <?php endforeach ?>

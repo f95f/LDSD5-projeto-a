@@ -52,6 +52,9 @@ i.icon {
 
 .card-body {
     width: 100%;
+    border-top: 1px solid var(--border-color);
+    border-bottom: 1px solid var(--border-color);
+    padding: 24px 0;
 }
 
 .project-title {
@@ -142,11 +145,12 @@ hr.form-separator {
 }
 
 .searchbar {
-    max-width: 480px;
+    
     position: relative;
 }
 .inline-input {
     margin: 0;
+    width: 440px;
 }
 
 a.search-icon {
