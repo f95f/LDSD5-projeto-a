@@ -100,10 +100,13 @@ hr.light-separator {
     flex-direction: column;
     justify-content: space-evenly;
     gap: 8px;
-    height: 96px;
+    /* height: 96px; */
     padding: 16px;
     text-align: center;
     font-size: .9em;
+}
+.side-menu-footer hr {
+    margin-bottom: 16px;
 }
 .menu-item {
     display: flex;
@@ -135,6 +138,27 @@ hr.light-separator {
     background-color: var(--primary);
     color: var(--text-color);
 }
+.logout-item {
+    width: 100%;
+}
+.logout-item a {
+    display: inline-block;
+    width: 100%;
+    padding: 16px 0px;
+    font-size: 1.2em;
+    color: var(--text-light);
+    transition: all .2s ease;
+}
+.logout-item a i {
+    color: var(--text-light);
+
+}
+.logout-item a:hover {
+    color: var(--text-color);
+}
+
+
+
 
 /************************* 
     Layout
@@ -143,6 +167,16 @@ hr.light-separator {
     width: 100%;
     display: flex;
     flex-direction: column;
+}
+.waterdrop {
+    width: 320px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    opacity: .1;
+    mix-blend-mode: screen;
+    filter: blur(8px);
 }
 header {
     width: min(100%, 1640px);

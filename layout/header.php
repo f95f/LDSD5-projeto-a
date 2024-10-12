@@ -14,3 +14,4 @@
 
 <body>    
     <div class="content">
+        <img src="../images/logo.png" alt="waterdrop" class="waterdrop">
