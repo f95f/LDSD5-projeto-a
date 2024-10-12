@@ -545,6 +545,9 @@ main {
 **************************/
 
 .toast {
+    width: 300px;
+    display: flex;
+    gap: 16px;
     position: absolute;
     top: 16px;
     right: 16px;
@@ -558,9 +561,17 @@ main {
     z-index: 1000;
 }
 
+.icon i {
+    font-size: 2.4em;
+    opacity: .4;
+    color: var(--primary);
+    margin-top: 8px;
+}
+.toast-text {
+    flex: 1;
+}
 .toast-header {
-    /* border-bottom: 1px solid var(--border-color); */
-    padding: 8px 0;
+    padding-top: 8px;
 }
 .toast-title {
     font-size: 1.2em;
@@ -569,14 +580,7 @@ main {
     text-wrap: nowrap;
 }
 
-.toast-title i{
-    opacity: .4;
-    color: var(--primary);
-}
-
 .toast-body {
     color: var(--text-light);
     padding: 8px 0;
-    margin-top: 8px;
-
 }

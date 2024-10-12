@@ -2,7 +2,7 @@ $(document).ready(function () {
 
     $('#loginForm').submit(function(event) {
         event.preventDefault();
-            console.warn($('#email').val(), $('#senha').val())
+        
         if(!$('#email').val() || !$('#senha').val()) {
             fireError("Preencha os dados corretamente!");
             return;
@@ -31,6 +31,10 @@ $(document).ready(function () {
     $('#signinForm').submit(function(event) {
         event.preventDefault();
     
+
+        if(!isSigninValid()) return;
+
+
         var formData = $(this).serialize();
         
         $.ajax({
@@ -49,8 +53,37 @@ $(document).ready(function () {
 });
 
 
+
+let isSigninValid = function() {
+
+    let username = $('#nome').val();
+    let email = $('#email').val();
+    let password = $('#senha').val();
+    let confirmPassword =$('#confirmarSenha').val();
+    
+    if(!username || !email || !password || !confirmPassword) {
+        fireError("Preencha os dados corretamente!");
+        return false;
+    }
+
+    if(password !== confirmPassword) {
+        fireError("As senhas não são iguais!", "Verifique sua senha");
+        return false;
+    }
+    
+    if(password.length < 6) {
+        fireError("Sua senha deve ter pelo menos 6 caracteres.", "Senha muito fraca!");
+        return false;
+    }
+    return true;
+
+}
+
+
+
 let fireError = function(message, title = "Erro") {
-    $('#toastTitle').html(`<i class="fa-solid fa-circle-exclamation"></i> ${title}`);
+    $('#toastTitle').html(title);
+    $('#icon').html(`<i class="fa-solid fa-circle-exclamation"></i>`);
     $('#toastMessage').text(message);
     
     $('#toast').fadeIn();

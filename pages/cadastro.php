@@ -73,15 +73,19 @@
             <form id="signinForm" class="login-form" action="" method="POST">
                 <div class="input-group">
                     <label for="nome">Nome</label>
-                    <input type="text" name="nome" class="inline-input" placeholder="Informe o seu nome">
+                    <input type="text" name="nome" id="nome" class="inline-input" placeholder="Informe o seu nome">
                 </div>
                 <div class="input-group">
                     <label for="email">Email</label>
-                    <input type="text" name="email" class="inline-input" placeholder="Informe o seu email">
+                    <input type="text" name="email" id="email" class="inline-input" placeholder="Informe o seu email">
                 </div>
                 <div class="input-group">
                     <label for="senha">Senha</label>
-                    <input type="password" name="senha" class="inline-input" placeholder="Informe a sua senha">
+                    <input type="password" name="senha" id="senha" class="inline-input" placeholder="Informe a sua senha">
+                </div>
+                <div class="input-group">
+                    <label for="senha">Confirme a senha</label>
+                    <input type="password" name="confirmarSenha" id="confirmarSenha" class="inline-input" placeholder="Confirme a senha">
                 </div>
                 <hr class="light-separator">
                 <button type="submit" class="pill-button">Cadastrar</button>
@@ -91,6 +95,21 @@
         </div>
     </div>
 </div>
+
+
+
+<div class="toast" id="toast" style="display:none;">
+    <div class="icon" id="icon"></div>
+    <div class="toast-text">
+        <div class="toast-header">
+            <span class="toast-title" id="toastTitle"></span>
+        </div>
+        <div class="toast-body">
+            <span class="toast-message" id="toastMessage"></span>
+        </div>
+    </div>
+</div>
+
 
 <footer>
     <script src="../scripts/login.js"></script>
