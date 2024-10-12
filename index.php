@@ -8,12 +8,10 @@
 <?php include('layout/header.php'); ?>
     </div>
 
-    <script>
-        $(document).ready(function() {
-            var currentUrl = window.location.href; 
-            window.location.href = currentUrl + 'pages/inicio.php';
-        });
-    </script>
+    <div class="content">
+        <?php include('pages/tasklist.php'); ?>
+        <?php //include('pages/projects.php'); ?>
+    </div>
 </body>
 
 </html> 

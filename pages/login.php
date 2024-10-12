@@ -25,12 +25,13 @@
                     $_SESSION['id'] = $usuario['id'];
                     $_SESSION['name'] = $usuario['name'];
 
-                    header("Location: .php");
+                    header("Location: tasklist.php");
             } 
                 else{
                     echo("Falha ao logar! Email ou senha invalidos");
                 }
             }
+
 ?>
 </html>
 <!DOCTYPE html>
@@ -38,19 +39,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>cadastro</title>
+    <title>Login</title>
     <link rel="stylesheet" href="../styles/cadastro.css">
 </head>
 <body>
 <form action="post">
     <div class="login-wrapper">
         <div class="login-box">
-            <h1 class="title">Cadastro</h1>
-            <form class="login-form" action="" method="POST">
-                <div class="input-group">
-                    <label for="name">Nome</label>
-                    <input type="text" id="name" class="inline-input" placeholder="Entre com sua nome">
-                </div>
+            <h1 class="title">Login</h1>
+            <form class="login-form" action="#">
                 <div class="input-group">
                     <label for="email">Email</label>
                     <input type="text" id="email" class="inline-input" placeholder="Entre com sua email">
@@ -59,8 +56,9 @@
                     <label for="senha">Senha</label>
                     <input type="password" id="senha" class="inline-input" placeholder="Entre com sua senha">
                 </div>
-                <button type="submit" class="pill-button">Cadastrar</button>
+                <button type="submit" class="pill-button">Entrar</button>
             </form>
+            <p class="light-text">Ainda não tem uma conta? <a href="../pages/cadastro.php">Cadastra-se</a></p>
         </div>
     </div>
 </form>
