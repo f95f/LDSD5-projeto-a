@@ -108,7 +108,7 @@
         }
 
 
-        exit;
+        exit();
     }
 
     define("TITLE", "Projetos | Journalling");

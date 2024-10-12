@@ -28,7 +28,26 @@ $(document).ready(function () {
         $.ajax({
             url: '',
             type: 'POST',
-            data: formData,
+            data: `${formData}&action=CREATE`,
+            success: function(response) {
+                location.reload();
+                $('#taskDescription').val('');
+            },
+            error: function(xhr, status, error) {
+                console.error('Error adding task:', error);
+            }
+        });
+    });
+
+    $('#searchForm').submit(function(event) {
+        event.preventDefault();
+    
+        var formData = $(this).serialize();
+
+        $.ajax({
+            url: '',
+            type: 'POST',
+            data: `${formData}&action=SEARCH`,
             success: function(response) {
                 location.reload();
                 $('#taskDescription').val('');

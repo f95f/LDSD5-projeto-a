@@ -30,9 +30,31 @@
         return !empty($filtered)? array_values($filtered)[0]['priority'] : 'Desconhecida'; 
     }
 
-    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        $request = $_POST;
-        $controller->createProject($request);
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {        
+        $action = isset($_POST['action']) ? $_POST['action'] : '';
+
+
+        switch ($action) {
+
+            case 'CREATE':
+                $request = $_POST;
+                $controller->createProject($request);
+                echo json_encode(['success' => true, 'message' => 'Project deleted']);
+                break;
+
+            case 'SEARCH':
+                $query = $_POST;
+                $controller->createProject($request);
+                echo json_encode(['success' => true, 'message' => 'Task deleted']);
+                break;
+                
+            default:
+                echo json_encode(['success' => false, 'message' => 'Invalid action']);
+                break;
+        }
+
+
+        exit();
     }
 
     define("TITLE", "Projetos | Journalling");
@@ -51,12 +73,29 @@
 </header>
 <main>
     <div class="wrapper">
+        
+
         <div class="menubar">
+            <form   method="PUT"
+                    id="searchForm"
+                    class="searchbar">
+                <input  type="text" 
+                        id="searchInput"
+                        name="searchInput"
+                        placeholder="Pesquisar..."
+                        class="inline-input" >
+                <button type="submit" role='button' 
+                    class="inline-button">
+                    <i class="fa-solid fa-magnifying-glass icon search-icon"></i>
+                </button>
+            </form>
             <button id="showFormModal" class="pill-button">
                 <i class="fa-solid fa-plus"></i>
                 Novo Projeto
             </button>
         </div>
+
+
         <ul class="card-grid">
         <?php foreach($projects as $item): ?>
             <li class="card-item">
