@@ -105,7 +105,7 @@
     </div>
 
 <footer>
-    <script src="../scripts/login.js"></script>
+    <script type="module" src="../scripts/login.js"></script>
 </footer>
 
 </body>
