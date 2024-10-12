@@ -50,10 +50,15 @@
 <body>
     <div class="content">
         <img src="../images/logo.png" alt="waterdrop" class="waterdrop">
-        <div class="login-wrapper">
+        <div class="login-wrapper">        
             <div class="login-box">
+                <div class="logo header-image">
+                    <img src="../images/logo.svg" alt="logo: journalling">
+                    <span>Journalling</span>
+                </div>
                 <h1 class="login-header">Login</h1>
                 <hr class="light-separator">
+
                 <form class="login-form" action="#">
                     <div class="input-group">
                         <label for="email">Email</label>
@@ -66,6 +71,7 @@
                     <hr class="light-separator">
                     <button type="submit" class="pill-button">Entrar</button>
                 </form>
+
                 <p class="light-text">Ainda não tem uma conta? <a href="../pages/cadastro.php">Cadastra-se</a></p>
             </div>
         </div>
