@@ -4,7 +4,7 @@
 
     if(isset($_POST['email']) || isset($_POST['senha']));
         if(strlen($_POST['email'])==0){
-            echo "Preencha seu email";
+            // echo "Preencha seu email";
         }else if(strlen($_POST['senha'])==0){
             echo "Preencha sua senha";
         }else{
@@ -39,28 +39,36 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
+    <title>Login | Journalling</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <link rel="stylesheet" href="../styles/global.css">
     <link rel="stylesheet" href="../styles/cadastro.css">
+    <link rel="icon" type="image/svg+xml" href="../images/favicon.svg">    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
 </head>
 <body>
-<form action="post">
-    <div class="login-wrapper">
-        <div class="login-box">
-            <h1 class="title">Login</h1>
-            <form class="login-form" action="#">
-                <div class="input-group">
-                    <label for="email">Email</label>
-                    <input type="text" id="email" class="inline-input" placeholder="Entre com sua email">
-                </div>
-                <div class="input-group">
-                    <label for="senha">Senha</label>
-                    <input type="password" id="senha" class="inline-input" placeholder="Entre com sua senha">
-                </div>
-                <button type="submit" class="pill-button">Entrar</button>
-            </form>
-            <p class="light-text">Ainda não tem uma conta? <a href="../pages/cadastro.php">Cadastra-se</a></p>
+    <div class="content">
+        <img src="../images/logo.png" alt="waterdrop" class="waterdrop">
+        <div class="login-wrapper">
+            <div class="login-box">
+                <h1 class="login-header">Login</h1>
+                <hr class="light-separator">
+                <form class="login-form" action="#">
+                    <div class="input-group">
+                        <label for="email">Email</label>
+                        <input type="text" id="email" class="inline-input" placeholder="Entre com seu email">
+                    </div>
+                    <div class="input-group">
+                        <label for="senha">Senha</label>
+                        <input type="password" id="senha" class="inline-input" placeholder="Informe sua senha">
+                    </div>
+                    <hr class="light-separator">
+                    <button type="submit" class="pill-button">Entrar</button>
+                </form>
+                <p class="light-text">Ainda não tem uma conta? <a href="../pages/cadastro.php">Cadastra-se</a></p>
+            </div>
         </div>
     </div>
-</form>
 </body>
 </html>

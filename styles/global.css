@@ -167,6 +167,7 @@ hr.light-separator {
     width: 100%;
     display: flex;
     flex-direction: column;
+    position: relative;
 }
 .waterdrop {
     width: 320px;
