@@ -1,4 +1,10 @@
 <?php 
+    session_start();
+
+    if (!isset($_SESSION['id'])) {
+        header('Location: ./login.php');
+        exit;
+    }
 
     function isActive($item) {
         return (PAGE == $item)? 'active' : '';
@@ -46,7 +52,7 @@
     </div>
     <div class="side-menu-footer">
         <span class="logout-item">
-            <a href="../pages/login.php">
+            <a href="/../services/logout-service.php">
                 <i class="fa-solid fa-right-from-bracket"></i>
                 Logout
             </a>

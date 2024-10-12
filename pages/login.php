@@ -5,8 +5,9 @@
 
     $service = new UsuarioService();
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        header('Content-Type: application/json'); 
 
-        
+
         $action = isset($_POST['action']) ? $_POST['action'] : '';
 
         if($action === 'LOGIN') {
@@ -29,20 +30,22 @@
                         echo json_encode(['success' => false, 'message' => 'Usuário não encontrado']);
                     }
                     else {
-                        echo json_encode(['success' => true, 'message' => 'Autenticado com sucesso']);    
-                        
-                        if(!isset($_SESSION)){
-                            session_start();
-                        }
+                        // if(!isset($_SESSION)){
+                        //     session_start();
+                        // }
+                        session_start();
+
                         $_SESSION['id'] = $usuario['id'];
                         $_SESSION['name'] = $usuario['name'];
-
-                        header("Location: tasklist.php");
+                        
+                        echo json_encode(['success' => true, 'message' => 'Autenticado com sucesso']);    
+                        
                     }
 
                 }
             }
         }
+        exit(); 
     }
 ?>
 </html>
@@ -74,11 +77,11 @@
                 <form id="loginForm" class="login-form" method="post" action="#">
                     <div class="input-group">
                         <label for="email">Email</label>
-                        <input type="text" name="email" class="inline-input" placeholder="Entre com seu email">
+                        <input type="text" name="email" id="email" class="inline-input" placeholder="Entre com seu email">
                     </div>
                     <div class="input-group">
                         <label for="senha">Senha</label>
-                        <input type="password" name="senha" class="inline-input" placeholder="Informe sua senha">
+                        <input type="password" name="senha" id="senha"  class="inline-input" placeholder="Informe sua senha">
                     </div>
                     <hr class="light-separator">
                     <button type="submit" class="pill-button">Entrar</button>
@@ -88,6 +91,16 @@
             </div>
         </div>
     </div>
+
+<div class="toast" id="toast" style="display:none;">
+    <div class="toast-header">
+        <span class="toast-title" id="toastTitle"></span>
+        
+    </div>
+    <div class="toast-body">
+        <span class="toast-message" id="toastMessage"></span>
+    </div>
+</div>
 
 <footer>
     <script src="../scripts/login.js"></script>
