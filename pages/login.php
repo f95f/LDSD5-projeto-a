@@ -4,37 +4,44 @@
     require_once __DIR__ . '/../services/usuario-service.php';
 
     $service = new UsuarioService();
-    // if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    if(isset($_POST['email']) || isset($_POST['senha'])) {
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-    
-        if(strlen($_POST['email'])==0){
-            // echo "Preencha seu email";
-        }else if(strlen($_POST['senha'])==0){
-            echo "Preencha sua senha";
-        }else{
-            
-            
-            $email = $_POST['email'];
-            $senha = $_POST['senha'];
-            
-            $usuario = $service->login($email, $senha);
+        
+        $action = isset($_POST['action']) ? $_POST['action'] : '';
 
-            if(!$usuario){
-                echo json_encode(['success' => false, 'message' => 'Usuário não encontrado']);
-            }
-            else {
-                echo json_encode(['success' => true, 'message' => 'Autenticado com sucesso']);    
-                
-                if(!isset($_SESSION)){
-                    session_start();
+        if($action === 'LOGIN') {
+            if(isset($_POST['email']) || isset($_POST['senha'])) {
+
+            
+                if(strlen($_POST['email'])==0){
+                    // echo "Preencha seu email";
+                }else if(strlen($_POST['senha'])==0){
+                    echo "Preencha sua senha";
+                }else{
+                    
+                    
+                    $email = $_POST['email'];
+                    $senha = $_POST['senha'];
+                    
+                    $usuario = $service->login($email, $senha);
+
+                    if(!$usuario){
+                        echo json_encode(['success' => false, 'message' => 'Usuário não encontrado']);
+                    }
+                    else {
+                        echo json_encode(['success' => true, 'message' => 'Autenticado com sucesso']);    
+                        
+                        if(!isset($_SESSION)){
+                            session_start();
+                        }
+                        $_SESSION['id'] = $usuario['id'];
+                        $_SESSION['name'] = $usuario['name'];
+
+                        header("Location: tasklist.php");
+                    }
+
                 }
-                $_SESSION['id'] = $usuario['id'];
-                $_SESSION['name'] = $usuario['name'];
-
-                header("Location: tasklist.php");
             }
-
         }
     }
 ?>

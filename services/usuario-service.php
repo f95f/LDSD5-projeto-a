@@ -24,6 +24,22 @@ class UsuarioService {
             throw new Exception("Error logging in: " . $e->getMessage());
         }
     }
+
+
+    public function signup($nome, $email, $senha) {
+
+        $query = 'insert into tb_user (name, email, senha) values (:nome, :email, :senha)';
+        $sql = $this->pdo->prepare($query);
+        $sql->bindValue(':nome', $nome);
+        $sql->bindValue(':email', $email);
+        $sql->bindValue(':senha', $senha);
+
+        try{
+            return $sql->execute();
+        } catch (PDOException $e) {
+            throw new Exception("Error signing up: " . $e->getMessage());
+        }
+    }
 }
 
 return new UsuarioService();
