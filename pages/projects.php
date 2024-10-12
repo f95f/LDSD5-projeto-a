@@ -30,9 +30,32 @@
         return !empty($filtered)? array_values($filtered)[0]['priority'] : 'Desconhecida'; 
     }
 
-    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        $request = $_POST;
-        $controller->createProject($request);
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {        
+        $action = isset($_POST['action']) ? $_POST['action'] : '';
+
+
+        switch ($action) {
+
+            case 'CREATE':
+                $request = $_POST;
+                $controller->createProject($request);
+                echo json_encode(['success' => true, 'message' => 'Project deleted']);
+                break;
+
+            case 'SEARCH':
+                $query = $_POST;
+                $projects = [];
+                $projects = $controller->searchProjects($query);
+                echo json_encode(['success' => true, 'message' => $projects]);
+                break;
+                
+            default:
+                echo json_encode(['success' => false, 'message' => 'Invalid action']);
+                break;
+        }
+
+
+        exit();
     }
 
     define("TITLE", "Projetos | Journalling");
@@ -51,30 +74,49 @@
 </header>
 <main>
     <div class="wrapper">
+        
+
         <div class="menubar">
+            <form   method="POST"
+                    id="searchForm"
+                    class="searchbar">
+                <input  type="text" 
+                        id="searchInput"
+                        name="searchInput"
+                        placeholder="Pesquisar..."
+                        class="inline-input" >
+                <button type="submit" role='button' 
+                    class="inline-button">
+                    <i class="fa-solid fa-magnifying-glass icon search-icon"></i>
+                </button>
+            </form>
             <button id="showFormModal" class="pill-button">
                 <i class="fa-solid fa-plus"></i>
                 Novo Projeto
             </button>
         </div>
-        <ul class="card-grid">
+
+
+        <ul class="card-grid" id="projectList">
         <?php foreach($projects as $item): ?>
             <li class="card-item">
                 <div class="card-row">
-                    <h3><?= $item['project_name']?></h3>
-                    <span><?= getStatus($item['project_status'], $status);?></span>
+                    <h3>
+                        <i class="fa-solid fa-sitemap icon"></i>
+                        <?= $item['project_name']?>
+                    </h3>
+                    <span class="status secondary"><?= getStatus($item['project_status'], $status);?></span>
                 </div>
-                <!-- <div class="card-body">
-                    Project Description
-                </div> -->
+                <div class="card-body">
+                    Lorem ipsum dolor sit, amet consectetur adipisicing elit. Veniam porro quas sapiente, fugiat facere distinctio magnam. 
+                </div>
                 <div class="card-row">
                     <span><?= $item['deadline']?></span>
-                    <a href="project-details.php?id=<?= $item['id']?>">Ver mais...</a>
-            <!-- <button 
-                type="button"
-                class="showDetailsModal inline-button"
-                >Ver mais...
-            </button> -->
+                    <a href="project-details.php?id=<?= $item['id']?>"
+                        class="inline-button">
+                        <i class="fa-solid fa-circle-info"></i>
+                        Mais detalhes...
+                    </a>
                 </div>
             </li>
         <?php endforeach ?>

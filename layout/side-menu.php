@@ -48,6 +48,12 @@
                     Diário Digital
                 </a>
             </li>
+            <li class="menu-item <?= isActive('PERFIL'); ?>">
+                <a href="../pages/perfil.php">
+                    <i class="fa-solid fa-user"></i>
+                    Perfil
+                </a>
+            </li>
         </ul>
     </div>
     <div class="side-menu-footer">

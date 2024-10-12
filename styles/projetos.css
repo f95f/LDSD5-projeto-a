@@ -2,8 +2,9 @@
 .menubar {
     width: 100%;
     display: flex;
-    justify-content: flex-end;
-    padding: 16px 6px;
+    justify-content: space-between;
+    padding: 16px 0px;
+    margin-bottom: 16px;
 }
 
 .card-grid {
@@ -16,9 +17,10 @@
 .card-item {
     display: flex;
     flex-direction: column;
-    gap: 8px;
-    padding: 8px;
-    max-width: 480px;
+    gap: 16px;
+    padding: 16px;
+    min-height: 120px;
+    /* max-width: 480px; */
     border-radius: 8px;
     border: 1px solid var(--border-color);
     cursor: pointer;
@@ -27,6 +29,7 @@
 }
 .card-item:hover {
     border: 1px solid var(--secondary);
+    background-color: var(--secondary-light);
 }
 
 .card-row {
@@ -49,6 +52,9 @@ i.icon {
 
 .card-body {
     width: 100%;
+    border-top: 1px solid var(--border-color);
+    border-bottom: 1px solid var(--border-color);
+    padding: 24px 0;
 }
 
 .project-title {
@@ -72,7 +78,7 @@ i.icon {
 }
 .info-row {
     width: 100%;
-    margin: 16px 0;
+    margin: 24px 0;
 }
 
 h4 {
@@ -136,4 +142,20 @@ hr.form-separator {
     display: flex;
     gap: 8px;
     align-items: center;
+}
+
+.searchbar {
+    
+    position: relative;
+}
+.inline-input {
+    margin: 0;
+    width: 440px;
+}
+
+a.search-icon {
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
 }
