@@ -34,6 +34,42 @@
         return !empty($filtered)? array_values($filtered)[0]['priority'] : 'Desconhecida'; 
     }
 
+    function getStatusColor($statusId, $type) {
+        global $status;
+        global $priorities;
+
+        if($type == 'STATUS') {
+            $value = getStatus($statusId, $status);
+        }
+        else {
+            $value = getPriority($statusId, $priorities);
+        }
+
+        switch($value) {
+            case 'BAIXA':
+            case 'BACKLOG':
+                $class = 'neutral';
+                break;
+            case 'CONCLUIDO':
+                $class = 'success';
+                break;
+            case 'PARADO':
+            case 'ATRASADO':
+            case 'ALTA':
+                $class = 'warning';
+                break;
+            case 'CANCELADO':
+            case 'CRITICA':
+                $class = 'danger';
+                break;
+            default:
+                $class = '';
+        }
+        
+        return $class;
+    }
+
+
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $action = isset($_POST['action']) ? $_POST['action'] : '';
 
@@ -110,11 +146,13 @@
 
         <div class="info-row">
             <span class="label">Status:</span>
-            <span><?= getStatus($selectedProject['project_status'], $status);?></span>
+            <span class="status"><?= getStatus($selectedProject['project_status'], $status);?></span>
         </div>
         <div class="info-row">
             <span class="label">Prioridade:</span>
-            <span><?= getPriority($selectedProject['project_priority'], $priorities);?></span>
+            <span class="status <?= getStatusColor($selectedProject['project_priority'], 'PRIORITY')?>">
+                <?= getPriority($selectedProject['project_priority'], $priorities);?>
+            </span>
         </div>
         <div class="info-row">
             <span class="label">Criado em:</span>

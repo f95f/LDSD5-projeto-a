@@ -10,9 +10,22 @@
     --text-color: #f0f3fd;
     --text-light: #adbcf4;
 
-
     --background: #161733;
     --shadow-color: #0e0d1f66;
+    --secondary-light:#ee9ca733;
+    --primary-light: #6e6eff33;
+    
+    --warning: #FFE56E;
+    --warning-light: #FFE56E33;
+
+    --danger: #FF756E;
+    --danger-light: #FF756E33;
+
+    --neutral: #8282AA;
+    --neutral-light: #8282AA33;
+
+    --success: #6EFFA4;
+    --success-light: #6EFFA433;
 
     --heading-font: 'Cinzel', serif;
 }
@@ -541,7 +554,7 @@ main {
 
 
 /************************* 
-    Form
+    Toast
 **************************/
 
 .toast {
@@ -583,4 +596,42 @@ main {
 .toast-body {
     color: var(--text-light);
     padding: 8px 0;
+}
+
+
+
+/************************* 
+    Status
+**************************/
+.status {
+    padding: 8px 16px;
+    font-weight: 600;
+    color: var(--primary);
+    background-color: var(--primary-light);
+    border-radius: 4px;
+}
+
+.status.secondary {
+    color: var(--secondary);
+    background-color: var(--secondary-light);
+}
+
+.status.success {
+    color: var(--success);
+    background-color: var(--success-light);
+}
+
+.status.warning {
+    color: var(--warning);
+    background-color: var(--warning-light);
+}
+
+.status.danger {
+    color: var(--danger);
+    background-color: var(--danger-light);
+}
+
+.status.neutral {
+    color: var(--neutral);
+    background-color: var(--neutral-light);
 }

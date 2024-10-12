@@ -30,13 +30,14 @@
     font-family: var(--heading-font);
     color: var(--text-light);
 }
-.header-image  img {
+.header-image img {
     width: 80px;
 }
 
 .login-header {
     text-align: left;
     padding-bottom: 24px;
+    font-family: var(--heading-font);
 }
 .login-form {
     display: flex;

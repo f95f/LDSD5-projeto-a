@@ -61,15 +61,22 @@
         <?php foreach($projects as $item): ?>
             <li class="card-item">
                 <div class="card-row">
-                    <h3><?= $item['project_name']?></h3>
-                    <span><?= getStatus($item['project_status'], $status);?></span>
+                    <h3>
+                        <i class="fa-solid fa-sitemap icon"></i>
+                        <?= $item['project_name']?>
+                    </h3>
+                    <span class="status secondary"><?= getStatus($item['project_status'], $status);?></span>
                 </div>
-                <!-- <div class="card-body">
-                    Project Description
-                </div> -->
+                <div class="card-body">
+                    Lorem ipsum dolor sit, amet consectetur adipisicing elit. Veniam porro quas sapiente, fugiat facere distinctio magnam. 
+                </div>
                 <div class="card-row">
                     <span><?= $item['deadline']?></span>
-                    <a href="project-details.php?id=<?= $item['id']?>">Ver mais...</a>
+                    <a href="project-details.php?id=<?= $item['id']?>"
+                        class="inline-button">
+                        <i class="fa-solid fa-circle-info"></i>
+                        Mais detalhes...
+                    </a>
             <!-- <button 
                 type="button"
                 class="showDetailsModal inline-button"
