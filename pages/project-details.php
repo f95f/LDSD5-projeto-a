@@ -18,39 +18,14 @@
     $tasks = $taskController->getTasksFromProject($projectId);
     $selectedProject = $controller->getProjectById($projectId)[0];
 
-    function getStatus($id, $status) {
-        $filtered = array_filter($status, function($item) use ($id) {
-            return $item['id'] == $id;
-        });
-    
-        return !empty($filtered) ? array_values($filtered)[0]['status'] : 'Desconhecido';
-    }
-
-    function getPriority($id, $priorities) {
-        $filtered = array_filter($priorities, function($item) use ($id) {
-            return $item['id'] == $id;
-        });
-
-        return !empty($filtered)? array_values($filtered)[0]['priority'] : 'Desconhecida'; 
-    }
-
-    function getStatusColor($statusId, $type) {
-        global $status;
-        global $priorities;
-
-        if($type == 'STATUS') {
-            $value = getStatus($statusId, $status);
-        }
-        else {
-            $value = getPriority($statusId, $priorities);
-        }
+    function getStatusColor($value) {
 
         switch($value) {
-            case 'BAIXA':
             case 'BACKLOG':
                 $class = 'neutral';
                 break;
             case 'CONCLUIDO':
+                case 'BAIXA':
                 $class = 'success';
                 break;
             case 'PARADO':
@@ -146,12 +121,14 @@
 
         <div class="info-row">
             <span class="label">Status:</span>
-            <span class="status"><?= getStatus($selectedProject['project_status'], $status);?></span>
+            <span class="status <?= getStatusColor($selectedProject['project_status'])?>">
+                <?= $selectedProject['project_status']; ?>
+            </span>
         </div>
         <div class="info-row">
             <span class="label">Prioridade:</span>
-            <span class="status <?= getStatusColor($selectedProject['project_priority'], 'PRIORITY')?>">
-                <?= getPriority($selectedProject['project_priority'], $priorities);?>
+            <span class="status <?= getStatusColor($selectedProject['project_priority'])?>">
+                <?= $selectedProject['project_priority'];?>
             </span>
         </div>
         <div class="info-row">
@@ -213,11 +190,6 @@
                 </div>
                 <input type="hidden" name="projectId" value="<?= $projectId ?>">
      
-                <!-- <button type="button"
-                        id="closeForm"
-                        class="pill-button secondary">
-                    <i class="fa-solid fa-xmark"></i>
-                </button> -->
                 <button type="submit"
                         id="submitTask"
                         class="pill-button add-task-button">
@@ -232,15 +204,33 @@
                     <div class="left-card-wrapper">
                         <i class="fa-solid fa-list-check light-text"></i>
                         <span class="light-text">|</span>
+
+                        <i class="fa-solid 
+                        <?php
+
+                            echo getStatusColor($item['task_priority']).' ';
+
+                            switch($item['task_priority']){
+                                case 'BAIXA':
+                                    echo 'fa-circle-minus';
+                                break;
+                                case 'ALTA':
+                                    echo 'fa-circle-info';
+                                break;
+                                case 'CRITICA':
+                                    echo 'fa-circle-exclamation';
+                                break;
+                                default:
+                                    echo 'fa-circle';
+                            }
+
+                        ?> light-text status">
+                        </i>
+
                         <span><?= $item['task_description'] ?></span>
                     </div>
                     <div class="right-card-wrapper">
-                        <?php /*
-                        <span><?= getStatus($selectedProject['project_status'], $status); ?></span>
-                        <span class="light-text">|</span>
-                        <span><?= getPriority($selectedProject['project_priority'], $priority); ?></span>
-                        <span class="light-text">|</span>
-                        */?>
+                        
                         <span class="light-text">até</span>
                         <span><?= $item['deadline'] ?></span>
                         <span class="light-text">|</span>

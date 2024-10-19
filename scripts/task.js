@@ -1,26 +1,27 @@
+import { fireError, fireSuccess } from './toast.js';
+
+
 $(document).ready(function () {
     
     $('#addTaskForm').submit(function(event) {
-        event.preventDefault(); // Prevent the default form submission
+        event.preventDefault();
     
-        var taskDescription = $('#taskDescription').val();
-    
+        var formData = $(this).serialize();
+
         $.ajax({
             url: '',
             type: 'POST',
-            data: {
-                taskDescription: taskDescription
-            },
+            data: `${formData}&action=ADD_TASK`,
             success: function(response) {
                 location.reload();
-                $('#taskDescription').val('');
+                fireSuccess("Task criada.");
             },
             error: function(xhr, status, error) {
                 console.error('Error adding task:', error);
             }
         });
     });
-
+    
     $('.edit-button').on('click', function () {
         var task = $(this).closest('.task');
         task.find('.progress').addClass('hidden');
@@ -60,23 +61,20 @@ $(document).ready(function () {
         });
     });
     
-    $('.delete-button').click(function(event) {
+    $('.deleteTaskButton').click(function(event) {
         event.preventDefault();
     
-        var taskId = $(this).closest('.task').find('.progress').data('task-id');
+        var taskId = $(this).data('task-id');
     
         $.ajax({
             url: '',
-            type: 'DELETE',
-            data: {
-                id: taskId
-            },
+            type: 'POST',
+            data: `taskId=${taskId}&action=DELETE_TASK`,
             success: function(response) {
-                // if (response.success) { alert(1)
-                    $(this).closest('.task').remove();
-                    location.reload();
-                // }
-            }.bind(this), // Bind 'this' to access the delete button
+                fireSuccess("Task exluída com sucesso.");
+
+                $(this).closest('.task-card').remove();
+            }.bind(this),
             error: function(xhr, status, error) {
                 console.error('Error deleting task:', error);
             }
@@ -133,4 +131,8 @@ $(document).ready(function () {
         //     }
         // });
     })
+
+    let deleteTask = function(taskId) {
+        alert(taskId)
+    }
 });

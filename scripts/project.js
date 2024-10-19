@@ -80,7 +80,9 @@ let makeCard = function(project) {
                 <i class="fa-solid fa-sitemap icon"></i>
                 ${project.project_name}     
             </h3>
-            <span class="status secondary"><?= getStatus(${project.project_status}, $status);?></span>
+            <span class="status secondary">
+                ${project.project_status}
+            </span>
         </div>
         <div class="card-body">
             Lorem ipsum dolor sit, amet consectetur adipisicing elit. Veniam porro quas sapiente, fugiat facere distinctio magnam. 
