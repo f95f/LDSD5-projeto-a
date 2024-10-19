@@ -1,17 +1,41 @@
 <?php
 require_once  __DIR__  . '/../services/task-service.php';
+require_once  __DIR__  . '/../services/status-service.php';
+require_once  __DIR__  . '/../services/priority-service.php';
 require_once  __DIR__  . '/../models/task-model.php';
 
 class TaskController{
 
     private $service;
+    private $statusService;
+    private $priorityService;
 
     function __construct() {
         $this -> service = new TaskService();
+        $this->priorityService = new priorityService();
     }
 
     public function getTasks() {
         $tasks = $this -> service -> getAllTasks();
+        $priorities = $this->priorityService->getAllPriorities();
+
+        if(!is_array($priorities) || empty($priorities) ) {
+            return $tasks;
+        }
+
+        if(is_array($tasks) && !empty($tasks)) {
+            
+            $taskList = [];
+            
+            foreach($tasks as $item) {
+                
+                $item['task_priority'] = $this->getPriority($item['task_priority'], $priorities);
+                $taskList[] = $item;
+
+            }
+            
+            return $taskList;
+        }
         return $tasks;
     }
 
@@ -47,8 +71,39 @@ class TaskController{
     }
 
     public function getTasksFromProject($projectId) {
-        if($projectId) {
-            return $this->service->getTasksFromProject($projectId);
+        if(!$projectId) {
+            return;
         }
+
+        $tasks = $this->service->getTasksFromProject($projectId);
+        $priorities = $this->priorityService->getAllPriorities();
+
+        if(!is_array($priorities) || empty($priorities) ) {
+            return $tasks;
+        }
+
+        if(is_array($tasks) && !empty($tasks)) {
+            
+            $taskList = [];
+            
+            foreach($tasks as $item) {
+                
+                $item['task_priority'] = $this->getPriority($item['task_priority'], $priorities);
+                $taskList[] = $item;
+
+            }
+            
+            return $taskList;
+        }
+
+        return $tasks;
+    }
+
+    private function getPriority($id, $priorities) {
+        $filtered = array_filter($priorities, function($item) use ($id) {
+            return $item['id'] == $id;
+        });
+
+        return !empty($filtered)? array_values($filtered)[0]['priority'] : 'Desconhecida'; 
     }
 }

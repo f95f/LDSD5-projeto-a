@@ -23,7 +23,7 @@ class ProjectController {
         $status = $this->statusService->getAllStatus();
         $priorities = $this->priorityService->getAllPriorities();
 
-        if(!is_array($status) || empty($status) || !is_array($status) || empty($status) ) {
+        if(!is_array($status) || empty($status) || !is_array($priorities) || empty($priorities) ) {
             return $projects;
         }
 
@@ -45,11 +45,7 @@ class ProjectController {
         return $projects;
     }
 
-
-    public function getAllProjects2() {
-        $projects = $this -> service -> getAllProjects();
-        return $projects;
-    }
+    
 
     public function searchProjects($query) {
         $value = $query['searchInput'];
@@ -58,7 +54,7 @@ class ProjectController {
         $status = $this->statusService->getAllStatus();
         $priorities = $this->priorityService->getAllPriorities();
 
-        if(!is_array($status) || empty($status) || !is_array($status) || empty($status) ) {
+        if(!is_array($status) || empty($status) || !is_array($priorities) || empty($priorities) ) {
             return $projects;
         }
 
@@ -82,6 +78,17 @@ class ProjectController {
 
     public function getProjectById($projectId) {
         $project = $this -> service -> getProjectById($projectId);
+        $status = $this->statusService->getAllStatus();
+        $priorities = $this->priorityService->getAllPriorities();
+
+        if(!is_array($status) || empty($status) || !is_array($priorities) || empty($priorities) ) {
+            return $project;
+        }
+        
+        $project[0]['project_status'] = $this->getStatus($project[0]['project_status'], $status);
+        $project[0]['project_priority'] = $this->getPriority($project[0]['project_priority'], $priorities);
+
+        
         return $project;
     }
 
