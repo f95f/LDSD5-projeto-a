@@ -13,6 +13,7 @@ $(document).ready(function () {
             data: `${formData}&action=ADD_TASK`,
             success: function(response) {
                 location.reload();
+                fireSuccess("Task criada.");
             },
             error: function(xhr, status, error) {
                 console.error('Error adding task:', error);
@@ -35,11 +36,9 @@ $(document).ready(function () {
                 action: 'DELETE_TASK',
             },
             success: function(response) {
-                location.reload();
-                if (response.success) {
-                    console.log('Received data:', response.received_data);
-                    
-                }
+                // location.reload();
+                fireSuccess("Task exluída com sucesso.");
+                $(this).closest('.task-card').remove();
             }.bind(this),
             error: function(xhr, status, error) {
                 console.error('Error deleting task:', error);
