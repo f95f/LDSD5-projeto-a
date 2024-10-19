@@ -1,46 +1,105 @@
 <?php
     require_once __DIR__ . '/../controllers/task-controller.php';
+    require_once __DIR__ . '/../controllers/priority-controller.php';
 
     $controller = new TaskController();
+    $priorityController = new PriorityController();
+
     $tasks = $controller->getTasks();
+    $priorities = $priorityController->getAllPriorities();
 
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        $taskDescription = isset($_POST['taskDescription']) ? $_POST['taskDescription'] : '';
-        $controller->createTask($taskDescription);
+        $action = isset($_POST['action']) ? $_POST['action'] : '';
 
-        header("Location: " . $_SERVER['PHP_SELF']);
-        exit(); 
-    }
 
-    if ($_SERVER['REQUEST_METHOD'] === 'PUT') {
-        parse_str(file_get_contents("php://input"), $_PUT);
-        if (isset($_PUT['completed'])) {
-            $taskId = isset($_PUT['id']) ? $_PUT['id'] : '';
-            $completed = isset($_PUT['completed']) ? $_PUT['completed'] : '';
-            $controller->changeTaskStatus($taskId, $completed);
-            
-            // Return a JSON response
-            echo json_encode(['success' => true]);
-            exit(); 
-        } else {
-            $taskId = isset($_PUT['id']) ? $_PUT['id'] : '';
-            $taskDescription = isset($_PUT['description']) ? $_PUT['description'] : '';
-            $controller->updateTask($taskId, $taskDescription);
-        
-            // Return a JSON response
-            echo json_encode(['success' => true]);
-            exit(); 
+        switch ($action) {
+
+            case 'DELETE_TASK':
+                $taskId = $_POST['id'];
+                $controller->deleteTask($taskId);
+                echo json_encode(['success' => true, 'message' => 'Task deleted']);
+                break;
+
+            case 'ADD_TASK':
+                $request = $_POST;
+                $controller->createTask($request);
+                echo json_encode(['success' => true, 'message' => 'Task added']);
+                break;
+
+            case 'UPDATE':
+                $taskId = $_POST['id'];
+                $newDescription = $_POST['description'];
+                $newDeadline = $_POST['deadline'];
+                
+                $controller->updateTask($taskId, $newDescription, $newDeadline);
+                echo json_encode(['success' => true, 'message' => 'Task updated']);
+                break;
+                
+            default:
+                echo json_encode(['success' => false, 'message' => 'Invalid action']);
+                break;
         }
+
+
+        exit();
+
     }
+
+    // if ($_SERVER['REQUEST_METHOD'] === 'PUT') {
+    //     parse_str(file_get_contents("php://input"), $_PUT);
+    //     if (isset($_PUT['completed'])) {
+    //         $taskId = isset($_PUT['id']) ? $_PUT['id'] : '';
+    //         $completed = isset($_PUT['completed']) ? $_PUT['completed'] : '';
+    //         $controller->changeTaskStatus($taskId, $completed);
+            
+    //         // Return a JSON response
+    //         echo json_encode(['success' => true]);
+    //         exit(); 
+    //     } else {
+    //         $taskId = isset($_PUT['id']) ? $_PUT['id'] : '';
+    //         $taskDescription = isset($_PUT['description']) ? $_PUT['description'] : '';
+    //         $controller->updateTask($taskId, $taskDescription);
+        
+    //         // Return a JSON response
+    //         echo json_encode(['success' => true]);
+    //         exit(); 
+    //     }
+    // }
     
-    if ($_SERVER['REQUEST_METHOD'] === 'DELETE') {
-        parse_str(file_get_contents("php://input"), $_DELETE);
-        $taskId = isset($_DELETE['id']) ? $_DELETE['id'] : '';
-        $controller->deleteTask($taskId);
+    // if ($_SERVER['REQUEST_METHOD'] === 'DELETE') {
+    //     parse_str(file_get_contents("php://input"), $_DELETE);
+    //     $taskId = isset($_DELETE['id']) ? $_DELETE['id'] : '';
+    //     $controller->deleteTask($taskId);
     
-        // Return a JSON response
-        echo json_encode(['success' => true]);
-        exit(); 
+    //     // Return a JSON response
+    //     echo json_encode(['success' => true]);
+    //     exit(); 
+    // }    
+    
+    function getStatusColor($value) {
+
+        switch($value) {
+            case 'BACKLOG':
+                $class = 'neutral';
+                break;
+            case 'CONCLUIDO':
+                case 'BAIXA':
+                $class = 'success';
+                break;
+            case 'PARADO':
+            case 'ATRASADO':
+            case 'ALTA':
+                $class = 'warning';
+                break;
+            case 'CANCELADO':
+            case 'CRITICA':
+                $class = 'danger';
+                break;
+            default:
+                $class = '';
+        }
+        
+        return $class;
     }
 
     define("TITLE", "Tasks | Journalling");
@@ -57,62 +116,106 @@
 </header>
 <main>
     <div class="wrapper">
-        <form method="POST" id="addTaskForm" name="addTaskForm">
-            <div class="add-task-row">
+        
+        <form method="POST" 
+            id="addTaskForm" 
+            name="addTaskForm" 
+            class="form-row">
+
+            <div class="input-row">
+                <label for="projectName">Descrição da task:</label>
                 <input
                     type="text"
                     id="taskDescription"
                     name="taskDescription"
-                    class="inline-input add-task-input"
-                    placeholder="O que deseja fazer?"
+                    class="inline-input"
+                    placeholder="O que você quer fazer?"
                 >
-                <button
-                    type="submit"
-                    id="submitTask"
-                    class="pill-button add-task-button"
-                >
-                    <i class="fa-solid fa-plus"></i>
-                </button>
             </div>
+            <div class="input-row small">
+                <label for="deadline">Deadline</label>
+                <input
+                    type="date"
+                    id="deadline"
+                    name="deadline"
+                    class="inline-input"
+                >
+            </div>
+            <div class="input-row small">
+                <label for="taskPriority">Prioridade</label>
+                <select
+                    id="taskPriority"
+                    name="taskPriority"
+                    class="inline-input"
+                >   
+                <?php foreach($priorities as $item): ?>
+                    <option value="<?= $item['id']?>">
+                    <?= $item['priority']?>
+                    </option>
+                <?php endforeach ?>
+                </select>
+            </div>
+            
+
+            <button type="submit"
+                    id="submitTask"
+                    class="pill-button add-task-button">
+                <i class="fa-solid fa-check"></i>
+            </button>
         </form>
-        <ul>
-            <?php foreach($tasks as $task): ?>
-                <div class="task">
-                    <input
-                        type="checkbox"
-                        name="progress"
-                        class="progress <?= $task['completed'] ? 'done' : '' ?>"
-                        data-task-id="<?= $task['id']?>"
-                        <?= $task['completed'] ? 'checked' : '' ?>
-                    >
-                    <span class="light-text">|</span>
-                    <p class="task-description">
-                        <?= $task['description'] ?>
-                    </p>
-                    <div class="task-actions">
-                        <a class="action-button edit-button">
-                            <i class="fa-regular fa-pen-to-square"></i>
-                        </a>
-                        <a role="button" class="action-button delete-button">
-                            <i class="fa-regular fa-trash-can"></i>
+
+
+        <div class="info-row">
+            <?php foreach($tasks as $item): ?>
+                <div class="task-card">
+                    <div class="left-card-wrapper">
+                        <i class="fa-solid fa-list-check light-text"></i>
+                        <span class="light-text">|</span>
+
+                        <i class="fa-solid 
+                        <?php
+
+                            echo getStatusColor($item['task_priority']).' ';
+
+                            switch($item['task_priority']){
+                                case 'BAIXA':
+                                    echo 'fa-circle-minus';
+                                break;
+                                case 'ALTA':
+                                    echo 'fa-circle-info';
+                                break;
+                                case 'CRITICA':
+                                    echo 'fa-circle-exclamation';
+                                break;
+                                default:
+                                    echo 'fa-circle';
+                            }
+
+                        ?> light-text status">
+                        </i>
+
+                        <span><?= $item['task_description'] ?></span>
+                    </div>
+                    <div class="right-card-wrapper">
+                        
+                        <span class="light-text">até</span>
+                        <span><?= $item['deadline'] ?></span>
+                        <span class="light-text">|</span>
+                        <i class="fa-solid fa-edit light-text"></i>
+                        <a  role="button"
+                            class="inline-button deleteTaskButton"
+                            data-task-id="<?= $item['id'] ?>">
+                            <i class="fa-solid fa-trash light-text"></i>
                         </a>
                     </div>
-                    <form method="PUT" class="to-do-form edit-task hidden">
-                        <input type="text" class="hidden" name="id" value="<?= $task['id']?>">
-                        <input
-                            class="inline-input edit-input"
-                            type="text"
-                            name="description"
-                            placeholder="Edit your task here"
-                            value="<?= $task['description']?>"
-                        >
-                        <button type="submit" class="pill-button confirm-button">
-                            <i class="fa-solid fa-check"></i>
-                        </button>
-                    </form>
                 </div>
             <?php endforeach ?>
-        </ul>
+            <?php if(!is_array($tasks)): ?>
+                <span class="light-text large">
+                    Nenhuma task adicionada ao projeto...
+                </span>
+            <?php endif?>
+        </div>
     </div>
 </main>
             

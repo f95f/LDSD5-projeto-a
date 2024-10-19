@@ -40,12 +40,13 @@ class TaskController{
     }
 
     public function createTask($taskData) {
+        $projectId = $taskData['projectId']? $taskData['projectId'] : 0;
         $task = new Task(
             0,
             $taskData['taskDescription'],
             $taskData['taskPriority'],
             0,
-            $taskData['projectId'],
+            $projectId,
             date("Y-m-d"),
             $taskData['deadline']
         );

@@ -1,19 +1,16 @@
 $(document).ready(function () {
     
     $('#addTaskForm').submit(function(event) {
-        event.preventDefault(); // Prevent the default form submission
+        event.preventDefault();
     
-        var taskDescription = $('#taskDescription').val();
-    
+        var formData = $(this).serialize();
+
         $.ajax({
             url: '',
             type: 'POST',
-            data: {
-                taskDescription: taskDescription
-            },
+            data: `${formData}&action=ADD_TASK`,
             success: function(response) {
                 location.reload();
-                $('#taskDescription').val('');
             },
             error: function(xhr, status, error) {
                 console.error('Error adding task:', error);

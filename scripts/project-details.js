@@ -12,7 +12,6 @@ $(document).ready(function () {
             type: 'POST',
             data: `${formData}&action=ADD_TASK`,
             success: function(response) {
-                clearForm('#addTaskForm');
                 location.reload();
             },
             error: function(xhr, status, error) {
@@ -68,12 +67,3 @@ $(document).ready(function () {
         });
     });
 });
-
-
-let clearForm = function(formId) {
-    $(formId).find(
-        'input[type=text], ' + 
-        'input[type=email], ' +
-        'textarea, ' +
-        'input[type=date]').val('');
-}
