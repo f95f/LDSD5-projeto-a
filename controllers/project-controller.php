@@ -1,17 +1,52 @@
 <?php
 require_once  __DIR__  . '/../services/project-service.php';
+require_once  __DIR__  . '/../services/status-service.php';
+require_once  __DIR__  . '/../services/priority-service.php';
 require_once  __DIR__  . '/../models/project-model.php';
 
 class ProjectController {
 
     private $service;
+    private $statusService;
+    private $priorityService;
 
     function __construct() {
 
         $this->service = new ProjectService();
+        $this->statusService = new StatusService();
+        $this->priorityService = new priorityService();
     }
 
+
     public function getAllProjects() {
+        $projects = $this -> service -> getAllProjects();
+        $status = $this->statusService->getAllStatus();
+        $priorities = $this->priorityService->getAllPriorities();
+
+        if(!is_array($status) || empty($status) || !is_array($status) || empty($status) ) {
+            return $projects;
+        }
+
+        if(is_array($projects) && !empty($projects)) {
+            
+            $projectList = [];
+            
+            foreach($projects as $item) {
+                
+                $item['project_status'] = $this->getStatus($item['project_status'], $status);
+                $item['project_priority'] = $this->getPriority($item['project_priority'], $priorities);
+                $projectList[] = $item;
+
+            }
+            
+            return $projectList;
+        }
+
+        return $projects;
+    }
+
+
+    public function getAllProjects2() {
         $projects = $this -> service -> getAllProjects();
         return $projects;
     }
@@ -19,6 +54,29 @@ class ProjectController {
     public function searchProjects($query) {
         $value = $query['searchInput'];
         $projects = $this -> service -> searchProjects($value);
+
+        $status = $this->statusService->getAllStatus();
+        $priorities = $this->priorityService->getAllPriorities();
+
+        if(!is_array($status) || empty($status) || !is_array($status) || empty($status) ) {
+            return $projects;
+        }
+
+        if(is_array($projects) && !empty($projects)) {
+            
+            $projectList = [];
+            
+            foreach($projects as $item) {
+                
+                $item['project_status'] = $this->getStatus($item['project_status'], $status);
+                $item['project_priority'] = $this->getPriority($item['project_priority'], $priorities);
+                $projectList[] = $item;
+                
+            }
+            
+            return $projectList;
+        }
+
         return $projects;
     }
 
@@ -61,5 +119,21 @@ class ProjectController {
         if($projectId && $status) {
             $this -> service -> changeProjectStatus($projectId, $status);
         }
+    }
+
+
+    private function getStatus($id, $status) {
+        $filtered = array_filter($status, function($item) use ($id) {
+            return $item['id'] == $id;
+        });
+        return !empty($filtered) ? array_values($filtered)[0]['status'] : 'Desconhecido';
+    }
+
+    private function getPriority($id, $priorities) {
+        $filtered = array_filter($priorities, function($item) use ($id) {
+            return $item['id'] == $id;
+        });
+
+        return !empty($filtered)? array_values($filtered)[0]['priority'] : 'Desconhecida'; 
     }
 }

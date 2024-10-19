@@ -14,22 +14,6 @@
     $status = $statusController->getAllStatus();
     $priorities = $priorityController->getAllPriorities();
 
-    function getStatus($id, $status) {
-        $filtered = array_filter($status, function($item) use ($id) {
-            return $item['id'] == $id;
-        });
-    
-        return !empty($filtered) ? array_values($filtered)[0]['status'] : 'Desconhecido';
-    }
-
-    function getPriority($id, $priorities) {
-        $filtered = array_filter($priorities, function($item) use ($id) {
-            return $item['id'] == $id;
-        });
-
-        return !empty($filtered)? array_values($filtered)[0]['priority'] : 'Desconhecida'; 
-    }
-
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {        
         $action = isset($_POST['action']) ? $_POST['action'] : '';
 
@@ -105,7 +89,10 @@
                         <i class="fa-solid fa-sitemap icon"></i>
                         <?= $item['project_name']?>
                     </h3>
-                    <span class="status secondary"><?= getStatus($item['project_status'], $status);?></span>
+                    <span class="status secondary">
+                        <?= //getStatus($item['project_status'], $status);
+                        $item['project_status']; ?>
+                    </span>
                 </div>
                 <div class="card-body">
                     Lorem ipsum dolor sit, amet consectetur adipisicing elit. Veniam porro quas sapiente, fugiat facere distinctio magnam. 
