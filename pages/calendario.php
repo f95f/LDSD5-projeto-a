@@ -7,6 +7,27 @@
     include __DIR__ . '/../layout/header.php';
 
 ?>
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../styles/calendario.css">
+    <script>
+
+      document.addEventListener('DOMContentLoaded', function() {
+        var calendarEl = document.getElementById('calendar');
+        var calendar = new FullCalendar.Calendar(calendarEl, {
+          initialView: 'dayGridMonth'
+             
+        });
+        calendar.render();
+      });
+
+    </script>
+
+</head>
+<body>
 
 <header>
     <div class="title">
@@ -15,11 +36,13 @@
     </div>
 </header>
 <main>
-    <div class="wrapper">
-        <span class="light-text">Página de calendário a ser construída...</span>
-    </div>
-</main>
+            <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.js'></script>
 
+            <div id='calendar'></div>
+</main>
 <footer>
     <script src="../scripts/calendario.js"></script>
 </footer>
+
+</body>
+</html>
