@@ -61,6 +61,46 @@ $(document).ready(function () {
         });
     });
     
+    
+
+    $('.priority-filter-button').on('click', function(event){
+        const status = $(this).data('status');
+        
+        $.ajax({
+            url: '',
+            type: 'POST',
+            data: {
+                action: 'FILTER_STATUS',
+                status: status
+            },
+            success: function(response) {
+
+                if (typeof response === 'string') {
+                    response = JSON.parse(response);
+                }
+                console.warn(response)
+                if (response.success) {
+                    $('#taskList').empty();
+                    response.content.forEach(function(task) {
+                        let card = makeCard(task);
+                        $('#taskList').append(card);
+                    });
+                } else {
+                    console.error('Search not successful: ', response.content);
+                }
+
+            },
+            error: function(xhr, status, error) {
+                console.error('Error fetching tasks:', error);
+            }
+        });
+    });
+
+
+    $('#clearFilters').click(function() {
+        location.reload();
+    });
+    
     $('.deleteTaskButton').click(function(event) {
         event.preventDefault();
     
@@ -111,28 +151,62 @@ $(document).ready(function () {
             }
         });
 
-
-        // const id = $(this).data('task-id');
-        // const completed = $(this).is(':checked') ? 'true' : 'false';
-        // $.ajax({
-        //     url: '../controllers/update-progress.php',
-        //     method: 'POST',
-        //     data: {id: id, completed: completed},
-        //     dataType: 'json',
-        //     success: function (response) {
-        //         if (response.success) {
-
-        //         } else {
-        //             alert('Erro ao editar a tarefa');
-        //         }
-        //     },
-        //     error: function () {
-        //         alert('Ocorreu um erro');
-        //     }
-        // });
     })
 
     let deleteTask = function(taskId) {
         alert(taskId)
     }
 });
+
+
+let makeCard = function(item) {
+    let status = '';
+    let icon = '';
+
+    switch(item.task_priority) {
+        case 'MEDIA':
+            status = 'success';
+            icon = 'fa-circle-minus';
+            break;
+        case 'ALTA':
+            status = 'warning';
+            icon = 'fa-circle-info';
+            break;
+        case 'CRITICA':
+            status = 'danger';
+            icon = 'fa-circle-exclamation';
+            break;
+        default:
+            status = ''
+            icon = 'fa-circle';
+    }
+
+    return `
+
+    <div class="task-card">
+        <div class="left-card-wrapper">
+            <i class="fa-solid fa-list-check light-text"></i>
+            <span class="light-text">|</span>
+
+            <i class="fa-solid light-text status
+            ${status} ${icon}
+            "></i>
+
+            <span>${item.task_description}</span>
+        </div>
+        <div class="right-card-wrapper">
+            
+            <span class="light-text">até</span>
+            <span>${item.deadline}</span>
+            <span class="light-text">|</span>
+            <i class="fa-solid fa-edit light-text"></i>
+            <a  role="button"
+                class="inline-button deleteTaskButton"
+                data-task-id="${item.id}">
+                <i class="fa-solid fa-trash light-text"></i>
+            </a>
+        </div>
+    </div>
+
+    `
+}

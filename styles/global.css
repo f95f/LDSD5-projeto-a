@@ -309,6 +309,27 @@ main {
     transition: all .2s ease;
 }
 
+.inline-button.secondary {
+    color: var(--secondary);
+}
+
+.inline-button.secondary i {
+    color: var(--secondary);
+}
+
+
+.inline-button.success {
+    color: var(--success);
+}
+
+.inline-button.warning {
+    color: var(--warning);
+}
+
+.inline-button.danger {
+    color: var(--danger);
+}
+
 .inline-button:hover {
     filter: brightness(1.4);
 }
@@ -319,6 +340,7 @@ main {
     color: var(--primary);
     font-size: 1em;
 }
+
 
 #to_do {
     display: flex;

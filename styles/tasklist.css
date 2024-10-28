@@ -39,3 +39,17 @@
 .form-row button {
     margin-bottom: 31px;
 }
+
+h4 {
+    margin-bottom: 16px;
+}
+
+hr.light-separator {
+    margin: 16px 0;
+}
+
+.filter-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;;
+}
