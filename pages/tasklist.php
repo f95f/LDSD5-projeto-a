@@ -1,12 +1,15 @@
 <?php
     require_once __DIR__ . '/../controllers/task-controller.php';
     require_once __DIR__ . '/../controllers/priority-controller.php';
+    require_once __DIR__ . '/../controllers/project-controller.php';
 
     $controller = new TaskController();
+    $projectController = new ProjectController();
     $priorityController = new PriorityController();
 
     $tasks = $controller->getTasks();
     $priorities = $priorityController->getAllPriorities();
+    $projects = $projectController->getProjectNames();
 
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $action = isset($_POST['action']) ? $_POST['action'] : '';
@@ -24,6 +27,26 @@
                 $request = $_POST;
                 $controller->createTask($request);
                 echo json_encode(['success' => true, 'message' => 'Task added']);
+                break;
+
+            case 'FILTER_STATUS':
+                $taskStatus = $_POST['status'];
+                
+                $filteredTasks = $controller->filterByStatus($taskStatus);
+                echo json_encode([
+                    'success' => true,
+                    'content' => $filteredTasks
+                ]);
+                break;
+
+            case 'FILTER_PROJECT':
+                $projectId = $_POST['projectId'];
+                
+                $filteredTasks = $controller->getTasksFromProject($projectId);
+                echo json_encode([
+                    'success' => true,
+                    'content' => $filteredTasks
+                ]);
                 break;
 
             case 'UPDATE':
@@ -45,37 +68,7 @@
 
     }
 
-    // if ($_SERVER['REQUEST_METHOD'] === 'PUT') {
-    //     parse_str(file_get_contents("php://input"), $_PUT);
-    //     if (isset($_PUT['completed'])) {
-    //         $taskId = isset($_PUT['id']) ? $_PUT['id'] : '';
-    //         $completed = isset($_PUT['completed']) ? $_PUT['completed'] : '';
-    //         $controller->changeTaskStatus($taskId, $completed);
-            
-    //         // Return a JSON response
-    //         echo json_encode(['success' => true]);
-    //         exit(); 
-    //     } else {
-    //         $taskId = isset($_PUT['id']) ? $_PUT['id'] : '';
-    //         $taskDescription = isset($_PUT['description']) ? $_PUT['description'] : '';
-    //         $controller->updateTask($taskId, $taskDescription);
-        
-    //         // Return a JSON response
-    //         echo json_encode(['success' => true]);
-    //         exit(); 
-    //     }
-    // }
-    
-    // if ($_SERVER['REQUEST_METHOD'] === 'DELETE') {
-    //     parse_str(file_get_contents("php://input"), $_DELETE);
-    //     $taskId = isset($_DELETE['id']) ? $_DELETE['id'] : '';
-    //     $controller->deleteTask($taskId);
-    
-    //     // Return a JSON response
-    //     echo json_encode(['success' => true]);
-    //     exit(); 
-    // }    
-    
+
     function getStatusColor($value) {
 
         switch($value) {
@@ -101,6 +94,7 @@
         
         return $class;
     }
+
 
     define("TITLE", "Tasks | Journalling");
     define("PAGE", "TASKS");
@@ -164,8 +158,63 @@
             </button>
         </form>
 
+        <div class="filter-wrapper">
+            <h4 class="light-text">Filtros:</h4>
+            <div class="filter-row">
 
-        <div class="info-row">
+                <div class="priority-filters">
+                    <a  role="button"
+                        data-status="1"
+                        id="lowPriorityFilter"
+                        class="inline-button priority-filter-button">
+                        <i class="fa-solid fa-circle light-text status"></i>
+                        Baixa
+                    </a>
+                    <a  role="button"
+                        data-status="2"
+                        id="mediumPriorityFilter"
+                        class="inline-button priority-filter-button success">
+                        <i class="fa-solid fa-circle-minus light-text success status"></i>
+                        Média
+                    </a>
+                    <a  role="button"
+                        data-status="3"
+                        id="highPriorityFilter"
+                        class="inline-button priority-filter-button warning">
+                        <i class="fa-solid fa-circle-info light-text warning status"></i>
+                        Alta
+                    </a>
+                    <a  role="button"
+                        data-status="4"
+                        id="criticalPriorityFilter"
+                        class="inline-button priority-filter-button danger">
+                        <i class="fa-solid fa-circle-exclamation light-text danger status"></i>
+                        Crítica
+                    </a>
+                </div>
+
+                <div class="projectWrapper">
+                    <label for="selectProject">Projeto:</label>
+                    <select class="inline-input" id="selectProject">
+                        <option value="0" selected>Todos</option>
+                        <?php foreach($projects as $item): ?>
+                            <option value="<?= $item['id']?>">
+                                <?= $item['project_name'] ?>
+                            </option>
+                        <?php endforeach ?>
+                    </select>
+                </div>
+
+                <button class="inline-button secondary" id="clearFilters">
+                    <i class="fa-solid fa-filter-circle-xmark"></i>
+                    Limpar
+                </button>
+
+            </div>
+        </div>
+        <hr class="light-separator">
+
+        <div class="info-row" id="taskList">
             <?php foreach($tasks as $item): ?>
                 <div class="task-card">
                     <div class="left-card-wrapper">
@@ -178,7 +227,7 @@
                             echo getStatusColor($item['task_priority']).' ';
 
                             switch($item['task_priority']){
-                                case 'BAIXA':
+                                case 'MEDIA':
                                     echo 'fa-circle-minus';
                                 break;
                                 case 'ALTA':

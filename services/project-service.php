@@ -24,6 +24,20 @@ class ProjectService {
         }
     }
 
+    public function getProjectNames() {
+        $project = [];
+        $query = 'select id, project_name from tb_project';
+        try{
+            $this -> sql = $this->pdo->query($query);
+            if($this -> sql -> rowCount() > 0) {
+                $project = $this -> sql -> fetchAll(PDO::FETCH_ASSOC);
+            }
+            return $project;
+        } catch (PDOException $e) {
+            throw new Exception("Error fetching project: " . $e->getMessage());
+        }
+    }
+
     public function searchProjects($term) {
         $projects = [];
         $query = "select * from tb_project where project_name like :term";

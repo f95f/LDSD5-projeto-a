@@ -112,6 +112,22 @@ class TaskService {
             throw new Exception("Error fetching tasks: " . $e->getMessage());
         }
     }
+
+    public function filterTasksByStatus($status) {
+        $tasks = [];
+        $query = "select * from tb_task where task_priority = :status";
+        $stmt = $this->pdo->prepare($query);
+        $stmt->bindValue(':status', $status); 
+
+        try{
+            $stmt->execute();
+            $tasks = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            
+            return $tasks;
+        } catch (PDOException $e) {
+            throw new Exception("Error fetching tasks: " . $e->getMessage());
+        }
+    }
 }
 
 return new TaskService();

@@ -100,6 +100,36 @@ class TaskController{
         return $tasks;
     }
 
+    
+    public function filterByStatus($status) {
+        if(!$status) {
+            return;
+        }
+
+        $tasks = $this->service->filterTasksByStatus($status);
+        $priorities = $this->priorityService->getAllPriorities();
+        
+        if(!is_array($priorities) || empty($priorities) ) {
+            return $tasks;
+        }
+
+        if(is_array($tasks) && !empty($tasks)) {
+            
+            $taskList = [];
+            
+            foreach($tasks as $item) {
+                
+                $item['task_priority'] = $this->getPriority($item['task_priority'], $priorities);
+                $taskList[] = $item;
+
+            }
+            
+            return $taskList;
+        }
+
+        return $tasks;
+    }
+
     private function getPriority($id, $priorities) {
         $filtered = array_filter($priorities, function($item) use ($id) {
             return $item['id'] == $id;
