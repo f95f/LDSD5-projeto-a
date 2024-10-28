@@ -45,7 +45,11 @@ class ProjectController {
         return $projects;
     }
 
-    
+    public function getprojectNames() {
+        $projects = $this -> service -> getProjectNames();
+
+        return $projects;
+    }
 
     public function searchProjects($query) {
         $value = $query['searchInput'];

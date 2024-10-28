@@ -78,14 +78,22 @@ $(document).ready(function () {
                 if (typeof response === 'string') {
                     response = JSON.parse(response);
                 }
-                console.warn(response)
+                
                 if (response.success) {
                     $('#taskList').empty();
+
+                    if(!response.content.length) {
+                        let emptyListMessage = makeEmptyListMessage(); 
+                        $('#taskList').append(emptyListMessage());
+                    }
+
                     response.content.forEach(function(task) {
                         let card = makeCard(task);
                         $('#taskList').append(card);
                     });
                 } else {
+                    let emptyListMessage = makeEmptyListMessage(); 
+                    $('#taskList').append(emptyListMessage);
                     console.error('Search not successful: ', response.content);
                 }
 
@@ -100,7 +108,48 @@ $(document).ready(function () {
     $('#clearFilters').click(function() {
         location.reload();
     });
+
+
+    $('#selectProject').on('change', function(event) {
+
+        var projectId = event.target.value;
     
+        $.ajax({
+            url: '',
+            type: 'POST',
+            data: `projectId=${projectId}&action=FILTER_PROJECT`,
+            success: function(response) {
+
+                if (typeof response === 'string') {
+                    response = JSON.parse(response);
+                }
+
+                console.warn(response)
+                if (response.success) {
+                    $('#taskList').empty();
+
+                    if(!response.content.length) {
+                        let emptyListMessage = makeEmptyListMessage(); 
+                        $('#taskList').append(emptyListMessage);
+                    }
+
+                    response.content.forEach(function(task) {
+                        let card = makeCard(task);
+                        $('#taskList').append(card);
+                    });
+
+                } else {
+                    console.error('Search not successful: ', response.content);
+                }
+
+            }.bind(this),
+            error: function(xhr, status, error) {
+                console.error('Error filtering task:', error);
+            }
+        });
+    });
+
+
     $('.deleteTaskButton').click(function(event) {
         event.preventDefault();
     
@@ -153,11 +202,15 @@ $(document).ready(function () {
 
     })
 
-    let deleteTask = function(taskId) {
-        alert(taskId)
-    }
 });
 
+let makeEmptyListMessage = function() {
+    return `
+        <span class="light-text large">
+            Nenhuma task encontrada...
+        </span>
+    `
+}
 
 let makeCard = function(item) {
     let status = '';

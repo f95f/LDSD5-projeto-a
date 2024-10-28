@@ -1,12 +1,15 @@
 <?php
     require_once __DIR__ . '/../controllers/task-controller.php';
     require_once __DIR__ . '/../controllers/priority-controller.php';
+    require_once __DIR__ . '/../controllers/project-controller.php';
 
     $controller = new TaskController();
+    $projectController = new ProjectController();
     $priorityController = new PriorityController();
 
     $tasks = $controller->getTasks();
     $priorities = $priorityController->getAllPriorities();
+    $projects = $projectController->getProjectNames();
 
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $action = isset($_POST['action']) ? $_POST['action'] : '';
@@ -30,6 +33,16 @@
                 $taskStatus = $_POST['status'];
                 
                 $filteredTasks = $controller->filterByStatus($taskStatus);
+                echo json_encode([
+                    'success' => true,
+                    'content' => $filteredTasks
+                ]);
+                break;
+
+            case 'FILTER_PROJECT':
+                $projectId = $_POST['projectId'];
+                
+                $filteredTasks = $controller->getTasksFromProject($projectId);
                 echo json_encode([
                     'success' => true,
                     'content' => $filteredTasks
@@ -148,6 +161,7 @@
         <div class="filter-wrapper">
             <h4 class="light-text">Filtros:</h4>
             <div class="filter-row">
+
                 <div class="priority-filters">
                     <a  role="button"
                         data-status="1"
@@ -178,10 +192,24 @@
                         Crítica
                     </a>
                 </div>
+
+                <div class="projectWrapper">
+                    <label for="selectProject">Projeto:</label>
+                    <select class="inline-input" id="selectProject">
+                        <option value="0" selected>Todos</option>
+                        <?php foreach($projects as $item): ?>
+                            <option value="<?= $item['id']?>">
+                                <?= $item['project_name'] ?>
+                            </option>
+                        <?php endforeach ?>
+                    </select>
+                </div>
+
                 <button class="inline-button secondary" id="clearFilters">
                     <i class="fa-solid fa-filter-circle-xmark"></i>
                     Limpar
                 </button>
+
             </div>
         </div>
         <hr class="light-separator">
