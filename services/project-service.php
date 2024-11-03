@@ -70,16 +70,32 @@ class ProjectService {
 
     public function createProject($project) {
         $query = '
-            INSERT INTO tb_project 
-                (project_name, project_priority, project_status, created_at, deadline) 
-            VALUES 
-                (:name, :priority, :status, :createdAt, :deadline)';
+            INSERT INTO tb_project (
+                project_name, 
+                project_priority, 
+                project_status, 
+                project_description, 
+                start_date, 
+                created_at, 
+                deadline
+            ) 
+            VALUES(
+                :name, 
+                :priority, 
+                :status,
+                :description,
+                :startDate,
+                :createdAt, 
+                :deadline
+            )';
 
         try {
             $sql = $this->pdo->prepare($query);
             $sql->bindValue(':name', $project -> getProjectName());
             $sql->bindValue(':priority', $project -> getProjectPriority());
             $sql->bindValue(':status', 1);
+            $sql->bindValue(':description', $project -> getDescription());
+            $sql->bindValue(':startDate', $project -> getStartDate());
             $sql->bindValue(':createdAt', $project -> getCreatedAt());
             $sql->bindValue(':deadline', $project -> getDeadline());
             return $sql->execute();

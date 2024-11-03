@@ -102,7 +102,9 @@ class ProjectController {
             $projectData['projectName'],
             $projectData['projectPriority'],
             0,
+            $projectData['projectDescription'],
             date("Y-m-d"),
+            $projectData['startDate'],
             $projectData['deadline']
         );
         $this->service->createProject($project);
@@ -114,7 +116,9 @@ class ProjectController {
             $projectData['project_name'],
             $projectData['project_priority'],
             $projectData['project_status'],
+            $projectData['project_description'],
             $projectData['created_at'],
+            $projectData['start_date'],
             $projectData['deadline']
         );
         $this -> service -> updateProject($project);

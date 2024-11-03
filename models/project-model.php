@@ -5,13 +5,26 @@ class Project {
     private $project_name;
     private $project_priority;
     private $project_status;
+    private $project_description;
+    private $startDate;
     private $created_at;
     private $deadline;
 
-    public function __construct($id, $project_name, $project_priority, $project_status, $created_at, $deadline) {
+    public function __construct(
+        $id, 
+        $project_name, 
+        $project_priority, 
+        $project_status, 
+        $project_description,
+        $start_date,
+        $created_at, 
+        $deadline
+        ) {
         $this->id = $id;
         $this->project_name = $project_name;
         $this->project_priority = $project_priority;
+        $this->project_description = $project_description;
+        $this->start_date = $start_date;
         $this->project_status = $project_status;
         $this->created_at = $created_at;
         $this->deadline = $deadline;
@@ -63,5 +76,21 @@ class Project {
 
     public function setDeadline($deadline) {
         $this->deadline = $deadline;
+    }
+
+    public function getDescription() {
+        return $this->project_description;
+    }
+
+    public function setDescription($project_description) {
+        $this->project_description = $project_description;
+    }
+
+    public function getStartDate() {
+        return $this->start_date;
+    }
+
+    public function setStartDate($start_date) {
+        $this->start_date = $start_date;
     }
 }

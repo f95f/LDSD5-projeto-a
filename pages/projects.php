@@ -90,19 +90,18 @@
                         <?= $item['project_name']?>
                     </h3>
                     <span class="status secondary">
-                        <?= //getStatus($item['project_status'], $status);
-                        $item['project_status']; ?>
+                        <?= $item['project_status']; ?>
                     </span>
                 </div>
                 <div class="card-body">
-                    Lorem ipsum dolor sit, amet consectetur adipisicing elit. Veniam porro quas sapiente, fugiat facere distinctio magnam. 
+                    <?= $item['project_description']?>
                 </div>
                 <div class="card-row">
-                    <span><?= $item['deadline']?></span>
+                    <span>De <?= $item['start_date']?> até <?= $item['deadline']?></span>
                     <a href="project-details.php?id=<?= $item['id']?>"
                         class="inline-button">
                         <i class="fa-solid fa-circle-info"></i>
-                        Mais detalhes...
+                        Ver mais...
                     </a>
                 </div>
             </li>
@@ -126,6 +125,24 @@
                         id="projectName"
                         name="projectName"
                         placeholder="Qual o nome do projeto?"
+                    >
+                </div>
+                <!-- TODO: trocar para textarea -->
+                <div class="input-row">
+                    <label for="projectDescription">Descrição</label>
+                    <input
+                        type="text"
+                        id="projectDescription"
+                        name="projectDescription"
+                        placeholder="Faça uma breve descrição do projeto..."
+                    >
+                </div>
+                <div class="input-row">
+                    <label for="startDate">Início</label>
+                    <input
+                        type="date"
+                        id="startDate"
+                        name="startDate"
                     >
                 </div>
                 <div class="input-row">
