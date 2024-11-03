@@ -67,7 +67,7 @@
     <div id="calendar"></div>
 </main>
 <footer>
-    <script src="../scripts/calendario.js"></script>
+    
 </footer>
 
 </body>
