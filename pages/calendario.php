@@ -12,19 +12,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script>
-
-      document.addEventListener('DOMContentLoaded', function() {
-        var calendarEl = document.getElementById('calendar');
-        var calendar = new FullCalendar.Calendar(calendarEl, {
-          initialView: 'dayGridMonth'
-             
-        });
-        calendar.render();
-      });
-
-    </script>
-
+    <link rel="stylesheet" href="../styles/custom.css">
 </head>
 <body>
 
@@ -35,11 +23,14 @@
     </div>
 </header>
 <main>
-            <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.js'></script>
-            <div id='calendar'></div>
+<div id='calendar'></div>
+    
+    <script src="../scripts/index.global.min.js"></script>
+    <script src="../scripts/core/locales-all.global.min.js"></script>
+    <script src="../scripts/custom.js"></script>
 </main>
 <footer>
-    <script src="../scripts/calendario.js"></script>
+    
 </footer>
 
 </body>
