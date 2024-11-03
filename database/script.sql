@@ -29,7 +29,9 @@ create table tb_project (
     project_priority varchar(50) DEFAULT('BAIXA'),
     project_status varchar(20) default('BACKLOG'),
     user_id integer null,
+    project_description varchar(512),
     created_at date,
+    start_date date,
     deadline date
 );
 

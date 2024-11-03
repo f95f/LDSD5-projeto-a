@@ -131,13 +131,19 @@
                 <?= $selectedProject['project_priority'];?>
             </span>
         </div>
+
+        <div class="info-row">
+            <span class="label">Descrição:</span>
+                <?= $selectedProject['project_description'];?>
+            </span>
+        </div>
         <div class="info-row">
             <span class="label">Criado em:</span>
             <span><?= $selectedProject['created_at'];?></span>
         </div>
         <div class="info-row">
             <span class="label">Prazo:</span>
-            <span><?= $selectedProject['deadline'];?></span>
+            <span>de <?= $selectedProject['start_date'];?> à <?= $selectedProject['deadline'];?></span>
         </div>
 
         <hr class="light-separator form-separator">

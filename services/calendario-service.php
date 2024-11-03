@@ -20,7 +20,7 @@ class CalendarioService {
             $stmt->bindValue(':start', $startDate);
             $stmt->bindValue(':end', $endDate);
             $stmt->execute();
-            $project = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            $projects = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
             return $projects;
         } catch (PDOException $e) {

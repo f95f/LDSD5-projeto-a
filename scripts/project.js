@@ -85,10 +85,10 @@ let makeCard = function(project) {
             </span>
         </div>
         <div class="card-body">
-            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Veniam porro quas sapiente, fugiat facere distinctio magnam. 
+            ${project.project_description}
         </div>
         <div class="card-row">
-            <span>${project.deadline}</span>
+            <span>${project.start_date}-${project.deadline}</span>
             <a href="project-details.php?id=${project.id}"
                 class="inline-button">
                 <i class="fa-solid fa-circle-info"></i>

@@ -16,8 +16,8 @@
 
       foreach ($projects as $project) {
         $events[] = [
-            'title' => $project['name'],
-            'start' => $project['created_at'],
+            'title' => $project['project_name'],
+            'start' => $project['start_date'],
             'end' => $project['deadline']
         ];
       }

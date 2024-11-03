@@ -11,9 +11,6 @@ class CalendarioController {
 
 
     public function getAllProjectsPerMonth($startDate, $endDate) {
-        
-        
-        $endDate = $endDate . ' 23:59:59';
 
         $items = $this->service->getAllProjects($startDate, $endDate);
         return $items;
@@ -22,10 +19,16 @@ class CalendarioController {
 
     public function getAllTasksPerMonth($startDate, $endDate) {
 
-        // $endDate = $endDate . ' 23:59:59';
 
         $items = $this->service->getAllTasks($startDate, $endDate);
-        //TODO: filtrar fora tasks com projetos, retornar apenas avulsas
-        return $items;
+
+        $filteredItems = array_filter($items, function($value) {
+            return $value['project_id'] == 0;
+        });
+    
+        
+        $filteredItems = array_values($filteredItems);
+    
+        return $filteredItems;
     }
 }
