@@ -3,7 +3,6 @@
 
     $controller = new CalendarioController();
 
-
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
       $startDate = date('Y-m-01');
@@ -50,9 +49,7 @@
 
     <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.js"></script>
 
-    <script src="../scripts/calendario.js">
-      
-    </script>
+    <script src="../scripts/calendario.js"></script>
 </head>
 <body>
 
@@ -69,6 +66,49 @@
 <footer>
     
 </footer>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var calendarEl = document.getElementById('calendar');
+        
+        // Inicializa o calendário com configuração padrão
+        var calendar = new FullCalendar.Calendar(calendarEl, {
+            initialView: 'dayGridMonth',  // Define o calendário em modo mensal por padrão
+            locale: 'pt-br',              // Define o idioma para Português do Brasil
+            headerToolbar: {
+                left: 'prev,next today',  // Botões de navegação no lado esquerdo
+                center: 'title',          // Título no centro
+                right: 'dayGridMonth,timeGridWeek,timeGridDay' // Visões no lado direito
+            },
+            
+            // Configura para buscar eventos do servidor
+            events: '/path/to/fetch-events', // URL para buscar eventos do banco de dados
+            
+            // Função acionada ao clicar em um evento (tarefa)
+            eventClick: function(info) {
+                let taskId = info.event.id; // Obtém o ID do evento
+                let action = confirm("Pressione OK para editar ou Cancelar para excluir");
+                
+                if (action) {
+                    // Edição
+                    let title = prompt("Novo título:", info.event.title);
+                    let startDate = prompt("Nova data de início (YYYY-MM-DD):", info.event.start.toISOString().split('T')[0]);
+                    let endDate = prompt("Nova data de fim (YYYY-MM-DD):", info.event.end ? info.event.end.toISOString().split('T')[0] : startDate);
+
+                    if (title && startDate && endDate) {
+                        updateTask(taskId, title, startDate, endDate); // Chama a função de atualização
+                    }
+                } else {
+                    // Exclusão
+                    deleteTask(taskId); // Chama a função de exclusão
+                }
+            }
+        });
+
+        // Renderiza o calendário
+        calendar.render();
+    });
+</script>
 
 </body>
 </html>
