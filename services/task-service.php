@@ -131,3 +131,43 @@ class TaskService {
 }
 
 return new TaskService();
+
+// --- Novo código para edição e exclusão pelo calendário --- 
+
+// Função para deletar uma tarefa
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
+    $action = $_POST['action'];
+    
+    if ($action == 'delete' && isset($_POST['task_id'])) {
+        $task_id = intval($_POST['task_id']);
+        $stmt = $conn->prepare("DELETE FROM tasks WHERE id = ?");
+        $stmt->bind_param("i", $task_id);
+
+        if ($stmt->execute()) {
+            echo json_encode(["status" => "success", "message" => "Tarefa deletada com sucesso."]);
+        } else {
+            echo json_encode(["status" => "error", "message" => "Erro ao deletar tarefa."]);
+        }
+        $stmt->close();
+        exit;
+    }
+
+    // Função para atualizar uma tarefa
+    if ($action == 'update' && isset($_POST['task_id'], $_POST['title'], $_POST['start_date'], $_POST['end_date'])) {
+        $task_id = intval($_POST['task_id']);
+        $title = $_POST['title'];
+        $start_date = $_POST['start_date'];
+        $end_date = $_POST['end_date'];
+
+        $stmt = $conn->prepare("UPDATE tasks SET title = ?, start_date = ?, end_date = ? WHERE id = ?");
+        $stmt->bind_param("sssi", $title, $start_date, $end_date, $task_id);
+
+        if ($stmt->execute()) {
+            echo json_encode(["status" => "success", "message" => "Tarefa atualizada com sucesso."]);
+        } else {
+            echo json_encode(["status" => "error", "message" => "Erro ao atualizar tarefa."]);
+        }
+        $stmt->close();
+        exit;
+    }
+}
