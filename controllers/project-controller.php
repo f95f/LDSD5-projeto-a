@@ -110,7 +110,7 @@ class ProjectController {
         $this->service->createProject($project);
     }
 
-    public function updateProject($projectId, $projectDescription) {
+    public function updateProject($projectData) {
         $project = new Project(
             $projectData['id'],
             $projectData['project_name'],

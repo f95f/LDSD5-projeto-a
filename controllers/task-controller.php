@@ -53,10 +53,17 @@ class TaskController{
         $this -> service -> createTask($task);
     }
 
-    public function updateTask($taskId, $taskDescription) {
-        if($taskDescription) {
-            $this -> service -> updateTask($taskId, $taskDescription);
-        }
+    public function updateTask($id, $taskData) {
+        $task = new Task(
+            $id,
+            $taskData['description'],
+            $taskData['taskPriority'],
+            0,
+            $projectId,
+            $taskData['startDate'],
+            $taskData['deadline']
+        );
+        $this -> service -> updateTask($id, $task);
     }
 
     public function deleteTask($taskId) {
