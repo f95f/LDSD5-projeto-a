@@ -1,35 +1,109 @@
 <?php
     require_once __DIR__ . '/../controllers/calendario-controller.php';
+    require_once __DIR__ . '/../controllers/task-controller.php';
+    require_once __DIR__ . '/../controllers/project-controller.php';
 
     $controller = new CalendarioController();
+    $projectController = new ProjectController();
+    $taskController = new TaskController();
 
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-      $startDate = date('Y-m-01');
-      $endDate = date('Y-m-t');
+        
+        $action = isset($_POST['action']) ? $_POST['action'] : '';
+        $type = isset($_POST['type']) ? $_POST['type'] : '';
 
-      $projects = $controller->getAllProjectsPerMonth($startDate, $endDate);
-      $tasks = $controller->getAllTasksPerMonth($startDate, $endDate);
+        switch ($action) {
 
-      $events = [];
 
-      foreach ($projects as $project) {
-        $events[] = [
-            'title' => $project['project_name'],
-            'start' => $project['start_date'],
-            'end' => $project['deadline']
-        ];
-      }
+            case 'update':
+                
+                if($type == 'PROJECT') {
 
-      foreach ($tasks as $task) {
-        $events[] = [
-            'title' => $task['task_description'],
-            'start' => $task['deadline'],
-            'end' => $task['deadline'],
-        ];
-      }
+                    $id = $_POST['task_id'];
+                    $title = $_POST['title'];
+                    $start = $_POST['startDate'];
+                    $end = $_POST['endDate'];
+    
+                    $project = array(
+                        'projectName' => $_POST['title'],
+                        'startDate' => $_POST['startDate'],
+                        'deadline' => $_POST['deadline'],
+                    );
+    
+                    $projectController->updateProject($project);
+                } 
+                else {
+                    
+                    $id = $_POST['task_id'];
+                    // $taskDescription = $_POST['title'];
+                    // $start = $_POST['startDate'];
+                    
+                    $task = array(
+                        'id' => $_POST['task_id'],
+                        'description' => $_POST['title'],
+                        'startDate' => $_POST['startDate'],
+                    );
+                    $taskController->updateTask($id, $task);
 
-      echo json_encode($events);
+                }
+                break;
+                
+            
+            case 'delete':
+                if($type == 'PROJECT') {
+
+                    $id = $_POST['task_id'];
+    
+                    $project = array(
+                        'projectName' => $_POST['title'],
+                        'startDate' => $_POST['startDate'],
+                        'deadline' => $_POST['deadline'],
+                    );
+    
+                    $projectController->updateProject($project);
+                } 
+                else {
+                    $id = $_POST['task_id'];
+                    // $start = $_POST['startDate'];
+    
+                    $taskController->deleteTask($id);
+
+                }
+                break;
+
+            default:
+
+                $startDate = date('Y-m-01');
+                $endDate = date('Y-m-t');
+
+                $projects = $controller->getAllProjectsPerMonth($startDate, $endDate);
+                $tasks = $controller->getAllTasksPerMonth($startDate, $endDate);
+
+                $events = [];
+
+                foreach ($projects as $project) {
+                    $events[] = [
+                        'id' => $project['id'],
+                        'title' => $project['project_name'],
+                        'start' => $project['start_date'],
+                        'end' => $project['deadline']
+                    ];
+                }
+
+                foreach ($tasks as $task) {
+                    $events[] = [
+                        'id' => $task['id'],
+                        'title' => $task['task_description'],
+                        'start' => $task['deadline'],
+                        'end' => $task['deadline'],
+                    ];
+                }
+
+                echo json_encode($events);
+                break;
+        }
+      
 
       exit();
     }
@@ -82,12 +156,28 @@
             },
             
             // Configura para buscar eventos do servidor
-            events: '/path/to/fetch-events', // URL para buscar eventos do banco de dados
+            events: function(fetchInfo, successCallback, failureCallback) {
+                
+                
+                fetch('', {
+                    method: 'POST',
+                    body: JSON.stringify({})
+                })
+                .then(response => response.json())
+                .then(data => successCallback(data))
+                .catch(error => failureCallback(error));
             
+            
+            }, // Requsição para buscar eventos do banco de dados
+            
+
             // Função acionada ao clicar em um evento (tarefa)
             eventClick: function(info) {
+                
                 let taskId = info.event.id; // Obtém o ID do evento
+                console.info(" ID: ", taskId);
                 let action = confirm("Pressione OK para editar ou Cancelar para excluir");
+
                 
                 if (action) {
                     // Edição

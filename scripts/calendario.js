@@ -1,39 +1,39 @@
 document.addEventListener('DOMContentLoaded', function() {
-  var calendarEl = document.getElementById('calendar');
   
   // Initialize the calendar
-  var calendar = new FullCalendar.Calendar(calendarEl, {
-    initialView: 'dayGridMonth',  // Month view by default
-    locale: 'pt-br',  // Set locale to Portuguese
-    headerToolbar: {
-      left: 'prev,next today',  // Buttons on the left
-      center: 'title',          // Title in the center
-      right: 'dayGridMonth,timeGridWeek,timeGridDay' // Views on the right
-    },
-    events: function(fetchInfo, successCallback, failureCallback) {
-      // AJAX request to fetch events
-      fetch('', {
-        method: 'POST',
-        body: JSON.stringify({})
-      })
-      .then(response => response.json())
-      .then(data => successCallback(data))
-      .catch(error => failureCallback(error));
-    }
-  });
-
-  calendar.render();
+  // var calendar = new FullCalendar.Calendar(calendarEl, {
+  //   initialView: 'dayGridMonth',  // Month view by default
+  //   locale: 'pt-br',  // Set locale to Portuguese
+  //   headerToolbar: {
+  //     left: 'prev,next today',  // Buttons on the left
+  //     center: 'title',          // Title in the center
+  //     right: 'dayGridMonth,timeGridWeek,timeGridDay' // Views on the right
+  //   },
+  //   events: function(fetchInfo, successCallback, failureCallback) {
+  //     // AJAX request to fetch events
+  //     fetch('', {
+  //       method: 'POST',
+  //       body: JSON.stringify({})
+  //     })
+  //     .then(response => response.json())
+  //     .then(data => successCallback(data))
+  //     .catch(error => failureCallback(error));
+  //   }
+  // });
+  // getCalendarItems();
+  // calendar.render();
 });
+
 
 // --- Novo código para edição e exclusão pelo calendário ---
 
 // Função para deletar uma tarefa
 function deleteTask(taskId) {
   if (confirm("Tem certeza que deseja deletar esta tarefa?")) {
-      fetch('../services/task-service.php', {
+      fetch('', {
           method: 'POST',
           headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-          body: `action=delete&task_id=${taskId}`
+          body: `action=delete&type=TASK&task_id=${taskId}`
       })
       .then(response => response.json())
       .then(data => {
@@ -50,10 +50,10 @@ function deleteTask(taskId) {
 
 // Função para atualizar uma tarefa
 function updateTask(taskId, title, startDate, endDate) {
-  fetch('../services/task-service.php', {
+  fetch('', {
       method: 'POST',
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-      body: `action=update&task_id=${taskId}&title=${encodeURIComponent(title)}&start_date=${startDate}&end_date=${endDate}`
+      body: `action=update&type=TASK&task_id=${taskId}&title=${encodeURIComponent(title)}&start_date=${startDate}&end_date=${endDate}`
   })
   .then(response => response.json())
   .then(data => {

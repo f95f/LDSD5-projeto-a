@@ -59,11 +59,20 @@ class TaskService {
         }
     }
 
-    public function updateTask($taskId, $taskDescription) {
-        $query = 'update tb_task set task_description = :description where id = :id';
+    public function updateTask($taskId, $taskData) {
+        $query = '
+        update tb_task set 
+            task_description = :description,
+            created_at = :createdAt 
+        where id = :id';
         try{
-            $sql = $this->pdo->prepare($query);
-            $sql->bindValue(':description', $taskDescription);
+            $sql = $this->pdo->prepare($query);            
+            $sql->bindValue(':description', $taskData -> getTaskDescription());
+            // $sql->bindValue(':priority', $taskData -> getTaskPriority());
+            // $sql->bindValue(':completed', $taskData -> isTaskCompleted());
+            // $sql->bindValue(':project', $taskData -> getProjectId());
+            $sql->bindValue(':createdAt', $taskData -> getCreatedAt());
+            // $sql->bindValue(':deadline', $taskData -> getDeadline());
             $sql->bindValue(':id', $taskId);
             return $sql->execute();
         } catch (PDOException $e) {
@@ -76,8 +85,10 @@ class TaskService {
             $query = 'delete from tb_task where id = :id';
             $sql = $this->pdo->prepare($query);
             $sql->bindValue(':id', $taskId);
+            // print_r($sql->execute());
             return $sql->execute();
         } catch (PDOException $e) {
+            print_r($e->getMessage());
             throw new Exception("Error deleting task: " . $e->getMessage());
         }
     }

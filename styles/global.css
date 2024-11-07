@@ -191,6 +191,7 @@ hr.light-separator {
     opacity: .1;
     mix-blend-mode: screen;
     filter: blur(8px);
+    z-index: -1;
 }
 header {
     width: min(100%, 1640px);
