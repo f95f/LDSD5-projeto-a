@@ -134,6 +134,7 @@
 
         <div class="info-row">
             <span class="label">Descrição:</span>
+            <span>
                 <?= $selectedProject['project_description'];?>
             </span>
         </div>

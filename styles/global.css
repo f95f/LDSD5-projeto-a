@@ -319,15 +319,18 @@ main {
 }
 
 
-.inline-button.success {
+.inline-button.success,
+.inline-button.success i {
     color: var(--success);
 }
 
-.inline-button.warning {
+.inline-button.warning,
+.inline-button.warning i {
     color: var(--warning);
 }
 
-.inline-button.danger {
+.inline-button.danger,
+.inline-button.danger i {
     color: var(--danger);
 }
 

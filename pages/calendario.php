@@ -85,18 +85,23 @@
                 foreach ($projects as $project) {
                     $events[] = [
                         'id' => $project['id'],
+                        'type' => 'PROJECT',
                         'title' => $project['project_name'],
+                        'description' => $project['project_description'],
                         'start' => $project['start_date'],
-                        'end' => $project['deadline']
+                        'end' => $project['deadline'],
+                        'priority' => $project['task_priority']
                     ];
                 }
 
                 foreach ($tasks as $task) {
                     $events[] = [
                         'id' => $task['id'],
+                        'type' => 'TASK',
                         'title' => $task['task_description'],
                         'start' => $task['deadline'],
                         'end' => $task['deadline'],
+                        'priority' => $task['task_priority']
                     ];
                 }
 
@@ -110,7 +115,7 @@
 
     define("TITLE", "Calendário | Journalling");
     define("PAGE", "CALENDARIO");
-    define("STYLESHEET", "Calendário");
+    define("STYLESHEET", "calendario");
     include __DIR__ . '/../layout/side-menu.php'; 
     include __DIR__ . '/../layout/header.php';
 
@@ -175,23 +180,33 @@
             eventClick: function(info) {
                 
                 let taskId = info.event.id; // Obtém o ID do evento
-                console.info(" ID: ", taskId);
-                let action = confirm("Pressione OK para editar ou Cancelar para excluir");
+                // let action = confirm("Pressione OK para editar ou Cancelar para excluir");
+                const data = {
+                    id: info.event.id,
+                    type: info.event.extendedProps.type,
+                    title: info.event.title,
+                    startDate: info.event.start.toISOString().split('T')[0],
+                    endDate: info.event.end ? info.event.end.toISOString().split('T')[0] : '',
+                    description: info.event.extendedProps.description || '',
+                    priority: info.event.extendedProps.priority || ''
+                };
 
+
+                openDetails(data);
                 
-                if (action) {
-                    // Edição
-                    let title = prompt("Novo título:", info.event.title);
-                    let startDate = prompt("Nova data de início (YYYY-MM-DD):", info.event.start.toISOString().split('T')[0]);
-                    let endDate = prompt("Nova data de fim (YYYY-MM-DD):", info.event.end ? info.event.end.toISOString().split('T')[0] : startDate);
+                // if (action) {
+                //     // Edição
+                //     let title = prompt("Novo título:", info.event.title);
+                //     let startDate = prompt("Nova data de início (YYYY-MM-DD):", info.event.start.toISOString().split('T')[0]);
+                //     let endDate = prompt("Nova data de fim (YYYY-MM-DD):", info.event.end ? info.event.end.toISOString().split('T')[0] : startDate);
 
-                    if (title && startDate && endDate) {
-                        updateTask(taskId, title, startDate, endDate); // Chama a função de atualização
-                    }
-                } else {
-                    // Exclusão
-                    deleteTask(taskId); // Chama a função de exclusão
-                }
+                //     if (title && startDate && endDate) {
+                //         updateTask(taskId, title, startDate, endDate); // Chama a função de atualização
+                //     }
+                // } else {
+                //     // Exclusão
+                //     deleteTask(taskId); // Chama a função de exclusão
+                // }
             }
         });
 
@@ -199,6 +214,141 @@
         calendar.render();
     });
 </script>
+
+
+
+    <div class="overlay" id="overlay"></div>
+    <!-- <div class="modal" id="editModal">
+        <div class="modal-wrapper">
+            <div class="modal-header">
+                <h2>Adicionar Projeto</h2>
+            </div>
+            <div class="modal-body">
+                
+            <form method="POST" id="addProjectForm" name="addProjectForm">
+                <div class="input-row">
+                    <label for="projectName">Nome do projeto:</label>
+                    <input
+                        type="text"
+                        id="projectName"
+                        name="projectName"
+                        placeholder="Qual o nome do projeto?"
+                    >
+                </div>
+                <div class="input-row">
+                    <label for="projectDescription">Descrição</label>
+                    <textarea name="projectDescription" 
+                        id="projectDescription"
+                        name="projectDescription"
+                        placeholder="Faça uma breve descrição do projeto...">
+                    </textarea>
+                </div>
+                <div class="input-row">
+                    <label for="startDate">Início</label>
+                    <input
+                        type="date"
+                        id="startDate"
+                        name="startDate"
+                    >
+                </div>
+                <div class="input-row">
+                    <label for="deadline">Deadline</label>
+                    <input
+                        type="date"
+                        id="deadline"
+                        name="deadline"
+                    >
+                </div>
+                <div class="input-row">
+                    <label for="projectPriority">Prioridade</label>
+                    <select
+                        id="projectPriority"
+                        name="projectPriority"
+                    >   
+  
+                    </select>
+                </div>
+                <div class="modal-footer">
+                    <button
+                        type="button"
+                        id="closeCreateModal"
+                        class="pill-button secondary"
+                    >
+                        Cancelar
+                    </button>
+                    <button
+                        type="submit"
+                        id="submitProject"
+                        class="pill-button"
+                    >
+                        <i class="fa-solid fa-plus"></i>
+                        Adicionar
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div> -->
+
+    
+    <div class="modal" id="detailsModal">
+        <div class="modal-wrapper">
+            <div class="modal-header">
+                <h2>Detalhes: <span id="eventDetails"></span></h2>
+            </div>
+            <div class="modal-body">
+                <div class="info-row">
+                    <span class="label">Tipo:</span>
+                    <span id="type"></span>
+                </div>
+                <div class="info-row">
+                    <span class="label">Status:</span>
+                </div>
+                <div class="info-row">
+                    <span class="label">Prioridade:</span>
+                </div>
+
+                <div class="info-row">
+                    <span class="label">Descrição:</span>
+                    <span id="description"></span>
+                </div>
+                <div class="info-row">
+                    <span class="label">Criado em:</span>
+                    <span id="createdAt"></span>
+                </div>
+                <div class="info-row">
+                    <span class="label">Prazo:</span>
+                    <span>de</span>
+                    <span id="startDate"></span>
+                    <span>à</span>
+                    <span id="endDate"></span>
+                </div>  
+                
+                <!-- <hr class="light-separator"> -->
+
+            </div>            
+            <div class="modal-footer">
+                <div class="left-wrapper">
+                    <a role="button" class="inline-button" onClick="hideModals()">
+                        <i class="fa-solid fa-xmark"></i>
+                        Fechar
+                    </a>
+                </div>
+                <div class="right-wrapper">
+                    <a role="button" class="inline-button">
+                        <i class="fa-solid fa-edit"></i>
+                        Editar
+                    </a>
+
+                    <a role="button" class="inline-button danger">
+                        <i class="fa-solid fa-trash"></i>
+                        Excluir
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
 
 </body>
 </html>

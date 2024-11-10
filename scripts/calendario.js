@@ -1,31 +1,15 @@
-document.addEventListener('DOMContentLoaded', function() {
-  
-  // Initialize the calendar
-  // var calendar = new FullCalendar.Calendar(calendarEl, {
-  //   initialView: 'dayGridMonth',  // Month view by default
-  //   locale: 'pt-br',  // Set locale to Portuguese
-  //   headerToolbar: {
-  //     left: 'prev,next today',  // Buttons on the left
-  //     center: 'title',          // Title in the center
-  //     right: 'dayGridMonth,timeGridWeek,timeGridDay' // Views on the right
-  //   },
-  //   events: function(fetchInfo, successCallback, failureCallback) {
-  //     // AJAX request to fetch events
-  //     fetch('', {
-  //       method: 'POST',
-  //       body: JSON.stringify({})
-  //     })
-  //     .then(response => response.json())
-  //     .then(data => successCallback(data))
-  //     .catch(error => failureCallback(error));
-  //   }
-  // });
-  // getCalendarItems();
-  // calendar.render();
+$('document').ready(function() {
+
+    closeModals();
+
+    $('#overlay').click(function() {
+        hideModals();
+    });
+
+
+
 });
 
-
-// --- Novo código para edição e exclusão pelo calendário ---
 
 // Função para deletar uma tarefa
 function deleteTask(taskId) {
@@ -88,3 +72,37 @@ document.addEventListener('DOMContentLoaded', function() {
       });
   });
 });
+
+
+
+
+
+function openDetails(details) {
+    closeModals()
+
+    $('#overlay').fadeIn();
+    $('#detailsModal').fadeIn();
+    console.warn(details);
+
+    details.type === 'TASK'? 
+        $('#type').text('Task') : $('#type').text('Projeto');
+    
+    $('#eventDetails').text(details.title);
+    $('#description').text(details.description || "Não disponível");
+    $('#createdAt').text(details.createdAt || "Não disponível");
+    $('#startDate').text(details.startDate || "Não disponível");
+    $('#endDate').text(details.endDate || "Não disponível");
+
+}
+
+function closeModals() {
+    $('#overlay').hide();
+    $('#detailsModal').hide();
+    $('#editModal').hide();
+}
+
+function hideModals() {
+    $('#overlay').fadeOut();
+    $('#detailsModal').fadeOut();
+    $('#editModal').fadeOut();
+}
