@@ -1,0 +1,13 @@
+.notification-menu {
+    position: absolute;
+    right: 16px;
+    top: 32px;
+    font-size: 1.4em;
+}
+.notification-menu i {
+    color: var(--text-light);
+    transition: all .2s ease; 
+}
+.notification-menu:hover i {
+    color: var(--secondary);
+}

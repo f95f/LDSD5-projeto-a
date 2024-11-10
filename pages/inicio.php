@@ -3,6 +3,7 @@
 <?php define("STYLESHEET", null); ?>
 <?php include __DIR__ . '/../layout/side-menu.php'; ?>
 <?php include __DIR__ . '/../layout/header.php'; ?>
+<?php include __DIR__ . '/../layout/notifications.php'; ?>
 <?php
 
     session_start();

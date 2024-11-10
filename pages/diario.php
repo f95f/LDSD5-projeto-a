@@ -5,6 +5,7 @@
     define("STYLESHEET", "Diário");
     include __DIR__ . '/../layout/side-menu.php'; 
     include __DIR__ . '/../layout/header.php';
+    include __DIR__ . '/../layout/notifications.php';
 
 ?>
 

@@ -99,8 +99,9 @@
     define("TITLE", "Tasks | Journalling");
     define("PAGE", "TASKS");
     define("STYLESHEET", "tasklist");
-    include __DIR__ . '/../layout/side-menu.php'; 
+    include __DIR__ . '/../layout/side-menu.php';
     include __DIR__ . '/../layout/header.php';
+    include __DIR__ . '/../layout/notifications.php';
 ?>
 <header>
     <div class="title">
