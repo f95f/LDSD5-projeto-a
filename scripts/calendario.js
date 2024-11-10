@@ -23,7 +23,6 @@ $('document').ready(function() {
 
 // Função para deletar uma tarefa
 function deleteEvent(id, type) {
-    console.warn(type)
   if (confirm("Tem certeza que deseja deletar este item?")) {
       fetch('', {
           method: 'POST',
@@ -89,14 +88,32 @@ function openDetails(details) {
     $('#overlay').fadeIn();
     $('#detailsModal').fadeIn();
 
+    const priorities = [
+        { title: 'Baixa', color: 'neutral' },
+        { title: 'Média', color: 'success' },
+        { title: 'Alta', color: 'warning' },
+        { title: 'Crítica', color: 'danger' },
+    ]
+
+
     details.type === 'TASK'? 
         $('#type').text('Task') : $('#type').text('Projeto');
+
     
+    if(details.priority) {
+        $('#priority').text(priorities[details.priority].title);
+        $('#priority').addClass(`status ${priorities[details.priority].color}`);
+    }
+    else {
+        $('#priority').text('Não disponivel');    
+    }
+
     $('#eventDetails').text(details.title);
     $('#description').text(details.description || "Não disponível");
     $('#createdAt').text(details.createdAt || "Não disponível");
     $('#startDate').text(details.startDate || "Não disponível");
     $('#endDate').text(details.endDate || "Não disponível");
+
 
     $('#editButton').data('id', details.id);
     $('#deleteButton').data('id', details.id);

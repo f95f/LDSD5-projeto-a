@@ -79,7 +79,9 @@
                         'title' => $project['project_name'],
                         'description' => $project['project_description'],
                         'start' => $project['start_date'],
+                        'createdAt' => $project['created_at'],
                         'end' => $project['deadline'],
+                        'deadline' => $project['deadline'],
                         'priority' => $project['project_priority']
                     ];
                 }
@@ -89,8 +91,11 @@
                         'id' => $task['id'],
                         'type' => 'TASK',
                         'title' => $task['task_description'],
+                        'description' => $task['task_description'],
                         'start' => $task['deadline'],
+                        'createdAt' => $task['created_at'],
                         'end' => $task['deadline'],
+                        'deadline' => $task['deadline'],
                         'priority' => $task['task_priority']
                     ];
                 }
@@ -176,7 +181,8 @@
                     type: info.event.extendedProps.type,
                     title: info.event.title,
                     startDate: info.event.start.toISOString().split('T')[0],
-                    endDate: info.event.end ? info.event.end.toISOString().split('T')[0] : '',
+                    endDate: info.event.extendedProps.deadline || '',
+                    createdAt: info.event.extendedProps.createdAt || '',
                     description: info.event.extendedProps.description || '',
                     priority: info.event.extendedProps.priority || ''
                 };
@@ -290,11 +296,10 @@
                     <span class="label">Tipo:</span>
                     <span id="type"></span>
                 </div>
-                <div class="info-row">
-                    <span class="label">Status:</span>
-                </div>
+                
                 <div class="info-row">
                     <span class="label">Prioridade:</span>
+                    <span id="priority"></span>
                 </div>
 
                 <div class="info-row">
