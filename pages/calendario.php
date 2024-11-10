@@ -36,8 +36,6 @@
                 else {
                     
                     $id = $_POST['task_id'];
-                    // $taskDescription = $_POST['title'];
-                    // $start = $_POST['startDate'];
                     
                     $task = array(
                         'id' => $_POST['task_id'],
@@ -51,25 +49,17 @@
                 
             
             case 'delete':
-                if($type == 'PROJECT') {
 
-                    $id = $_POST['task_id'];
-    
-                    $project = array(
-                        'projectName' => $_POST['title'],
-                        'startDate' => $_POST['startDate'],
-                        'deadline' => $_POST['deadline'],
-                    );
-    
-                    $projectController->updateProject($project);
+                $id = $_POST['task_id'];
+
+                if($type == 'PROJECT') {
+                    $projectController->deleteProject($id);
                 } 
                 else {
-                    $id = $_POST['task_id'];
-                    // $start = $_POST['startDate'];
-    
                     $taskController->deleteTask($id);
-
                 }
+
+                echo json_encode('Item excluído.');
                 break;
 
             default:
@@ -90,7 +80,7 @@
                         'description' => $project['project_description'],
                         'start' => $project['start_date'],
                         'end' => $project['deadline'],
-                        'priority' => $project['task_priority']
+                        'priority' => $project['project_priority']
                     ];
                 }
 
@@ -321,8 +311,8 @@
                     <span id="startDate"></span>
                     <span>à</span>
                     <span id="endDate"></span>
-                </div>  
-                
+                </div>
+
                 <!-- <hr class="light-separator"> -->
 
             </div>            
@@ -334,12 +324,16 @@
                     </a>
                 </div>
                 <div class="right-wrapper">
-                    <a role="button" class="inline-button">
+                    <a  role="button"
+                        id="editButton" 
+                        class="inline-button">
                         <i class="fa-solid fa-edit"></i>
                         Editar
                     </a>
 
-                    <a role="button" class="inline-button danger">
+                    <a  role="button"
+                        id="deleteButton" 
+                        class="inline-button danger">
                         <i class="fa-solid fa-trash"></i>
                         Excluir
                     </a>

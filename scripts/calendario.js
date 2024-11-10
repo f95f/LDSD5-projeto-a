@@ -6,31 +6,37 @@ $('document').ready(function() {
         hideModals();
     });
 
+    $('#editButton').click(function() {
+        let id = $(this).data('id');
+        deleteTask(id);
+    });
+
+    $('#deleteButton').click(function() {
+        let id = $(this).data('id');
+        let type = $(this).data('type');
+        deleteEvent(id, type);
+    });
 
 
 });
 
 
 // Função para deletar uma tarefa
-function deleteTask(taskId) {
-  if (confirm("Tem certeza que deseja deletar esta tarefa?")) {
+function deleteEvent(id, type) {
+    console.warn(type)
+  if (confirm("Tem certeza que deseja deletar este item?")) {
       fetch('', {
           method: 'POST',
           headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-          body: `action=delete&type=TASK&task_id=${taskId}`
+          body: `action=delete&type=${type}&task_id=${id}`
       })
-      .then(response => response.json())
       .then(data => {
-          if (data.status === "success") {
-              alert(data.message);
-              location.reload();
-          } else {
-              alert(data.message);
-          }
+          location.reload();
       })
       .catch(error => console.error('Erro:', error));
   }
 }
+
 
 // Função para atualizar uma tarefa
 function updateTask(taskId, title, startDate, endDate) {
@@ -78,11 +84,10 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 function openDetails(details) {
-    closeModals()
+    closeModals();
 
     $('#overlay').fadeIn();
     $('#detailsModal').fadeIn();
-    console.warn(details);
 
     details.type === 'TASK'? 
         $('#type').text('Task') : $('#type').text('Projeto');
@@ -93,6 +98,9 @@ function openDetails(details) {
     $('#startDate').text(details.startDate || "Não disponível");
     $('#endDate').text(details.endDate || "Não disponível");
 
+    $('#editButton').data('id', details.id);
+    $('#deleteButton').data('id', details.id);
+    $('#deleteButton').data('type', details.type);
 }
 
 function closeModals() {

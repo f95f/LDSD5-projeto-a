@@ -125,6 +125,7 @@ class ProjectController {
     }
 
     public function deleteProject($projectId) {
+        print_r($projectId);
         if($projectId) {
             $this -> service -> deleteProject($projectId);
         }
