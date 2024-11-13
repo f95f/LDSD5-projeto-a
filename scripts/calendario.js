@@ -7,14 +7,37 @@ $('document').ready(function() {
     });
 
     $('#editButton').click(function() {
-        let id = $(this).data('id');
-        deleteTask(id);
+        closeModals();
+        $('#overlay').fadeIn();
+        $('#editModal').fadeIn();
+
     });
 
     $('#deleteButton').click(function() {
         let id = $(this).data('id');
         let type = $(this).data('type');
         deleteEvent(id, type);
+    });
+
+    $('#submitUpdate').click(function(event) { 
+        event.preventDefault();
+        console.warn(" Should be updating")
+        let formData = $(this).serialize();
+        let type = $(this).data('type');
+        let id = $(this).data('id');
+
+        $.ajax({
+            url: '',
+            type: 'POST',
+            data: `action=update${formData}&type=${type}&id=${id}`,
+            success: function(response) {
+                // location.reload();
+                fireSuccess("Task criada.");
+            },
+            error: function(xhr, status, error) {
+                console.error('Error adding task:', error);
+            }
+        });
     });
 
 
@@ -38,23 +61,23 @@ function deleteEvent(id, type) {
 
 
 // Função para atualizar uma tarefa
-function updateTask(taskId, title, startDate, endDate) {
-  fetch('', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-      body: `action=update&type=TASK&task_id=${taskId}&title=${encodeURIComponent(title)}&start_date=${startDate}&end_date=${endDate}`
-  })
-  .then(response => response.json())
-  .then(data => {
-      if (data.status === "success") {
-          alert(data.message);
-          location.reload();
-      } else {
-          alert(data.message);
-      }
-  })
-  .catch(error => console.error('Erro:', error));
-}
+// function updateTask(taskId, title, startDate, endDate) {
+//   fetch('', {
+//       method: 'POST',
+//       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+//       body: `action=update&type=TASK&task_id=${taskId}&title=${encodeURIComponent(title)}&start_date=${startDate}&end_date=${endDate}`
+//   })
+//   .then(response => response.json())
+//   .then(data => {
+//       if (data.status === "success") {
+//           alert(data.message);
+//           location.reload();
+//       } else {
+//           alert(data.message);
+//       }
+//   })
+//   .catch(error => console.error('Erro:', error));
+// }
 
 // Exemplo de uso: adicionar eventos de clique nas tarefas do calendário para editar ou deletar
 document.addEventListener('DOMContentLoaded', function() {
@@ -115,10 +138,27 @@ function openDetails(details) {
     $('#endDate').text(details.endDate || "Não disponível");
 
 
-    $('#editButton').data('id', details.id);
+    $('#submitUpdate').data('id', details.id);
+    $('#submitUpdate').data('type', details.type);
     $('#deleteButton').data('id', details.id);
     $('#deleteButton').data('type', details.type);
+
+    $('#editButton').click(() => { showEditModal(details) });
+
 }
+
+
+function showEditModal(details) {
+    closeModals();
+    $('#overlay').fadeIn();
+    $('#editModal').fadeIn();
+
+    $('textarea#name').val(details.title || details.description || "Não disponível");
+    $('textarea#description').val(details.description || "Não disponível");
+    $('input#createdAt').val(details.createdAt || "Não disponível");
+    $('input#startDate').val(details.startDate || "Não disponível");
+    $('input#endDate').val(details.endDate || "Não disponível");
+};
 
 function closeModals() {
     $('#overlay').hide();
