@@ -19,12 +19,7 @@
             case 'update':
                 
                 if($type == 'PROJECT') {
-
-                    $id = $_POST['task_id'];
-                    $title = $_POST['title'];
-                    $start = $_POST['startDate'];
-                    $end = $_POST['endDate'];
-    
+                    print_r("Aqui");
                     $project = array(
                         'projectName' => $_POST['title'],
                         'startDate' => $_POST['startDate'],
@@ -39,12 +34,14 @@
                     
                     $task = array(
                         'id' => $_POST['task_id'],
-                        'description' => $_POST['title'],
+                        'description' => $_POST['description'],
                         'startDate' => $_POST['startDate'],
                     );
                     $taskController->updateTask($id, $task);
 
                 }
+
+                echo json_encode('Item aatualziado.');
                 break;
                 
             
@@ -215,77 +212,6 @@
 
 
     <div class="overlay" id="overlay"></div>
-    <!-- <div class="modal" id="editModal">
-        <div class="modal-wrapper">
-            <div class="modal-header">
-                <h2>Adicionar Projeto</h2>
-            </div>
-            <div class="modal-body">
-                
-            <form method="POST" id="addProjectForm" name="addProjectForm">
-                <div class="input-row">
-                    <label for="projectName">Nome do projeto:</label>
-                    <input
-                        type="text"
-                        id="projectName"
-                        name="projectName"
-                        placeholder="Qual o nome do projeto?"
-                    >
-                </div>
-                <div class="input-row">
-                    <label for="projectDescription">Descrição</label>
-                    <textarea name="projectDescription" 
-                        id="projectDescription"
-                        name="projectDescription"
-                        placeholder="Faça uma breve descrição do projeto...">
-                    </textarea>
-                </div>
-                <div class="input-row">
-                    <label for="startDate">Início</label>
-                    <input
-                        type="date"
-                        id="startDate"
-                        name="startDate"
-                    >
-                </div>
-                <div class="input-row">
-                    <label for="deadline">Deadline</label>
-                    <input
-                        type="date"
-                        id="deadline"
-                        name="deadline"
-                    >
-                </div>
-                <div class="input-row">
-                    <label for="projectPriority">Prioridade</label>
-                    <select
-                        id="projectPriority"
-                        name="projectPriority"
-                    >   
-  
-                    </select>
-                </div>
-                <div class="modal-footer">
-                    <button
-                        type="button"
-                        id="closeCreateModal"
-                        class="pill-button secondary"
-                    >
-                        Cancelar
-                    </button>
-                    <button
-                        type="submit"
-                        id="submitProject"
-                        class="pill-button"
-                    >
-                        <i class="fa-solid fa-plus"></i>
-                        Adicionar
-                    </button>
-                </div>
-            </form>
-        </div>
-    </div> -->
-
     
     <div class="modal" id="detailsModal">
         <div class="modal-wrapper">
@@ -318,9 +244,6 @@
                     <span>à</span>
                     <span id="endDate"></span>
                 </div>
-
-                <!-- <hr class="light-separator"> -->
-
             </div>            
             <div class="modal-footer">
                 <div class="left-wrapper">
@@ -349,6 +272,73 @@
     </div>
 
 
+    <div class="modal" id="editModal">
+        <div class="modal-wrapper">
+            <div class="modal-header">
+                <h2>Atualizar Evento</h2>
+            </div>
+            <div class="modal-body">
+                
+            <form method="POST" id="editForm" name="editForm">
+                <div class="input-row">
+                    <label for="name">Nome:</label>
+                    <input
+                        type="text"
+                        id="name"
+                        name="name"
+                        placeholder="Nome do evento"
+                    >
+                </div>
+                <div class="input-row">
+                    <label for="description">Descrição</label>
+                    <textarea name="description" 
+                        id="description"
+                        name="description"
+                        placeholder="Informe a descrição...">
+                    </textarea>
+                </div>
+                <div class="input-row">
+                    <label for="startDate">Início</label>
+                    <input
+                        type="date"
+                        id="startDate"
+                        name="startDate"
+                    >
+                </div>
+                <div class="input-row">
+                    <label for="endDate">Deadline</label>
+                    <input
+                        type="date"
+                        id="endDate"
+                        name="endDate"
+                    >
+                </div>
+                <div class="input-row">
+                    <label for="priority">Prioridade</label>
+                    <select
+                        id="priority"
+                        name="priority"
+                    >   
+  
+                    </select>
+                </div>
+                <div class="modal-footer">
+                    <a role="button" class="inline-button" onClick="hideModals()">
+                        <i class="fa-solid fa-xmark"></i>
+                        Cancelar
+                    </a>
+                    <button
+                        type="button"
+                        id="submitUpdate"
+                        class="pill-button"
+                    >
+                        <i class="fa-solid fa-check"></i>
+                        Confirmar
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
 
 </body>
 </html>
