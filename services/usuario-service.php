@@ -12,10 +12,10 @@ class UsuarioService {
     
     public function login($email, $senha) {
 
-        $query = 'select * from tb_user where email = :email and senha = :senha';
-        $sql = $this->pdo->prepare($query);
-        $sql->bindValue(':email', $email);
-        $sql->bindValue(':senha', $senha);
+        $query = 'select * from tb_user where email = "' . $email . '" and senha = "' . $senha . '"';
+        // print_r(" >> query: " . $query);
+
+        $sql = $this->pdo->query($query); 
 
         try{
             $sql->execute();
@@ -24,7 +24,21 @@ class UsuarioService {
             throw new Exception("Error logging in: " . $e->getMessage());
         }
     }
+    
+    // public function login($email, $senha) {
 
+    //     $query = 'select * from tb_user where email = :email and senha = :senha';
+    //     $sql = $this->pdo->prepare($query);
+    //     $sql->bindValue(':email', $email);
+    //     $sql->bindValue(':senha', $senha);
+
+    //     try{
+    //         $sql->execute();
+    //         return $sql -> fetch(PDO::FETCH_ASSOC);
+    //     } catch (PDOException $e) {
+    //         throw new Exception("Error logging in: " . $e->getMessage());
+    //     }
+    // }
 
     public function signup($nome, $email, $senha) {
 
