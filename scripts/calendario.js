@@ -122,10 +122,11 @@ function openDetails(details) {
     details.type === 'TASK'? 
         $('#type').text('Task') : $('#type').text('Projeto');
 
-    
     if(details.priority) {
-        $('#priority').text(priorities[details.priority].title);
-        $('#priority').addClass(`status ${priorities[details.priority].color}`);
+        const index = Number(details.priority) -1;
+        
+        $('#priority').text(priorities[index].title);
+        $('#priority').addClass(`status ${priorities[index].color}`);
     }
     else {
         $('#priority').text('Não disponivel');    
@@ -153,21 +154,30 @@ function showEditModal(details) {
     $('#overlay').fadeIn();
     $('#editModal').fadeIn();
 
-    $('textarea#name').val(details.title || details.description || "Não disponível");
+    $('input#name').val(details.title || "Não disponível");
     $('textarea#description').val(details.description || "Não disponível");
     $('input#createdAt').val(details.createdAt || "Não disponível");
     $('input#startDate').val(details.startDate || "Não disponível");
     $('input#endDate').val(details.endDate || "Não disponível");
+    $('select#priority').val(Number(details.priority) || 0);
 };
 
-function closeModals() {
-    $('#overlay').hide();
+function closeModals() { 
+    resetEditForm();
+    $('#overlay').hide(); 
     $('#detailsModal').hide();
     $('#editModal').hide();
 }
 
-function hideModals() {
+function hideModals() {  
+    resetEditForm(); 
     $('#overlay').fadeOut();
     $('#detailsModal').fadeOut();
     $('#editModal').fadeOut();
+}
+
+function resetEditForm() {
+    $('#editForm input[type="text"]').val('');
+    $('#editForm textarea').val('');
+    $('#editForm select').val('');
 }

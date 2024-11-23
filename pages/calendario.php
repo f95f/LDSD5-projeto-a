@@ -319,7 +319,12 @@
                         id="priority"
                         name="priority"
                     >   
-  
+                        <option value="0" selected disabled>Selecione</option>
+                        <option value="1">Baixa</option>
+                        <option value="2">Média</option>                        <option value="1">Baixa</option>
+                        <option value="3">Alta</option>
+                        <option value="4">Crítica</option>
+
                     </select>
                 </div>
                 <div class="modal-footer">
