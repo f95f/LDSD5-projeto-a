@@ -72,12 +72,6 @@ class TaskController{
         }
     }
 
-    public function changeTaskStatus($taskId) {
-        if($taskId) {
-            $this -> service -> changeTaskStatus($taskId);
-        }
-    }
-
     public function getTasksFromProject($projectId) {
         if(!$projectId) {
             return;
@@ -135,6 +129,11 @@ class TaskController{
         }
 
         return $tasks;
+    }
+
+    public function changeStatus($taskId, $status) {
+        $formattedStatus = $status? 1 : 0;
+        return $this->service->changeTaskStatus($taskId, $formattedStatus);
     }
 
     private function getPriority($id, $priorities) {

@@ -53,7 +53,20 @@
                 echo json_encode('Item atualizado.');
                 break;
                 
-            
+
+            case 'change-status':
+
+                $id = $_POST['taskId'];
+                $status = $_POST['completed'];
+
+                $result = $taskController->changeStatus($id, $status);
+
+                echo json_encode($result);
+                break;
+
+
+
+
             case 'delete':
 
                 $id = $_POST['task_id'];
@@ -216,6 +229,17 @@
         <div class="modal-wrapper">
             <div class="modal-header">
                 <h2>Detalhes: <span id="eventDetails"></span></h2>
+                <form method="POST" id="completeForm" name="completeForm">
+                    <label class="switch" for="completed">
+                        <input 
+                            type="checkbox"
+                            id="completed"
+                            name="completed">
+                        <span class="slider round"></span>
+                    </label>
+                    Concluída
+                    <input type="hidden" id="taskId" name="taskId">
+                </form>
             </div>
             <div class="modal-body">
                 <div class="info-row">
@@ -248,6 +272,7 @@
                     <span class="label">Prioridade:</span>
                     <span id="priority"></span>
                 </div>
+
             </div>            
             <div class="modal-footer">
                 <div class="left-wrapper">

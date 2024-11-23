@@ -39,6 +39,20 @@ $('document').ready(function() {
         });
     });
 
+    $('#completed').change(function() {
+        $.ajax({
+            type: 'POST',
+            url: '',
+            data: `action=change-status&${$('#completeForm').serialize()}`,
+            success: function(data) {
+                console.info('Form submitted successfully', data);
+
+                setStatus({ status: data, type: 'TASK' })
+            }
+        });
+    });
+    
+
 
 });
 
@@ -92,50 +106,17 @@ function openDetails(details) {
     $('#overlay').fadeIn();
     $('#detailsModal').fadeIn();
 
-    const priorities = [
-        { title: 'Baixa', color: 'neutral' },
-        { title: 'Média', color: 'success' },
-        { title: 'Alta', color: 'warning' },
-        { title: 'Crítica', color: 'danger' },
-    ]
-
-    const statuses = [
-        { title: 'Backlog', color: 'info' },
-        { title: 'Em progresso', color: 'secondary' },
-        { title: 'Concluído', color: 'success' },
-        { title: 'Parado', color: 'warning' },
-        { title: 'Atrasado', color: 'danger' },
-        { title: 'Cancelado', color: 'neutral' },
-    ]
-
-    details.type === 'TASK'? 
-        $('#type').text('Task') : $('#type').text('Projeto');
-
-    if(details.priority) {
-        const index = Number(details.priority) -1;
-        
-        $('#priority').text(priorities[index].title);
-        $('#priority').addClass(`status ${priorities[index].color}`);
+    if(details.type === "TASK") {
+        $('#completeForm').removeClass('hidden');
+        $('#type').text('Task')
     }
     else {
-        $('#priority').text('Não disponivel');    
+        $('#completeForm').addClass('hidden');
+        $('#type').text('Projeto');
     }
 
-
-    if(details.type === "PROJECT") {
-        const index = Number(details.status) -1;
-        
-        $('#status').text(statuses[index].title);
-        $('#status').addClass(`status ${statuses[index].color}`);
-
-    }
-    else {
-
-        $('#status').text(details.status === 0? 'Em progresso' : 'Concluído');
-        $('#status').addClass(details.status === 0? 'status secondary' : 'status success');
-
-    }
-
+    setStatus(details);
+    setPriority(details);
 
     $('#eventDetails').text(details.title);
     $('#description').text(details.description || "Não disponível");
@@ -143,6 +124,8 @@ function openDetails(details) {
     $('#startDate').text(details.startDate || "Não disponível");
     $('#endDate').text(details.endDate || "Não disponível");
     $('#projectId').val(details.projectId || 0);
+    $('#taskId').val(details.id || 0);
+    $('#completed').prop('checked', details.status === 1);
 
 
     $('#submitUpdate').data('id', details.id);
@@ -196,4 +179,50 @@ function resetEditForm() {
     $('#editForm input[type="text"]').val('');
     $('#editForm textarea').val('');
     $('#editForm select').val('');
+}
+
+function setStatus(details) {
+
+    const statuses = [
+        { title: 'Backlog', color: 'info' },
+        { title: 'Em progresso', color: 'secondary' },
+        { title: 'Concluído', color: 'success' },
+        { title: 'Parado', color: 'warning' },
+        { title: 'Atrasado', color: 'danger' },
+        { title: 'Cancelado', color: 'neutral' },
+    ]
+
+    if(details.type === "PROJECT") {
+        const index = Number(details.status) -1;
+        
+        $('#status').text(statuses[index].title);
+        $('#status').addClass(`status ${statuses[index].color}`);
+
+    }
+    else {
+        $('#status').attr('class', '');
+        $('#status').text(Number(details.status) === 0? 'Em progresso' : 'Concluído');
+        $('#status').addClass(Number(details.status) === 0? 'status secondary' : 'status success');
+
+    }
+}
+
+function setPriority(details){
+    const priorities = [
+        { title: 'Baixa', color: 'neutral' },
+        { title: 'Média', color: 'success' },
+        { title: 'Alta', color: 'warning' },
+        { title: 'Crítica', color: 'danger' },
+    ]
+
+    if(details.priority) {
+        const index = Number(details.priority) -1;
+        
+        $('#priority').text(priorities[index].title);
+        $('#priority').addClass(`status ${priorities[index].color}`);
+    }
+    else {
+        $('#priority').text('Não disponivel');    
+    }
+
 }

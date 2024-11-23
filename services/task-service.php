@@ -97,15 +97,18 @@ class TaskService {
         }
     }
 
-    public function changeTaskStatus($taskId) {
-        $task = $this -> getTaskById($taskId);
-            
+    public function changeTaskStatus($taskId, $status) {
+        
         try {
             $query = 'update tb_task set task_completed = :status where id = :id';
             $sql = $this->pdo->prepare($query);
-            $sql->bindValue(':status', $task->completed);
+            $sql->bindValue(':status', $status);
             $sql->bindValue(':id', $taskId);
-            return $sql->execute();
+            $sql->execute();
+
+            $task = $this -> getTaskById($taskId);
+
+            return $task[0]['task_completed'];
         } catch (PDOException $e) {
             throw new Exception("Error deleting task: " . $e->getMessage());
         }

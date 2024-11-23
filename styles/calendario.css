@@ -1,3 +1,9 @@
 .info-row {
     margin: 16px 0;
 }
+
+#completeForm {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
