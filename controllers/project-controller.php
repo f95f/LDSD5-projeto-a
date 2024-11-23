@@ -117,11 +117,11 @@ class ProjectController {
             $projectData['project_priority'],
             $projectData['project_status'],
             $projectData['project_description'],
-            $projectData['created_at'],
             $projectData['start_date'],
+            null,
             $projectData['deadline']
         );
-        $this -> service -> updateProject($project);
+        $this -> service -> updateProject($project->getId(), $project);
     }
 
     public function deleteProject($projectId) {

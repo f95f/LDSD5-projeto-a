@@ -6,7 +6,7 @@ class Project {
     private $project_priority;
     private $project_status;
     private $project_description;
-    private $startDate;
+    private $start_date;
     private $created_at;
     private $deadline;
 

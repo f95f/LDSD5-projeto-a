@@ -24,6 +24,7 @@ class ProjectService {
         }
     }
 
+
     public function getProjectNames() {
         $project = [];
         $query = 'select id, project_name from tb_project';
@@ -37,6 +38,7 @@ class ProjectService {
             throw new Exception("Error fetching project: " . $e->getMessage());
         }
     }
+
 
     public function searchProjects($term) {
         $projects = [];
@@ -54,6 +56,7 @@ class ProjectService {
         }
     }
 
+
     public function getProjectById($projectId) {
         $query = 'SELECT * FROM tb_project WHERE id = :id';
         try {
@@ -68,6 +71,7 @@ class ProjectService {
         }
     }
 
+    
     public function createProject($project) {
         $query = '
             INSERT INTO tb_project (
@@ -105,16 +109,29 @@ class ProjectService {
     }
 
     public function updateProject($projectId, $project) {
-        $query = 'update tb_project set project_description = :description where id = :id';
+        $query = 'update tb_project set 
+                    project_name = :name,
+                    project_priority = :priority,
+                    project_status = :status,
+                    project_description = :description,
+                    start_date = :startDate,
+                    deadline = :endDate
+                  where id = :id';
         try{
             $sql = $this->pdo->prepare($query);
-            $sql->bindValue(':description', $project);
             $sql->bindValue(':id', $projectId);
+            $sql->bindValue(':name', $project->getProjectName());
+            $sql->bindValue(':priority', $project->getProjectPriority());
+            $sql->bindValue(':status', $project->getProjectStatus());
+            $sql->bindValue(':description', $project->getDescription());
+            $sql->bindValue(':startDate', $project->getStartDate());
+            $sql->bindValue(':endDate', $project->getDeadline());
             return $sql->execute();
         } catch (PDOException $e) {
             throw new Exception("Error updating project: " . $e->getMessage());
         }
     }
+    
 
     public function deleteProject($projectId) {
         try{

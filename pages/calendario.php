@@ -19,11 +19,17 @@
             case 'update':
                 
                 if($type == 'PROJECT') {
-                    print_r("Aqui");
+
                     $project = array(
-                        'projectName' => $_POST['title'],
-                        'startDate' => $_POST['startDate'],
-                        'deadline' => $_POST['deadline'],
+                        'id' => $_POST['id'],
+                        'project_name' => $_POST['name'],
+                        'project_priority' => $_POST['priority'],
+                        'project_status' => 1,
+                        'project_description' => $_POST['description'],
+                        'project_status' => $_POST['status'],
+                        'created_at' => $_POST['startDate'],
+                        'start_date' => $_POST['startDate'],
+                        'deadline' => $_POST['endDate']
                     );
     
                     $projectController->updateProject($project);
@@ -41,7 +47,7 @@
 
                 }
 
-                echo json_encode('Item aatualziado.');
+                echo json_encode('Item atualizado.');
                 break;
                 
             
@@ -79,7 +85,8 @@
                         'createdAt' => $project['created_at'],
                         'end' => $project['deadline'],
                         'deadline' => $project['deadline'],
-                        'priority' => $project['project_priority']
+                        'priority' => $project['project_priority'],
+                        'status' => $project['project_status']
                     ];
                 }
 
@@ -182,7 +189,8 @@
                     endDate: info.event.extendedProps.deadline || '',
                     createdAt: info.event.extendedProps.createdAt || '',
                     description: info.event.extendedProps.description || '',
-                    priority: info.event.extendedProps.priority || ''
+                    priority: info.event.extendedProps.priority || '',
+                    status: info.event.extendedProps.status || ''
                 };
 
 
@@ -222,6 +230,11 @@
                 <div class="info-row">
                     <span class="label">Tipo:</span>
                     <span id="type"></span>
+                </div>
+                
+                <div class="info-row">
+                    <span class="label">Status:</span>
+                    <span id="status"></span>
                 </div>
                 
                 <div class="info-row">
@@ -321,9 +334,25 @@
                     >   
                         <option value="0" selected disabled>Selecione</option>
                         <option value="1">Baixa</option>
-                        <option value="2">Média</option>                        <option value="1">Baixa</option>
+                        <option value="2">Média</option>
                         <option value="3">Alta</option>
                         <option value="4">Crítica</option>
+
+                    </select>
+                </div>
+                <div class="input-row">
+                    <label for="status">Status</label>
+                    <select
+                        id="status"
+                        name="status"
+                    >   
+                        <option value="0" selected disabled>Selecione</option>
+                        <option value="1">Backlog</option>
+                        <option value="2">Em progresso</option>
+                        <option value="3">Concluído</option>
+                        <option value="4">Parado</option>
+                        <option value="5">Atrasado</option>
+                        <option value="6">Cancelado</option>
 
                     </select>
                 </div>
