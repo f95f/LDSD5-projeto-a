@@ -21,7 +21,7 @@ class CalendarioController {
 
 
         $items = $this->service->getAllTasks($startDate, $endDate);
-
+        
         $filteredItems = array_filter($items, function($value) {
             return $value['project_id'] == 0;
         });

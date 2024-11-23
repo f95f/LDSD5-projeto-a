@@ -59,7 +59,7 @@ class TaskController{
             $taskData['description'],
             $taskData['taskPriority'],
             0,
-            $projectId,
+            $taskData['projectId'],
             $taskData['startDate'],
             $taskData['deadline']
         );

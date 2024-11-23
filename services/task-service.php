@@ -61,18 +61,22 @@ class TaskService {
 
     public function updateTask($taskId, $taskData) {
         $query = '
-        update tb_task set 
-            task_description = :description,
-            created_at = :createdAt 
-        where id = :id';
+            update tb_task set 
+                task_description = :description,
+                task_completed = :completed,
+                task_priority = :priority,
+                project_id = :project,
+                deadline = :deadline,
+                created_at = :createdAt 
+            where id = :id';
         try{
             $sql = $this->pdo->prepare($query);            
             $sql->bindValue(':description', $taskData -> getTaskDescription());
-            // $sql->bindValue(':priority', $taskData -> getTaskPriority());
-            // $sql->bindValue(':completed', $taskData -> isTaskCompleted());
-            // $sql->bindValue(':project', $taskData -> getProjectId());
+            $sql->bindValue(':priority', $taskData -> getTaskPriority());
+            $sql->bindValue(':completed', $taskData -> isTaskCompleted());
+            $sql->bindValue(':project', $taskData -> getProjectId());
             $sql->bindValue(':createdAt', $taskData -> getCreatedAt());
-            // $sql->bindValue(':deadline', $taskData -> getDeadline());
+            $sql->bindValue(':deadline', $taskData -> getDeadline());
             $sql->bindValue(':id', $taskId);
             return $sql->execute();
         } catch (PDOException $e) {

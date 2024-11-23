@@ -21,7 +21,7 @@ $('document').ready(function() {
 
     $('#submitUpdate').click(function(event) { 
         event.preventDefault();
-        console.warn(" Should be updating")
+        
         let formData = $('#editForm').serialize();
         let type = $(this).data('type');
         let id = $(this).data('id');
@@ -100,8 +100,8 @@ function openDetails(details) {
     ]
 
     const statuses = [
-        { title: 'Backlog', color: 'neutral' },
-        { title: 'Em progresso', color: 'info' },
+        { title: 'Backlog', color: 'info' },
+        { title: 'Em progresso', color: 'secondary' },
         { title: 'Concluído', color: 'success' },
         { title: 'Parado', color: 'warning' },
         { title: 'Atrasado', color: 'danger' },
@@ -121,21 +121,28 @@ function openDetails(details) {
         $('#priority').text('Não disponivel');    
     }
 
-    if(details.status) {
+
+    if(details.type === "PROJECT") {
         const index = Number(details.status) -1;
         
         $('#status').text(statuses[index].title);
         $('#status').addClass(`status ${statuses[index].color}`);
+
     }
     else {
-        $('#status').text('Não disponivel');    
+
+        $('#status').text(details.status === 0? 'Em progresso' : 'Concluído');
+        $('#status').addClass(details.status === 0? 'status secondary' : 'status success');
+
     }
+
 
     $('#eventDetails').text(details.title);
     $('#description').text(details.description || "Não disponível");
     $('#createdAt').text(details.createdAt || "Não disponível");
     $('#startDate').text(details.startDate || "Não disponível");
     $('#endDate').text(details.endDate || "Não disponível");
+    $('#projectId').val(details.projectId || 0);
 
 
     $('#submitUpdate').data('id', details.id);
@@ -153,8 +160,17 @@ function showEditModal(details) {
     $('#overlay').fadeIn();
     $('#editModal').fadeIn();
 
+    if(details.type === "TASK") {
+        $('#nameRow').addClass('hidden');
+        $('#statusRow').addClass('hidden');
+    }
+    else {
+        $('#nameRow').removeClass('hidden');
+        $('#statusRow').removeClass('hidden');    
+    }
+
     $('input#name').val(details.title || "Não disponível");
-    $('textarea#description').val(details.description || "Não disponível");
+    $('textarea#description').val(details.description || details.title || "Não disponível");
     $('input#createdAt').val(details.createdAt || "Não disponível");
     $('input#startDate').val(details.startDate || "Não disponível");
     $('input#endDate').val(details.endDate || "Não disponível");

@@ -36,12 +36,15 @@
                 } 
                 else {
                     
-                    $id = $_POST['task_id'];
+                    $id = $_POST['id'];
                     
                     $task = array(
-                        'id' => $_POST['task_id'],
+                        'id' => $_POST['id'],
                         'description' => $_POST['description'],
+                        'taskPriority' => $_POST['priority'],
+                        'projectId' => $_POST['projectId'],
                         'startDate' => $_POST['startDate'],
+                        'deadline' => $_POST['endDate'],
                     );
                     $taskController->updateTask($id, $task);
 
@@ -89,7 +92,7 @@
                         'status' => $project['project_status']
                     ];
                 }
-
+                
                 foreach ($tasks as $task) {
                     $events[] = [
                         'id' => $task['id'],
@@ -100,7 +103,9 @@
                         'createdAt' => $task['created_at'],
                         'end' => $task['deadline'],
                         'deadline' => $task['deadline'],
-                        'priority' => $task['task_priority']
+                        'priority' => $task['task_priority'],
+                        'projectId' => $task['project_id'],
+                        'status' => $task['task_completed']
                     ];
                 }
 
@@ -190,25 +195,11 @@
                     createdAt: info.event.extendedProps.createdAt || '',
                     description: info.event.extendedProps.description || '',
                     priority: info.event.extendedProps.priority || '',
-                    status: info.event.extendedProps.status || ''
+                    status: info.event.extendedProps.status || 0
                 };
 
 
                 openDetails(data);
-                
-                // if (action) {
-                //     // Edição
-                //     let title = prompt("Novo título:", info.event.title);
-                //     let startDate = prompt("Nova data de início (YYYY-MM-DD):", info.event.start.toISOString().split('T')[0]);
-                //     let endDate = prompt("Nova data de fim (YYYY-MM-DD):", info.event.end ? info.event.end.toISOString().split('T')[0] : startDate);
-
-                //     if (title && startDate && endDate) {
-                //         updateTask(taskId, title, startDate, endDate); // Chama a função de atualização
-                //     }
-                // } else {
-                //     // Exclusão
-                //     deleteTask(taskId); // Chama a função de exclusão
-                // }
             }
         });
 
@@ -236,11 +227,6 @@
                     <span class="label">Status:</span>
                     <span id="status"></span>
                 </div>
-                
-                <div class="info-row">
-                    <span class="label">Prioridade:</span>
-                    <span id="priority"></span>
-                </div>
 
                 <div class="info-row">
                     <span class="label">Descrição:</span>
@@ -256,6 +242,11 @@
                     <span id="startDate"></span>
                     <span>à</span>
                     <span id="endDate"></span>
+                </div>
+                
+                <div class="info-row">
+                    <span class="label">Prioridade:</span>
+                    <span id="priority"></span>
                 </div>
             </div>            
             <div class="modal-footer">
@@ -293,7 +284,7 @@
             <div class="modal-body">
                 
             <form method="POST" id="editForm" name="editForm">
-                <div class="input-row">
+                <div class="input-row" id="nameRow">
                     <label for="name">Nome:</label>
                     <input
                         type="text"
@@ -340,7 +331,7 @@
 
                     </select>
                 </div>
-                <div class="input-row">
+                <div class="input-row" id="statusRow">
                     <label for="status">Status</label>
                     <select
                         id="status"
@@ -356,6 +347,10 @@
 
                     </select>
                 </div>
+                <input 
+                    type="hidden"
+                    name="projectId" 
+                    id="projectId">
                 <div class="modal-footer">
                     <a role="button" class="inline-button" onClick="hideModals()">
                         <i class="fa-solid fa-xmark"></i>
