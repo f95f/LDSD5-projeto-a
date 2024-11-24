@@ -170,37 +170,21 @@ $(document).ready(function () {
         });
     });
 
-    $('.progress').on('click', function () {
-        if ($(this).is(':checked')) {
-            $(this).addClass('done');
-        } else {
-            $(this).removeClass('done');
-        }
-    });
-
-    $('.progress').on('change', function () {
-
-        var taskId = $(this).closest('.task').find('.progress').data('task-id');
-        const completed = $(this).is(':checked') ? 'true' : 'false';
-    
+    $('#taskList').on('change', 'form#completeForm input[name="completed"]', function() {
+        var taskId = $(this).closest('form').find('.taskId').val();
+        var completed = $(this).is(':checked') ? 1 : 0;
+        
         $.ajax({
+            type: 'POST',
             url: '',
-            type: 'PUT',
-            data: {
-                id: taskId,
-                completed: completed
-            },
-            success: function(response) {
-                // if (response.success) { alert(1)
-                    location.reload();
-                // }
-            }.bind(this), // Bind 'this' to access the delete button
-            error: function(xhr, status, error) {
-                console.error('Error deleting task:', error);
+            data: `action=change-status&taskId=${taskId}&completed=${completed}`,
+            success: function(data) {
+                console.info('Form submitted successfully', data);
             }
         });
-
-    })
+    });
+    
+    
 
 });
 
@@ -252,6 +236,28 @@ let makeCard = function(item) {
             <span class="light-text">até</span>
             <span>${item.deadline}</span>
             <span class="light-text">|</span>
+
+
+
+            <form method="POST" id="completeForm" name="completeForm">
+                <label class="switch" for="${item.id}">
+                    <input 
+                        type="checkbox"
+                        class="completed"
+                        id="${item.id}"
+                        ${item.task_completed? 'checked' : ''}
+                        name="completed">
+                    <span class="slider round"></span>
+                </label>
+                Concluída
+                <input type="hidden" class="taskId" name="taskId" value="${item.id}"">
+            </form>
+
+
+
+
+            <span class="light-text">|</span>
+
             <i class="fa-solid fa-edit light-text"></i>
             <a  role="button"
                 class="inline-button deleteTaskButton"

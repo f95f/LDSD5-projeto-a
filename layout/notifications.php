@@ -9,31 +9,10 @@
 
     $daysBeforeDeadline = $usuarioController->getDeadlinePreferences();
 
-    $projects = $controller->getAllProjectsUntil($daysBeforeDeadline);
-    $tasks = $controller->getAllTasksUntil($daysBeforeDeadline);
+    $notificationProjects = $controller->getAllProjectsUntil($daysBeforeDeadline);
+    $notificationTasks = $controller->getAllTasksUntil($daysBeforeDeadline);
 
-    $amountOfNotifications = count($tasks) + count($projects);
-
-
-    // if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        
-    //     $action = $_POST['action']? $_POST['action'] : '';
-
-    //     switch($action) {
-
-    //         case "UPDATE_PREFERENCES":
-    //             $preferences = $_POST['daysBeforeDeadlineWarning'];
-
-    //             $usuarioController->setDeadlinePreferences($preferences);
-    //             echo json_encode('Item atualizado.');
-    //             exit();
-
-    //         break;
-            
-    //     }
-
-        
-    // }
+    $amountOfNotifications = count($notificationTasks) + count($notificationProjects);
     
 
 ?>
@@ -52,7 +31,7 @@
 
     <div class="notification-content">
 
-        <?= (empty($tasks) && empty($projects))? 
+        <?= (empty($notificationTasks) && empty($notificationProjects))? 
             '<div class="no-activity-container">
                 <i class="fa-solid fa-calendar-check"></i>
                 <h3>Tudo em dia!</h3>
@@ -60,7 +39,7 @@
             </div>' 
         : '' ?>
 
-        <?php foreach($tasks as $item): ?>
+        <?php foreach($notificationTasks as $item): ?>
             <div class="notification-card">
                 <span class="notification-card-title">
                     <i class="fa-solid fa-list-check light-icon"></i>
@@ -82,7 +61,7 @@
         <?php endforeach ?>
 
 
-        <?php foreach($projects as $item): ?>
+        <?php foreach($notificationProjects as $item): ?>
             <div class="notification-card">
                 <span class="notification-card-title">
                     <i class="fa-solid fa-diagram-project light-icon"></i>
