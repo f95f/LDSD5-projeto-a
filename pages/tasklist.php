@@ -76,16 +76,19 @@
                 $class = 'neutral';
                 break;
             case 'CONCLUIDO':
-                case 'BAIXA':
+            case 'MEDIA':
+            case 2:
                 $class = 'success';
                 break;
             case 'PARADO':
             case 'ATRASADO':
             case 'ALTA':
+            case 3:
                 $class = 'warning';
                 break;
             case 'CANCELADO':
             case 'CRITICA':
+            case 4:
                 $class = 'danger';
                 break;
             default:
@@ -224,26 +227,29 @@
 
                         <i class="fa-solid 
                         <?php
-
+                        
                             echo getStatusColor($item['task_priority']).' ';
 
                             switch($item['task_priority']){
-                                case 'MEDIA':
-                                    echo 'fa-circle-minus';
+                                case 'BAIXA':
+                                case 1:
+                                    echo 'fa-circle';
                                 break;
                                 case 'ALTA':
+                                case 3:
                                     echo 'fa-circle-info';
                                 break;
                                 case 'CRITICA':
+                                case 4:
                                     echo 'fa-circle-exclamation';
                                 break;
                                 default:
-                                    echo 'fa-circle';
+                                    echo 'fa-circle-minus';
                             }
 
                         ?> light-text status">
                         </i>
-
+                        <?= $item['task_priority'] ?>
                         <span><?= $item['task_description'] ?></span>
                     </div>
                     <div class="right-card-wrapper">
