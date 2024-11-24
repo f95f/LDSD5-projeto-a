@@ -8,6 +8,7 @@
     $priorityController = new PriorityController();
 
     $tasks = $controller->getTasks();
+    $taskList = $tasks;
     $priorities = $priorityController->getAllPriorities();
     $projects = $projectController->getProjectNames();
 
@@ -57,7 +58,23 @@
                 $controller->updateTask($taskId, $newDescription, $newDeadline);
                 echo json_encode(['success' => true, 'message' => 'Task updated']);
                 break;
-                
+
+
+            
+            case 'change-status':
+
+                $id = $_POST['taskId'];
+                $status = $_POST['completed'];
+
+                $result = $controller->changeStatus($id, $status);
+
+                echo json_encode($result);
+                exit();
+                break;
+    
+    
+    
+    
             default:
                 echo json_encode(['success' => false, 'message' => 'Invalid action']);
                 break;
@@ -76,16 +93,19 @@
                 $class = 'neutral';
                 break;
             case 'CONCLUIDO':
-                case 'BAIXA':
+            case 'MEDIA':
+            case 2:
                 $class = 'success';
                 break;
             case 'PARADO':
             case 'ATRASADO':
             case 'ALTA':
+            case 3:
                 $class = 'warning';
                 break;
             case 'CANCELADO':
             case 'CRITICA':
+            case 4:
                 $class = 'danger';
                 break;
             default:
@@ -93,8 +113,7 @@
         }
         
         return $class;
-    }
-
+    } 
 
     define("TITLE", "Tasks | Journalling");
     define("PAGE", "TASKS");
@@ -103,13 +122,14 @@
     include __DIR__ . '/../layout/header.php';
     include __DIR__ . '/../layout/notifications.php';
 ?>
+
 <header>
     <div class="title">
         <i class="fa-solid fa-list-check"></i>
         <h1>Gerenciamento de Tarefas</h1>
     </div>
 </header>
-<main>
+<main> 
     <div class="wrapper">
         
         <form method="POST" 
@@ -216,7 +236,7 @@
         <hr class="light-separator">
 
         <div class="info-row" id="taskList">
-            <?php foreach($tasks as $item): ?>
+            <?php foreach($tasks as $item): ?> 
                 <div class="task-card">
                     <div class="left-card-wrapper">
                         <i class="fa-solid fa-list-check light-text"></i>
@@ -224,32 +244,57 @@
 
                         <i class="fa-solid 
                         <?php
-
+                        
                             echo getStatusColor($item['task_priority']).' ';
 
                             switch($item['task_priority']){
-                                case 'MEDIA':
-                                    echo 'fa-circle-minus';
+                                case 'BAIXA':
+                                case 1:
+                                    echo 'fa-circle';
                                 break;
                                 case 'ALTA':
+                                case 3:
                                     echo 'fa-circle-info';
                                 break;
                                 case 'CRITICA':
+                                case 4:
                                     echo 'fa-circle-exclamation';
                                 break;
                                 default:
-                                    echo 'fa-circle';
+                                    echo 'fa-circle-minus';
                             }
 
                         ?> light-text status">
                         </i>
-
+                        
                         <span><?= $item['task_description'] ?></span>
                     </div>
+
+
                     <div class="right-card-wrapper">
-                        
+
                         <span class="light-text">até</span>
                         <span><?= $item['deadline'] ?></span>
+                        <span class="light-text">|</span>
+
+
+                        <form method="POST" id="completeForm" name="completeForm">
+                            <label class="switch" for="<?= $item['id'] ?>">
+                                <input 
+                                    type="checkbox"
+                                    class="completed"
+                                    id="<?= $item['id'] ?>"
+                                    <?php if ($item['task_completed']) : ?>
+                                        checked
+                                    <?php endif; ?>
+                                    name="completed">
+                                <span class="slider round"></span>
+                            </label>
+                            Concluída
+                            <input type="hidden" class="taskId" name="taskId" value="<?= $item['id'] ?>">
+                        </form>
+
+
                         <span class="light-text">|</span>
                         <i class="fa-solid fa-edit light-text"></i>
                         <a  role="button"
@@ -257,12 +302,13 @@
                             data-task-id="<?= $item['id'] ?>">
                             <i class="fa-solid fa-trash light-text"></i>
                         </a>
+
                     </div>
                 </div>
             <?php endforeach ?>
             <?php if(!is_array($tasks)): ?>
                 <span class="light-text large">
-                    Nenhuma task adicionada ao projeto...
+                    Nenhuma task adicionada...
                 </span>
             <?php endif?>
         </div>

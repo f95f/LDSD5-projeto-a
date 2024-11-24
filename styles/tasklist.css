@@ -44,7 +44,7 @@ h4 {
     margin-bottom: 16px;
 }
 
-hr.light-separator {
+.wrapper hr.light-separator {
     margin: 16px 0;
 }
 
@@ -52,4 +52,11 @@ hr.light-separator {
     display: flex;
     align-items: center;
     justify-content: space-between;;
+}
+
+#completeForm {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    scale: .8;
 }

@@ -8,4 +8,15 @@ class UsuarioController{
     function __construct() {
         $this -> service = new UsuarioService();
     }
+
+    function getDeadlinePreferences() {
+        $id = $_SESSION['id'];
+        return $this->service->getDeadlinePreferences($id);
+    }
+
+
+    function setDeadlinePreferences($daysBeforeDeadline) {
+        $id = $_SESSION['id'];
+        return $this->service->setDeadlinePreferences($id, $daysBeforeDeadline);
+    }
 }
