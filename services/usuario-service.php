@@ -40,6 +40,37 @@ class UsuarioService {
             throw new Exception("Error signing up: " . $e->getMessage());
         }
     }
+
+
+    public function getDeadlinePreferences($userId) {
+
+        $query = 'select daysBeforeDeadline from tb_user where id = :userId';
+        $sql = $this->pdo->prepare($query);
+        $sql->bindValue(':userId', $userId);
+    
+        try{
+            $sql->execute();
+            $result = $sql->fetch();
+            return $result['daysBeforeDeadline'];
+        } catch (PDOException $e) {
+            throw new Exception("Error signing up: " . $e->getMessage());
+        }
+    }
+    
+
+    public function setDeadlinePreferences($id, $daysBeforeDeadline) {
+        
+        $query = 'update tb_user set daysBeforeDeadline = :daysBeforeDeadline where id = :userId';
+        $sql = $this->pdo->prepare($query);
+        $sql->bindValue(':userId', $id);
+        $sql->bindValue(':daysBeforeDeadline', $daysBeforeDeadline);
+
+        try{
+            return $sql->execute();
+        } catch (PDOException $e) {
+            throw new Exception("Error signing up: " . $e->getMessage());
+        }
+    }
 }
 
 return new UsuarioService();

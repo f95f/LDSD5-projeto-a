@@ -490,7 +490,8 @@ main {
     Modal
 **************************/
 
-.overlay {
+.overlay,
+.preferencesOverlay {
     display: none;
     position: fixed;
     top: 0;

@@ -56,6 +56,9 @@
 
 .notification-content { 
     padding: 16px 0;
+    height: calc(100vh - 154px);
+    overflow-y: auto;
+    
 }
 
 .no-activity-container {
@@ -137,4 +140,16 @@
 .inline-button
 i {
     color: var(--secondary);
+}
+
+.notification-card hr.light-separator {
+    margin: unset;
+}
+
+.notification-footer {
+    padding: 16px;
+    display: flex;
+    gap: 16px;
+    align-items: center;
+    justify-content: flex-end;
 }

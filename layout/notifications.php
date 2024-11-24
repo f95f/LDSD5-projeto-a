@@ -7,12 +7,34 @@
     $controller = new CalendarioController();
     $usuarioController = new UsuarioController();
 
-    $daysBeforeDeadline = 3; // TODO trazer das configurações do usuário
+    $daysBeforeDeadline = $usuarioController->getDeadlinePreferences();
 
     $projects = $controller->getAllProjectsUntil($daysBeforeDeadline);
     $tasks = $controller->getAllTasksUntil($daysBeforeDeadline);
 
     $amountOfNotifications = count($tasks) + count($projects);
+
+
+    // if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        
+    //     $action = $_POST['action']? $_POST['action'] : '';
+
+    //     switch($action) {
+
+    //         case "UPDATE_PREFERENCES":
+    //             $preferences = $_POST['daysBeforeDeadlineWarning'];
+
+    //             $usuarioController->setDeadlinePreferences($preferences);
+    //             echo json_encode('Item atualizado.');
+    //             exit();
+
+    //         break;
+            
+    //     }
+
+        
+    // }
+    
 
 ?>
 
@@ -46,7 +68,6 @@
                 </span>
                 <hr class="light-separator">
                 <div class="notification-card-row">
-                    <!-- <hr class="light-separator"> -->
                     <span>
                         Até <?= $item['deadline'] ?>
                     </span>
@@ -69,7 +90,6 @@
                 </span>
                 <hr class="light-separator">
                 <div class="notification-card-row">
-                    <!-- <hr class="light-separator"> -->
                     <span>
                         Até <?= $item['deadline'] ?>
                     </span>
@@ -84,6 +104,19 @@
         <?php endforeach ?>
     </div>
 
+
+    <hr class="solid-separator">
+    <div class="notification-footer">
+        <a role="button" class="inline-button secondary" id="clearNotificationsButton">
+            <i class="fa-solid fa-broom"></i>
+            Limpar
+        </a>
+        <a role="button" class="inline-button secondary" id="preferencesButton">
+            <i class="fa-solid fa-user-gear"></i>
+            Preferências
+        </a>
+    </div>
+
 </div>
 
 <a  role="button" 
@@ -93,9 +126,58 @@
     <i class="fa-solid fa-bell"></i>
     
     <?= $amountOfNotifications?
-        '<span class="notification-amount">' . $amountOfNotifications . '</span>'
+        '<span class="notification-amount" id="notificationCounter">' . $amountOfNotifications . '</span>'
     : '' ?>
 
 </a>
+
+<div class="preferencesOverlay"></div>
+<div class="modal" id="preferencesModal">
+    <div class="modal-wrapper">
+        <div class="modal-header">
+            <h2>
+                <i class="fa-solid fa-user-gear"></i>
+                Preferências
+            </h2>
+        </div>
+
+        <div class="modal-body">
+            
+            <form method="POST" id="preferencesForm" name="preferencesForm">
+                <div class="input-row">
+                    <label for="daysBeforeDeadlineWarning">Dias antes do vencimento:</label>
+                    <input
+                        type="number"
+                        min="1"
+                        id="daysBeforeDeadlineWarning"
+                        name="daysBeforeDeadlineWarning"
+                        value="<?= $daysBeforeDeadline ?>"
+                        placeholder="Avisar com quantos dias de antecedência?"
+                    >
+                </div>
+                
+                <div class="modal-footer">
+                    <button
+                        type="button"
+                        id="closePreferencesModal"
+                        class="pill-button secondary"
+                    >
+                        Cancelar
+                    </button>
+                    <button
+                        type="submit"
+                        id="submitPreferences"
+                        class="pill-button"
+                    >
+                        <i class="fa-solid fa-floppy-disk"></i>
+                        Salvar
+                    </button>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>
+    
 
 <script src="../scripts/notification.js"></script>

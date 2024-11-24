@@ -51,6 +51,7 @@
                 }
 
                 echo json_encode('Item atualizado.');
+                exit();
                 break;
                 
 
@@ -62,6 +63,7 @@
                 $result = $taskController->changeStatus($id, $status);
 
                 echo json_encode($result);
+                exit();
                 break;
 
 
@@ -79,6 +81,7 @@
                 }
 
                 echo json_encode('Item excluído.');
+                exit();
                 break;
 
             default:
@@ -123,11 +126,11 @@
                 }
 
                 echo json_encode($events);
+                exit();
                 break;
         }
       
 
-      exit();
     }
 
     define("TITLE", "Calendário | Journalling");
