@@ -11,3 +11,130 @@
 .notification-menu:hover i {
     color: var(--secondary);
 }
+
+.notification-modal {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 0;
+    opacity: 0;
+    height: 100vh;
+    padding: 0;
+    border-left: 2px solid var(--secondary);
+    background-color: var(--background-light);
+    backdrop-filter: blur(16px);
+    z-index: 1000;
+    transition: all .2s ease;
+}
+
+.notification-modal.open {
+    width: min(480px, 100%);
+    padding: 16px 24px;
+    opacity: 1;
+}
+
+.notification-modal h2 {
+    font-family: var(--heading-font);
+}
+
+.notification-modal h2 i {
+    opacity: .4;
+    margin-right: 8px;
+}
+
+.notification-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 8px 0 16px;
+}
+
+.notification-header a#closeNotifications {
+    font-size: 1.4em;
+}
+
+
+.notification-content { 
+    padding: 16px 0;
+}
+
+.no-activity-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    width: 100%;
+    padding: 32px 8px;
+}
+.no-activity-container h3 {
+    font-size: 1.6em;
+    font-weight: 500;
+    color: var(--secondary);
+    opacity: .8;
+}
+
+.no-activity-container span {
+    margin-top: 8px;
+    opacity: .8;
+}
+.no-activity-container .fa-calendar-check {
+    font-size: 3.2em;
+    color: var(--secondary);
+    opacity: .8;
+}
+
+.notification-amount {
+    background-color: var(--secondary);
+    color: var(--primary);
+    padding: 4px 8px;
+    border-radius: 4px;
+    position: absolute;
+    top: -8px;
+    left: -8px;
+    font-weight: 700;
+    scale: .7
+}
+
+.notification-card {
+    width: 100%;
+    padding: 8px 16px;
+    border: 1px solid var(--border-color);
+    background-color: var(--background);
+    border-radius: 8px;
+    display: flex;
+    gap: 8px;
+    flex-direction: column;
+    justify-content: space-between;
+    margin-bottom: 16px;
+    transition: all .2s ease;
+}
+
+.notification-card:hover {
+    border: 1px solid var(--secondary);
+    background-color: var(--secondary-light);
+}
+.notification-card-title {
+    font-size: 1.2em;
+    color: var(--text-light);
+    font-weight: 500;
+    margin: 8px 0;
+}
+.light-icon {
+    opacity: .6;
+}
+
+.notification-card-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.notification-card:hover 
+.notification-card-row 
+.inline-button,
+.notification-card:hover 
+.notification-card-row 
+.inline-button
+i {
+    color: var(--secondary);
+}
