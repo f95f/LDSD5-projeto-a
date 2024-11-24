@@ -84,6 +84,13 @@ hr.light-separator {
 
 }
 
+hr.solid-separator {
+    border: unset;
+    border-bottom: 1px solid var(--primary);
+    width: 100%;
+
+}
+
 /************************* 
     Menu Lateral 
 **************************/

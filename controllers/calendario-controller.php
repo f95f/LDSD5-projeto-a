@@ -19,7 +19,6 @@ class CalendarioController {
 
     public function getAllTasksPerMonth($startDate, $endDate) {
 
-
         $items = $this->service->getAllTasks($startDate, $endDate);
         
         $filteredItems = array_filter($items, function($value) {
@@ -30,5 +29,26 @@ class CalendarioController {
         $filteredItems = array_values($filteredItems);
     
         return $filteredItems;
+    }
+
+
+    public function getAllTasksUntil($daysBeforeDeadline) {
+        $items = $this->service->getTasksUntil($daysBeforeDeadline);
+        
+        $filteredItems = array_filter($items, function($value) {
+            return $value['task_completed'] == 0;
+        });
+    
+        
+        $filteredItems = array_values($filteredItems);
+    
+        return $filteredItems;
+    }
+
+    public function getAllProjectsUntil($daysBeforeDeadline) {
+        $items = $this->service->getProjectsUntil($daysBeforeDeadline);
+        
+    
+        return $items;
     }
 }
