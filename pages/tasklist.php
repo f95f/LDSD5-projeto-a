@@ -217,12 +217,13 @@
                 <div class="projectWrapper">
                     <label for="selectProject">Projeto:</label>
                     <select class="inline-input" id="selectProject">
-                        <option value="0" selected>Todos</option>
+                        <option value="-1" selected>Todos</option>
                         <?php foreach($projects as $item): ?>
                             <option value="<?= $item['id']?>">
                                 <?= $item['project_name'] ?>
                             </option>
                         <?php endforeach ?>
+                        <option value="0">Sem projetos</option>
                     </select>
                 </div>
 

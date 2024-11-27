@@ -6,12 +6,15 @@ $(document).ready(function () {
   $('#closeNotifications').click(function() {
 
     $('#notificationModal').removeClass('open');
-
+    $('#notificationModal').fadeOut();
+    $('#notificationsOptionsMenu').hide();
   });
 
 
   $('#openNotifications').click(function() {
 
+    $('#notificationModal').show();
+    $('#notificationsOptionsMenu').show();
     $('#notificationModal').addClass('open');
 
   });

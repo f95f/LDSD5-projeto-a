@@ -10,16 +10,16 @@ class CalendarioController {
     }
 
 
-    public function getAllProjectsPerMonth($startDate, $endDate) {
+    public function getAllProjectsPerMonth() {
 
-        $items = $this->service->getAllProjects($startDate, $endDate);
+        $items = $this->service->getAllProjects();
         return $items;
     }
 
 
-    public function getAllTasksPerMonth($startDate, $endDate) {
+    public function getAllTasksPerMonth() {
 
-        $items = $this->service->getAllTasks($startDate, $endDate);
+        $items = $this->service->getAllTasks();
         
         $filteredItems = array_filter($items, function($value) {
             return $value['project_id'] == 0;

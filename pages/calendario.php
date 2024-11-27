@@ -86,11 +86,8 @@
 
             default:
 
-                $startDate = date('Y-m-01');
-                $endDate = date('Y-m-t');
-
-                $projects = $controller->getAllProjectsPerMonth($startDate, $endDate);
-                $tasks = $controller->getAllTasksPerMonth($startDate, $endDate);
+                $projects = $controller->getAllProjectsPerMonth();
+                $tasks = $controller->getAllTasksPerMonth();
 
                 $events = [];
 

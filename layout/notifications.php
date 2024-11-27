@@ -51,6 +51,7 @@
                         Até <?= $item['deadline'] ?>
                     </span>
                     <a  role="button"
+                        href="tasklist.php"
                         id="showDetails"
                         class="inline-button">
                         <i class="fa-solid fa-circle-info"></i>
@@ -73,6 +74,7 @@
                         Até <?= $item['deadline'] ?>
                     </span>
                     <a  role="button"
+                        href="project-details.php?id=<?=$item['id']?>"
                         id="showDetails"
                         class="inline-button">
                         <i class="fa-solid fa-circle-info"></i>
@@ -85,7 +87,7 @@
 
 
     <hr class="solid-separator">
-    <div class="notification-footer">
+    <div class="notification-footer" id="notificationsOptionsMenu">
         <a role="button" class="inline-button secondary" id="clearNotificationsButton">
             <i class="fa-solid fa-broom"></i>
             Limpar

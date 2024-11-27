@@ -11,7 +11,7 @@ class TaskController{
     private $priorityService;
 
     function __construct() {
-        $this -> service = new TaskService();
+        $this->service = new TaskService();
         $this->priorityService = new priorityService();
     }
 
@@ -73,11 +73,13 @@ class TaskController{
     }
 
     public function getTasksFromProject($projectId) {
-        if(!$projectId) {
-            return;
+
+        if($projectId == -1) {        
+            $tasks = $this->service->getAllTasks();
+        } else {
+            $tasks = $this->service->getTasksFromProject($projectId);
         }
 
-        $tasks = $this->service->getTasksFromProject($projectId);
         $priorities = $this->priorityService->getAllPriorities();
 
         if(!is_array($priorities) || empty($priorities) ) {

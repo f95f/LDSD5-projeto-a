@@ -10,15 +10,14 @@ class CalendarioService {
         $this->pdo = require __DIR__ . '/../database/conn.php';
     }
 
-    public function getAllProjects($startDate, $endDate) {
+    public function getAllProjects() {
         $projects = [];
-        $query = "select * from tb_project where deadline between :start and :end";
+        $query = "select * from tb_project";
         
         try{
 
             $stmt = $this->pdo->prepare($query);
-            $stmt->bindValue(':start', $startDate);
-            $stmt->bindValue(':end', $endDate);
+            
             $stmt->execute();
             $projects = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
@@ -29,15 +28,13 @@ class CalendarioService {
     }
 
 
-    public function getAllTasks($startDate, $endDate) {
+    public function getAllTasks() {
         $tasks = [];
-        $query = "select * from tb_task where deadline between :start and :end";
+        $query = "select * from tb_task";
         
         try{
 
             $stmt = $this->pdo->prepare($query);
-            $stmt->bindValue(':start', $startDate);
-            $stmt->bindValue(':end', $endDate);
             
             $stmt->execute();
             $tasks = $stmt->fetchAll(PDO::FETCH_ASSOC);
