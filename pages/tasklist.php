@@ -223,7 +223,7 @@
                                 <?= $item['project_name'] ?>
                             </option>
                         <?php endforeach ?>
-                        <option value="0">Sem projetos</option>
+                        <option value="0">Tasks Avulsas</option>
                     </select>
                 </div>
 
