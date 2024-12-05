@@ -187,32 +187,24 @@
             </form>
         </div>
     </div>
-<!-- TODO Fechar modal ao adicionar  -->
-
-    <!-- <div class="modal" id="detailsModal">
-
-        <div class="modal-wrapper">
-            <div class="modal-header">
-                <h2>Projeto</h2>
-            </div>
-            <div class="modal-body">
-                Lorem, ipsum dolor sit amet consectetur adipisicing elit. Voluptatem corrupti rerum magnam maiores voluptatibus suscipit sapiente recusandae incidunt et delectus odit iure eveniet repellendus quisquam deserunt, natus molestiae vero accusamus.
-            </div>
-
-            <div class="modal-footer">
-                <button
-                    type="button"
-                    id="closeDetailsModal"
-                    class="pill-button secondary"
-                >
-                    Fechar
-                </button>
-            </div>
-        </div>
-
-    </div>  -->
 </main>
 
+
+<div class="toast" id="toast" style="display:none;">
+    <div class="icon" id="icon"></div>
+    <div class="toast-text">
+        <div class="toast-header">
+            <span class="toast-title" id="toastTitle"></span>
+        </div>
+        <div class="toast-body">
+            <span class="toast-message" id="toastMessage"></span>
+        </div>
+    </div>
+</div>
+
+
 <footer>
-    <script src="../scripts/project.js"></script>
+    <script type="module"  src="../scripts/task.js"></script>
+    <script type="module"  src="../scripts/validation.js"></script>
+    <script type="module"  src="../scripts/project.js"></script>
 </footer>

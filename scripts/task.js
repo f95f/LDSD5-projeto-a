@@ -8,8 +8,8 @@ $(document).ready(function () {
 
 
         const fieldsToValidate = [
-            { selector: '#taskDescription', errorMessage: 'Task name is required.', validationFn: (value) => !!value },
-            { selector: '#deadline', errorMessage: 'Due date is required.', validationFn: (value) => !!value && !isNaN(Date.parse(value)) }
+            { selector: '#taskDescription', errorMessage: 'Descrição da task é obrigatória.', validationFn: (value) => !!value },
+            { selector: '#deadline', errorMessage: 'Deadline da task é obrigatória.', validationFn: (value) => !!value && !isNaN(Date.parse(value)) }
         ];
 
         if (!validateForm(fieldsToValidate)) {

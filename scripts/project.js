@@ -1,3 +1,6 @@
+import { fireError, fireSuccess } from './toast.js';
+import { validateForm } from './validation.js';
+
 $(document).ready(function () {
 
     $(document).on('click', '#showFormModal', function() {
@@ -24,6 +27,24 @@ $(document).ready(function () {
         event.preventDefault();
     
         var formData = $(this).serialize();
+
+
+
+
+        const fieldsToValidate = [
+            { selector: '#projectName', errorMessage: 'O nome do projeto é obrigatório.', validationFn: (value) => !!value },
+            { selector: '#projectDescription', errorMessage: 'A descrição do projeto é obrigatório.', validationFn: (value) => !!value },
+            { selector: '#startDate', errorMessage: 'Data de início é obrigatória.', validationFn: (value) => !!value && !isNaN(Date.parse(value)) },
+            { selector: '#deadline', errorMessage: 'Data fim é obrigatória.', validationFn: (value) => !!value && !isNaN(Date.parse(value)) }
+        ];
+
+        if (!validateForm(fieldsToValidate)) {
+
+            fireError("Preencha todos os campos.");
+            return;
+        }
+
+
 
         $.ajax({
             url: '',
