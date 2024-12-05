@@ -1,53 +1,22 @@
 import { fireError, fireSuccess } from './toast.js';
-
+import { validateForm } from './validation.js';
 
 $(document).ready(function () {
     
     $('#addTaskForm').submit(function(event) {
         event.preventDefault();
 
-        
 
+        const fieldsToValidate = [
+            { selector: '#taskDescription', errorMessage: 'Task name is required.', validationFn: (value) => !!value },
+            { selector: '#deadline', errorMessage: 'Due date is required.', validationFn: (value) => !!value && !isNaN(Date.parse(value)) }
+        ];
 
-    // // Clear any previous error messages
-    // $('.error-message').remove();
+        if (!validateForm(fieldsToValidate)) {
 
-    // // Example validation rules
-    // let isValid = true;
-    // const taskDescription = $('#taskDescription').val().trim(); // Example input field
-    // const deadline = $('#deadline').val().trim(); // Example input field
-
-    // // Validate task name (required)
-    // if (!taskDescription) {
-    //     $('#taskDescription').before('<span class="error-message" style="color:red;">Task name is required.</span>');
-    //     isValid = false;
-    // }
-
-    // // Validate due date (required and valid date)
-    // if (!deadline) {
-    //     $('#deadline').before('<span class="error-message" style="color:red;">Due date is required.</span>');
-    //     isValid = false;
-    // } else if (isNaN(Date.parse(deadline))) {
-    //     $('#taskDueDate').before('<span class="error-message" style="color:red;">Invalid due date format.</span>');
-    //     isValid = false;
-    // }
-
-    // // If form is not valid, stop submission
-    // if (!isValid) {
-    //     return;
-    // }
-
-
-    const fieldsToValidate = [
-        { selector: '#taskDescription', errorMessage: 'Task name is required.', validationFn: (value) => !!value },
-        { selector: '#deadline', errorMessage: 'Due date is required.', validationFn: (value) => !!value && !isNaN(Date.parse(value)) }
-    ];
-
-    if (!validateForm(fieldsToValidate)) {
-
-        fireError("Preencha todos os campos.");
-        return;
-    }
+            fireError("Preencha todos os campos.");
+            return;
+        }
 
 
 
@@ -58,13 +27,14 @@ $(document).ready(function () {
             type: 'POST',
             data: `${formData}&action=ADD_TASK`,
             success: function(response) {
-                // location.reload();
+                location.reload();
                 fireSuccess("Task criada.");
             },
             error: function(xhr, status, error) {
                 console.error('Error adding task:', error);
             }
         });
+
     });
     
     $('.edit-button').on('click', function () {
@@ -315,17 +285,17 @@ let makeCard = function(item) {
     `
 }
 
-function validateForm(fields) {
-    let isValid = true;
-    $('.error-message').remove();
+// function validateForm(fields) {
+//     let isValid = true;
+//     $('.error-message').remove();
 
-    fields.forEach(({ selector, errorMessage, validationFn }) => {
-        const value = $(selector).val().trim();
-        if (!validationFn(value)) {
-            $(selector).before(`<span class="error-message">${errorMessage}</span>`);
-            isValid = false;
-        }
-    });
+//     fields.forEach(({ selector, errorMessage, validationFn }) => {
+//         const value = $(selector).val().trim();
+//         if (!validationFn(value)) {
+//             $(selector).before(`<span class="error-message">${errorMessage}</span>`);
+//             isValid = false;
+//         }
+//     });
 
-    return isValid;
-}
+//     return isValid;
+// }
