@@ -475,6 +475,11 @@ main {
     opacity: .8;
 }
 
+.error-message {
+    font-size: .8em;
+    color: var(--danger);
+}
+
 
 
 
