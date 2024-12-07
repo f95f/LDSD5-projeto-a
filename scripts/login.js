@@ -6,10 +6,10 @@ $(document).ready(function () {
     $('#loginForm').submit(function(event) {
         event.preventDefault();
         
-        if(!$('#email').val() || !$('#senha').val()) {
-            fireError("Preencha os dados corretamente!");
-            return;
-        }
+        // if(!$('#email').val() || !$('#senha').val()) {
+        //     fireError("Preencha os dados corretamente!");
+        //     return;
+        // }
 
         var formData = $(this).serialize();
         
