@@ -18,7 +18,7 @@ $(document).ready(function () {
             type: 'POST',
             data: `${formData}&action=LOGIN`,
             success: function(response) {
-                if(response.success && response.success === true) {
+                if(response.success && response.success === true) { 
                     window.location.replace('/pages/inicio.php');
                 }
                 else {

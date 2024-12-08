@@ -34,13 +34,23 @@
                         //     session_start();
                         // }
                         session_start();
+                        // error_log($usuario[0]['name']);
+                        //print_r($usuario['success']);
+                        if(count($usuario) == 1) {
 
-                        $_SESSION['id'] = $usuario['id'];
-                        $_SESSION['name'] = $usuario['name'];
-                        
-                        echo json_encode(['success' => true, 'message' => 'Autenticado com sucesso']);    
+                            $_SESSION['id'] = $usuario[0]['id'];
+                            $_SESSION['name'] = $usuario[0]['name'];
+                            
+                            echo json_encode(['success' => true, 'message' => $usuario]);    
+
+                        }
+                        else {
+                            echo json_encode(['success' => false, 'message' => $usuario]);    
+                            
+                        }
                         
                     }
+                    // echo json_encode(['success' => false, 'message' => $usuario]);
 
                 // }
             }
