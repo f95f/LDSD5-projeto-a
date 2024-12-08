@@ -145,12 +145,12 @@ hr.form-separator {
 }
 
 .searchbar {
-    
+    width: 100%;
     position: relative;
 }
 .inline-input {
     margin: 0;
-    width: 440px;
+    width: 50%;
 }
 
 a.search-icon {

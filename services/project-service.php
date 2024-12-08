@@ -40,11 +40,25 @@ class ProjectService {
     }
 
 
+    // try{
+    //     $query = 'SELECT * FROM tb_user WHERE email = "' . $email . '" AND senha = "' . $senha . '"';
+    //     error_log($query);
+    //     $sql = $this->pdo->query($query);
+    //     $result = $sql->fetchAll(PDO::FETCH_ASSOC);
+    //     //print_r($result);
+    //     return $result;
+    // } catch (PDOException $e) {
+    //     return ['success' => false, 'message' => $e->getMessage()];
+    // }
+
+
+
+
     public function searchProjects($term) {
         $projects = [];
-        $query = "select * from tb_project where project_name like :term";
+        $query = "select * from tb_project where project_name like '%". $term ."%'";
         $stmt = $this->pdo->prepare($query);
-        $stmt->bindValue(':term', '%' . $term . '%'); 
+        // $stmt->bindValue(':term', '%' . $term . '%'); 
 
         try{
             $stmt->execute();
@@ -55,6 +69,25 @@ class ProjectService {
             throw new Exception("Error fetching project: " . $e->getMessage());
         }
     }
+
+
+
+
+    // public function searchProjects($term) {
+    //     $projects = [];
+    //     $query = "select * from tb_project where project_name like :term";
+    //     $stmt = $this->pdo->prepare($query);
+    //     $stmt->bindValue(':term', '%' . $term . '%'); 
+
+    //     try{
+    //         $stmt->execute();
+    //         $projects = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            
+    //         return $projects;
+    //     } catch (PDOException $e) {
+    //         throw new Exception("Error fetching project: " . $e->getMessage());
+    //     }
+    // }
 
 
     public function getProjectById($projectId) {
