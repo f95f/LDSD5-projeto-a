@@ -64,7 +64,7 @@
             </a>
         </span>
         <hr class="light-separator">
-        <span>© Projeto LDPD5</span>
+        <span>© Projeto SSID5</span>
         <span>2024</span>             
     </div>
 </div>
