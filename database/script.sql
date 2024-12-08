@@ -20,7 +20,7 @@ create table tb_user (
     email varchar(50) not null,
     senha varchar(50) not null,
     active boolean default true,
-    daysBeforeDeadline: int default 3;
+    daysBeforeDeadline int default 3
 );
 
 -- PROJETO ----
