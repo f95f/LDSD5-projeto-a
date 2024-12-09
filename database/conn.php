@@ -2,7 +2,7 @@
 
 $database = 'db_journalling';
 $host = 'localhost';
-$user = 'admin';
+$user = 'root';
 $pass = 'senha';
 
 try {
