@@ -46,7 +46,8 @@ body {
     position: relative;
     display: flex;
     min-height: 100vh;
-    background-image: linear-gradient(to right top, #312d59, #27264c, #1e1e3f, #161733, #0f0f27);
+    background-color: #1e1e3f;
+    /* background-image: linear-gradient(to right, #373362, #27264c, #1e1e3f, #27264c, #373362); */
 }
 
 a {
@@ -95,13 +96,22 @@ hr.solid-separator {
     Menu Lateral 
 **************************/
 .side-menu {
-    width: 380px;
+    width: 280px;
     background-color: #161733aa;
     border-right: 1px solid var(--border-color);
     box-shadow: 4px 0px 8px var(--shadow-color);;
     display: flex;
     flex-direction: column;
     justify-content: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+}
+
+.side-menu-space {
+    width: 360px;
+    height: 100vh;
 }
 
 .side-menu-header {

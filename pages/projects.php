@@ -77,7 +77,7 @@
             </form>
             <button id="showFormModal" class="pill-button">
                 <i class="fa-solid fa-plus"></i>
-                Novo Projeto
+                Novo
             </button>
         </div>
 
