@@ -72,3 +72,30 @@ create table tb_category (
 	id integer primary key auto_increment,
     category varchar(20)
 )
+
+
+
+-- Migration --
+INSERT INTO tb_user (name, email, senha, active, daysBeforeDeadline) VALUES
+('João Silva', 'joao.silva@email.com', '897adfs', true, 3),
+('Maria Oliveira', 'maria.oliveira@gmail.com', 'P@ssW0rD!', true, 3),
+('Carlos Pereira', 'carlos.pereira@yahoo.com', '65dsgf4sda', true, 3),
+('Ana Costa', 'ana.costa@email.com', 'senha101', true, 3),
+('Fernanda Santos', 'fernanda.santos@example.com', 'senha', true, 3),
+('Administrator', 'admin@journalling.com', '1A!dM1n#202$Sec', true, 3);
+
+INSERT INTO tb_project (project_name, project_priority, project_status, user_id, project_description, created_at, start_date, deadline) VALUES
+('Desenvolvimento de Aplicativo', 'ALTA', 'EM_PROGRESSO', 1, 'Aplicativo para gerenciamento de tarefas.', '2024-10-01', '2024-10-05', '2024-12-01'),
+('Site Institucional', 'MEDIA', 'BACKLOG', 2, 'Criação de um site para a empresa.', '2024-10-02', '2024-10-10', '2024-11-15'),
+('Sistema de Vendas', 'CRITICA', 'ATRASADO', 3, 'Sistema para controle de vendas e estoque.', '2024-09-15', '2024-09-20', '2024-10-30'),
+('Atualização de Software', 'BAIXA', 'CONCLUIDO', 4, 'Atualização da versão do software existente.', '2024-08-01', '2024-08-05', '2024-09-01'),
+('Pesquisa de Mercado', 'MEDIA', 'PARADO', 5, 'Pesquisa para entender o comportamento do consumidor.', '2024-09-10', '2024-09-15', '2024-10-10'),
+('Implementação de CRM', 'ALTA', 'BACKLOG', 6, 'Implementação de um sistema de CRM para a equipe de vendas.', '2024-10-03', '2024-10-07', '2024-12-15');
+
+INSERT INTO tb_task (task_description, task_completed, task_priority, project_id, deadline, created_at) VALUES
+('Definir requisitos do aplicativo', false, 'ALTA', 1, '2023-10-15', '2023-10-01'),
+('Criar layout do site', false, 'MEDIA', 2, '2023-10-20', '2023-10-02'),
+('Desenvolver módulo de vendas', false, 'CRITICA', 3, '2023-10-25', '2023-09-15'),
+('Testar nova versão do software', false, 'BAIXA', 4, '2023-09-10', '2023-08-01'),
+('Analisar dados da pesquisa', false, 'MEDIA', 5, '2023-10-05', '2023-09-10'),
+('Configurar sistema de CRM', false, 'ALTA', 6, '2023-12-01', '2023-10-03');
