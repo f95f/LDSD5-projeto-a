@@ -1,3 +1,4 @@
+
 $('document').ready(function() {
 
     closeModals();
@@ -21,9 +22,41 @@ $('document').ready(function() {
 
     $('#submitUpdate').click(function(event) { 
         event.preventDefault();
+
+        let type = $(this).data('type');
+
+        const taskFieldsToValidate = [
+            { selector: '#description', errorMessage: 'Descrição da task é obrigatória.', validationFn: (value) => !!value },
+            { selector: '#deadline', errorMessage: 'Deadline da task é obrigatória.', validationFn: (value) => !!value && !isNaN(Date.parse(value)) }
+        ];
+
+        const projectFieldsToValidate = [
+            { selector: '#name', errorMessage: 'O nome do projeto é obrigatório.', validationFn: (value) => !!value },
+            { selector: '#description', errorMessage: 'A descrição do projeto é obrigatório.', validationFn: (value) => !!value },
+            { selector: '#startDate', errorMessage: 'Data de início é obrigatória.', validationFn: (value) => !!value && !isNaN(Date.parse(value)) },
+            { selector: '#endDate', errorMessage: 'Data fim é obrigatória.', validationFn: (value) => !!value && !isNaN(Date.parse(value)) }
+        ];
+
+
+        if(type === 'TASK') {
+            if (!validateForm(taskFieldsToValidate)) {
+    
+                fireError("Preencha todos os campos.");
+                return;
+            }
+        }
+        else {
+            if (!validateForm(projectFieldsToValidate)) {
+    
+                fireError("Preencha todos os campos.");
+                return;
+            }
+        }
+
+        
+    
         
         let formData = $('#editForm').serialize();
-        let type = $(this).data('type');
         let id = $(this).data('id');
 
         $.ajax({
@@ -225,4 +258,35 @@ function setPriority(details){
         $('#priority').text('Não disponivel');    
     }
 
+}
+
+
+function validateForm(fields) {
+    let isValid = true;
+    $('.error-message').remove();
+  
+    fields.forEach(({ selector, errorMessage, validationFn }) => {
+        const value = $(selector).val().trim();
+        if (!validationFn(value)) {
+            $(selector).before(`<span class="error-message">${errorMessage}</span>`);
+            isValid = false;
+        }
+    });
+  
+    return isValid;
+}
+
+
+function fireError(message, title = "Erro") {
+
+    $('#toastTitle').html(title);
+    $('#icon').html(`<i class="fa-solid fa-circle-exclamation"></i>`);
+    $('#toastMessage').text(message);
+    
+    $('#toast').fadeIn();
+    $('#toast').click(function() {
+        $(this).fadeOut();
+    });
+
+    setTimeout(() => { $('#toast').fadeOut(); }, 5000);
 }

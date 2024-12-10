@@ -319,7 +319,8 @@
         </div>
     </div> -->
 </main>
-
+            
 <footer>
-    <script src="../scripts/project-details.js"></script>
+    <script type="module"  src="../scripts/task.js"></script>
+    <script type="module"  src="../scripts/validation.js"></script>
 </footer>

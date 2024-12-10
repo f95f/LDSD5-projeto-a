@@ -1,9 +1,26 @@
+import { fireError, fireSuccess } from './toast.js';
+import { validateForm } from './validation.js';
+
 $(document).ready(function () {
 
     $('#addTaskForm').hide();
 
     $('#addTaskForm').submit(function(event) {
         event.preventDefault();
+
+
+        const fieldsToValidate = [
+            { selector: '#taskDescription', errorMessage: 'Descrição da task é obrigatória.', validationFn: (value) => !!value },
+            { selector: '#deadline', errorMessage: 'Deadline da task é obrigatória.', validationFn: (value) => !!value && !isNaN(Date.parse(value)) }
+        ];
+
+        if (!validateForm(fieldsToValidate)) {
+
+            fireError("Preencha todos os campos.");
+            return;
+        }
+
+        
     
         var formData = $(this).serialize();
 

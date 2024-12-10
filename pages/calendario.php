@@ -394,5 +394,16 @@
         </div>
     </div>
 
+    <div class="toast" id="toast" style="display:none;">
+        <div class="icon" id="icon"></div>
+        <div class="toast-text">
+            <div class="toast-header">
+                <span class="toast-title" id="toastTitle"></span>
+            </div>
+            <div class="toast-body">
+                <span class="toast-message" id="toastMessage"></span>
+            </div>
+        </div>
+    </div>
 </body>
 </html>
