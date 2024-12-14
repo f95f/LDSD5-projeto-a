@@ -63,6 +63,7 @@ INSERT INTO tb_priorities (priority) VALUES
 -- ANOTAÇÕES/DIÁRIO ----
 create table tb_note (
  id integer auto_increment primary key,
+ title varchar(256) null,
  content varchar(2048) not null,
  created_at date
 );
