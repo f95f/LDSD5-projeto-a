@@ -1,7 +1,7 @@
 .menubar {
   width: 100%;
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
   padding: 16px 0px;
   margin-bottom: 16px;
 }
@@ -60,4 +60,8 @@ i.icon {
   display: flex;
   gap: 8px;
   align-items: center;
+}
+
+#detailContent {
+  margin: 16px 0;
 }

@@ -2,11 +2,14 @@ import { fireError, fireSuccess } from './toast.js';
 import { validateForm } from './validation.js';
 
 $(document).ready(function () {
+    $('#noteDetailsModal').hide();
 
     $(document).on('click', '#showFormModal', function() {
         $('#createModal').fadeIn();
-        $('.overlay').fadeIn(); // Show overlay for create modal
+        $('.overlay').fadeIn();
         
+        $("#formModalTitle").text("Adicionar Diário");
+        $("#submitDiario").text("Adicionar");
         $("#conteudoDiario").val('');
         $("#tituloDiario").val('');
         $("#idDiario").val('');
@@ -14,17 +17,23 @@ $(document).ready(function () {
     
     $(document).on('click', '#closeCreateModal', function() {
         $('#createModal').fadeOut();
-        $('.overlay').fadeOut(); // Hide overlay when create modal is closed
+        $('.overlay').fadeOut();
     });
     
-    $(document).on('click', '.showDetailsModal', function() {
-        $('#detailsModal').fadeIn();
-        $('.overlay').fadeIn(); // Show overlay for details modal
+    $('.detailsButton').click(function() {
+        $('#noteDetailsModal').fadeIn();
+        $('.overlay').fadeIn();
+
+        var title = $(this).data('note-title');
+        var content =  $(this).data('note-content');
+        
+        $("#detailTitle").text(title);
+        $("#detailContent").text(content);
     });
     
     $(document).on('click', '#closeDetailsModal', function() {
-        $('#detailsModal').fadeOut();
-        $('.overlay').fadeOut(); // Hide overlay when details modal is closed
+        $('#noteDetailsModal').fadeOut();
+        $('.overlay').fadeOut();
     });
 
     $('#addDiarioForm').submit(function(event) {
@@ -92,8 +101,8 @@ $(document).ready(function () {
                 if (response.success) {
                     $('#diarioList').empty();
                     response.message.forEach(function(project) {
-                        $card = makeCard(project);
-                        $('#diarioList').append($card);
+                        let card = makeCard(project);
+                        $('#diarioList').append(card);
                     });
                 } else {
                     console.error('Search not successful: ', response.message);
@@ -133,8 +142,8 @@ $(document).ready(function () {
         var id = $(this).data('note-id');
         var title = $(this).data('note-title');
         var content =  $(this).data('note-content');
-    
-        console.log(id, title, content);
+        $("#formModalTitle").text("Editar Diário");
+        $("#submitDiario").text("Atualizar");
         $("#tituloDiario").val(title);
         $("#conteudoDiario").val(content);
         $("#idDiario").val(id);
@@ -147,25 +156,40 @@ $(document).ready(function () {
 
 let makeCard = function(item) {
     return `
-
-    <li class="card-item">
-        <div class="card-row">
-            <h3>
-                <i class="fa-solid fa-book"></i>
-                ${item.titulo_diario}  
-            </h3>
-            <span class="status secondary">
-                ${item.conteudo_diario}
-            </span>
-        </div>
-        <div class="card-row">
-            <a href="diario-details.php?id=${item.id}"
-                class="inline-button">
-                <i class="fa-solid fa-circle-info"></i>
-                Mais detalhes...
-            </a>
-        </div>
-    </li>
+            <li class="card-item">
+                <div class="card-row">
+                    <h3>
+                        <i class="fa-solid fa-book"></i>
+                        ${item.title} 
+                    </h3>
+                    <div class="actions-wrapper">
+                        <a  role="button"
+                            class="inline-button editButton"
+                            data-note-title="${item.title}  "
+                            data-note-content="${item.content} "
+                            data-note-id="${item.id} ">
+                            <i class="fa-solid fa-edit light-text"></i>
+                        </a>
+                        <span class="light-text">|</span>
+                        <a  role="button"
+                            class="inline-button deleteButton"
+                            data-note-id="${item.id} ">
+                            <i class="fa-solid fa-trash light-text"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="card-body">
+                    ${item.content}
+                </div>
+                
+                <div class="card-row">
+                    <a href="diario-details.php?id=${item.id}"
+                        class="inline-button">
+                        <i class="fa-solid fa-circle-info"></i>
+                        Ver mais...
+                    </a>
+                </div>
+            </li>
     
     `
 }

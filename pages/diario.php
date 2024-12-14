@@ -81,7 +81,7 @@
         
 
         <div class="menubar">
-            <!-- <form   method="POST"
+            <form   method="POST"
                     id="searchForm"
                     class="searchbar">
                 <input  type="text" 
@@ -93,7 +93,7 @@
                     class="inline-button">
                     <i class="fa-solid fa-magnifying-glass icon search-icon"></i>
                 </button>
-            </form> -->
+            </form>
             <button id="showFormModal" class="pill-button">
                 <i class="fa-solid fa-plus"></i>
                 Novo Diário
@@ -130,8 +130,11 @@
                 </div>
                 
                 <div class="card-row">
-                    <a href="diario-details.php?id=<?= $item['id']?>"
-                        class="inline-button">
+                    <a 
+                        data-note-title="<?= $item['title'] ?>"
+                        data-note-content="<?= $item['content'] ?>"
+                        data-note-id="<?= $item['id'] ?>"
+                        class="inline-button detailsButton">
                         <i class="fa-solid fa-circle-info"></i>
                         Ver mais...
                     </a>
@@ -142,60 +145,79 @@
     </div>
 
     <div class="overlay"></div>
+
     <div class="modal" id="createModal">
         <div class="modal-wrapper">
             <div class="modal-header">
-                <h2>Adicionar Diário</h2>
+                <h2 id="formModalTitle">Adicionar Diário</h2>
             </div>
             <div class="modal-body">
-                
-            <form method="POST" id="addDiarioForm" name="addDiarioForm">
-                <div class="input-row">
-                    <label for="tituloDiario">Título do Diário:</label>
-                    <input
-                        type="text"
-                        id="tituloDiario"
-                        name="tituloDiario"
-                        placeholder="Qual o título do diário?"
-                    >
-                </div>
+                <form method="POST" id="addDiarioForm" name="addDiarioForm">
+                    <div class="input-row">
+                        <label for="tituloDiario">Título do Diário:</label>
+                        <input
+                            type="text"
+                            id="tituloDiario"
+                            name="tituloDiario"
+                            placeholder="Qual o título do diário?"
+                        >
+                    </div>
 
-                <div class="input-row">
-                    <label for="conteudoDiario">Nota</label>
-                    <textarea
-                        rows="12"
-                        type="text"
-                        id="conteudoDiario"
-                        name="conteudoDiario"
-                        placeholder="Escreva o que quiser..."
-                    >
-                    </textarea>
-                </div>
+                    <div class="input-row">
+                        <label for="conteudoDiario">Nota</label>
+                        <textarea
+                            rows="12"
+                            id="conteudoDiario"
+                            name="conteudoDiario"
+                            placeholder="Escreva o que quiser..."
+                        ></textarea>
+                    </div>
 
-                <input type="hidden"
-                        id="idDiario"
-                        name="idDiario">
-                
-                <div class="modal-footer">
-                    <button
-                        type="button"
-                        id="closeCreateModal"
-                        class="pill-button secondary"
-                    >
-                        Cancelar
-                    </button>
-                    <button
-                        type="submit"
-                        id="submitDiario"
-                        class="pill-button"
-                    >
-                        <i class="fa-solid fa-plus"></i>
-                        Adicionar
-                    </button>
-                </div>
-            </form>
+                    <input type="hidden" id="idDiario" name="idDiario">
+                    
+                    <div class="modal-footer">
+                        <button
+                            type="button"
+                            id="closeCreateModal"
+                            class="pill-button secondary"
+                        >
+                            Cancelar
+                        </button>
+                        <button
+                            type="submit"
+                            id="submitDiario"
+                            class="pill-button"
+                        >
+                            <i class="fa-solid fa-plus"></i>
+                            Adicionar
+                        </button>
+                    </div>
+                </form>
+            </div>
         </div>
-    </div>
+    </div> <!-- End of createModal -->
+
+    <div class="modal" id="noteDetailsModal">
+        <div class="modal-wrapper">
+            <div class="modal-header">
+                <h2 id="detailTitle">Sem Título</h2>
+            </div>
+            <div class="modal-body">
+                <p id="detailContent">Sem Descrição...</p>
+            </div>
+            <div class="modal-footer">
+                <button
+                    type="button"
+                    id="closeDetailsModal"
+                    class="pill-button secondary"
+                >
+                    Fechar
+                </button>
+            </div>
+        </div>
+    </div> <!-- End of noteDetailsModal -->
+
+
 </main>
 
 <div class="toast" id="toast" style="display:none;">
