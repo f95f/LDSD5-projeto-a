@@ -109,14 +109,18 @@
                 <?= $selectedProject['project_name']; ?>
             </h3>
             <span class="light-text">|</span>
-            <a  role="button">
+            <a  role="button" id="showFormModal"
+                class="inline-button">
                 <i class="fa-solid fa-edit light-text"></i>
             </a>
-            <a  role="button"
-                class="inline-button deleteProjectButton">
+            <a  role="button" onClick="deleteProject()"
+                id="deleteProjectButton"
+                class="inline-button">
                 <i class="fa-solid fa-trash light-text"></i>
             </a>
         </div>
+
+        
 
         <hr class="light-separator form-separator">
 
@@ -135,7 +139,6 @@
 
         <div class="info-row">
             <span class="label">Descrição:</span>
-            <span>
                 <?= $selectedProject['project_description'];?>
             </span>
         </div>
@@ -149,6 +152,8 @@
         </div>
 
         <hr class="light-separator form-separator">
+
+
 
         <div class="info-row">
             <div class="add-task-row">
@@ -259,22 +264,41 @@
         </div>
     </div>
 
+    
+
     <div class="overlay"></div>
-    <!-- <div class="modal" id="createModal">
+    <div class="modal" id="editProjectModal">
         <div class="modal-wrapper">
             <div class="modal-header">
-                <h2>Adicionar Task</h2>
+                <h2>Atualizar Projeto</h2>
             </div>
             <div class="modal-body">
                 
-            <form method="POST" id="addTaskForm" name="addTaskForm">
+            <form method="POST" id="addProjectForm" name="addProjectForm">
                 <div class="input-row">
-                    <label for="projectName">Descrição da task:</label>
+                    <label for="projectName">Nome do projeto:</label>
                     <input
                         type="text"
-                        id="taskDescription"
-                        name="taskDescription"
-                        placeholder="O que você quer fazer?"
+                        id="projectName"
+                        name="projectName"
+                        placeholder="Qual o nome do projeto?"
+                    >
+                </div>
+                <div class="input-row">
+                    <label for="projectDescription">Descrição</label>
+                    <input
+                        type="text"
+                        id="projectDescription"
+                        name="projectDescription"
+                        placeholder="Faça uma breve descrição do projeto..."
+                    >
+                </div>
+                <div class="input-row">
+                    <label for="startDate">Início</label>
+                    <input
+                        type="date"
+                        id="startDate"
+                        name="startDate"
                     >
                 </div>
                 <div class="input-row">
@@ -316,11 +340,15 @@
                     </button>
                 </div>
             </form>
+
         </div>
-    </div> -->
+    </div>
+
+
 </main>
             
 <footer>
     <script type="module"  src="../scripts/task.js"></script>
+    <script type="module"  src="../scripts/project-details.js"></script>
     <script type="module"  src="../scripts/validation.js"></script>
 </footer>

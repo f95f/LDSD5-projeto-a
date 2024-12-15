@@ -4,6 +4,17 @@ import { validateForm } from './validation.js';
 $(document).ready(function () {
 
     $('#addTaskForm').hide();
+    $('#editProjectModal').hide();
+
+    $(document).on('click', '#showFormModal', function() {
+        $('#editProjectModal').fadeIn();
+        $('.overlay').fadeIn();
+    });
+    
+    $(document).on('click', '#closeEditModal', function() {
+        $('#editProjectModal').fadeOut();
+        $('.overlay').fadeOut();
+    });
 
     $('#addTaskForm').submit(function(event) {
         event.preventDefault();
@@ -63,7 +74,7 @@ $(document).ready(function () {
         });
     });    
 
-    $('.deleteProjectButton').click(function() {
+    $(document).on('click', '#deleteProjectButton', function() {
         $.ajax({
             url: '',
             type: 'POST',
@@ -72,14 +83,11 @@ $(document).ready(function () {
             },
             success: function(response) {
                 location.href = 'projects.php';
-                if (response.success) {
-                    console.log('Received data:', response.received_data);
-                    
-                }
-            }.bind(this),
+            },
             error: function(xhr, status, error) {
                 console.error('Error deleting project:', error);
             }
         });
     });
+    
 });

@@ -139,31 +139,6 @@ function deleteEvent(id, type) {
 
 
 
-// Exemplo de uso: adicionar eventos de clique nas tarefas do calendário para editar ou deletar
-// document.addEventListener('DOMContentLoaded', function() {
-//   document.querySelectorAll('.calendar-task').forEach(task => {
-//       task.addEventListener('click', function() {
-//           const taskId = this.getAttribute('data-task-id');
-//           const taskTitle = prompt("Editar título da tarefa:", this.getAttribute('data-task-title'));
-//           const taskStartDate = prompt("Editar data de início (YYYY-MM-DD):", this.getAttribute('data-start-date'));
-//           const taskEndDate = prompt("Editar data de término (YYYY-MM-DD):", this.getAttribute('data-end-date'));
-
-//           if (taskTitle && taskStartDate && taskEndDate) {
-//               updateTask(taskId, taskTitle, taskStartDate, taskEndDate);
-//           }
-//       });
-
-//       task.querySelector('.delete-btn').addEventListener('click', function(event) {
-//           event.stopPropagation();
-//           const taskId = task.getAttribute('data-task-id');
-//           deleteTask(taskId);
-//       });
-//   });
-// });
-
-
-
-
 
 function openDetails(details) {
     closeModals();

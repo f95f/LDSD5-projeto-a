@@ -5,22 +5,22 @@ $(document).ready(function () {
 
     $(document).on('click', '#showFormModal', function() {
         $('#createModal').fadeIn();
-        $('.overlay').fadeIn(); // Show overlay for create modal
+        $('.overlay').fadeIn();
     });
     
     $(document).on('click', '#closeCreateModal', function() {
         $('#createModal').fadeOut();
-        $('.overlay').fadeOut(); // Hide overlay when create modal is closed
+        $('.overlay').fadeOut();
     });
     
     $(document).on('click', '.showDetailsModal', function() {
         $('#detailsModal').fadeIn();
-        $('.overlay').fadeIn(); // Show overlay for details modal
+        $('.overlay').fadeIn(); 
     });
     
     $(document).on('click', '#closeDetailsModal', function() {
         $('#detailsModal').fadeOut();
-        $('.overlay').fadeOut(); // Hide overlay when details modal is closed
+        $('.overlay').fadeOut();
     });
 
     $('#addProjectForm').submit(function(event) {
