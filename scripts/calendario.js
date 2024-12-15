@@ -24,10 +24,18 @@ $('document').ready(function() {
         event.preventDefault();
 
         let type = $(this).data('type');
+        let formData = $('#editForm').serialize();
+        const form = document.getElementById('editForm');
+        const formFields = new FormData(form);
+
+        const data = {};
+        formFields.forEach((value, key) => {
+            data[key] = value;
+        });
 
         const taskFieldsToValidate = [
             { selector: '#description', errorMessage: 'Descrição da task é obrigatória.', validationFn: (value) => !!value },
-            { selector: '#deadline', errorMessage: 'Deadline da task é obrigatória.', validationFn: (value) => !!value && !isNaN(Date.parse(value)) }
+            { selector: '#endDate', errorMessage: 'Deadline da task é obrigatória.', validationFn: (value) => !!value && !isNaN(Date.parse(value)) }
         ];
 
         const projectFieldsToValidate = [
@@ -37,26 +45,50 @@ $('document').ready(function() {
             { selector: '#endDate', errorMessage: 'Data fim é obrigatória.', validationFn: (value) => !!value && !isNaN(Date.parse(value)) }
         ];
 
-
+        let isValid = true;
         if(type === 'TASK') {
-            if (!validateForm(taskFieldsToValidate)) {
-    
-                fireError("Preencha todos os campos.");
+
+            if (!data.description) {
+                fireError('Descrição da task é obrigatória.'); 
+                isValid = false;
                 return;
             }
+            if(!data.endDate) {
+                fireError('Deadline da task é obrigatória.');
+                isValid = false;
+                return;
+            }
+            
         }
         else {
-            if (!validateForm(projectFieldsToValidate)) {
-    
-                fireError("Preencha todos os campos.");
+
+            if (!data.name) {
+                fireError('O nome do projeto é obrigatório.'); 
+                isValid = false;
                 return;
             }
+            if(!data.description) {
+                fireError('A descrição do projeto é obrigatório.');
+                isValid = false;
+                return;
+            }
+            if(!data.startDate) {
+                fireError('Data de início é obrigatória.');
+                isValid = false;
+                return;
+            }
+            if(!data.endDate) {
+                fireError('Data fim é obrigatória.');
+                isValid = false;
+                return;
+            }
+            
+
         }
 
         
-    
         
-        let formData = $('#editForm').serialize();
+        if(!isValid) return;
         let id = $(this).data('id');
 
         $.ajax({
@@ -152,10 +184,10 @@ function openDetails(details) {
     setPriority(details);
 
     $('#eventDetails').text(details.title);
-    $('#description').text(details.description || "Não disponível");
-    $('#createdAt').text(details.createdAt || "Não disponível");
-    $('#startDate').text(details.startDate || "Não disponível");
-    $('#endDate').text(details.endDate || "Não disponível");
+    $('#description').text(details.description);
+    $('#createdAt').text(details.createdAt);
+    $('#startDate').text(details.startDate);
+    $('#endDate').text(details.endDate);
     $('#projectId').val(details.projectId || 0);
     $('#taskId').val(details.id || 0);
     $('#completed').prop('checked', details.status === 1);
@@ -264,9 +296,10 @@ function setPriority(details){
 function validateForm(fields) {
     let isValid = true;
     $('.error-message').remove();
-  
+
     fields.forEach(({ selector, errorMessage, validationFn }) => {
-        const value = $(selector).val().trim();
+        console.warn(selector)
+        const value = $(selector)?.val()?.trim();
         if (!validationFn(value)) {
             $(selector).before(`<span class="error-message">${errorMessage}</span>`);
             isValid = false;
