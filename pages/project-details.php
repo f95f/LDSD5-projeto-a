@@ -68,6 +68,21 @@
                 echo json_encode(['success' => true, 'message' => 'Task added']);
                 break;
 
+            case 'UPDATE_PROJECT':
+                $request = $_POST;
+
+                $projectData['id'] = $projectId;
+                $projectData['project_name'] = $request['projectName'];
+                $projectData['project_priority'] = $request['projectPriority'];
+                $projectData['project_status'] = $request['projectStatus'];
+                $projectData['project_description'] = $request['projectDescription'];
+                $projectData['start_date'] = $request['startDate'];
+                $projectData['deadline'] = $request['deadline'];
+
+                $controller->updateProject($projectData);
+                echo json_encode(['success' => true, 'message' => 'Project updated']);
+                break;
+
             case 'UPDATE':
                 $taskId = $_POST['id'];
                 $newDescription = $_POST['description'];
@@ -120,7 +135,6 @@
             </a>
         </div>
 
-        
 
         <hr class="light-separator form-separator">
 
@@ -148,7 +162,10 @@
         </div>
         <div class="info-row">
             <span class="label">Prazo:</span>
-            <span>de <?= $selectedProject['start_date'];?> à <?= $selectedProject['deadline'];?></span>
+            <span>
+                de <?= $selectedProject['start_date'];?> 
+                à <?= $selectedProject['deadline'];?>
+            </span>
         </div>
 
         <hr class="light-separator form-separator">
@@ -167,8 +184,8 @@
             </div>
             
             <form method="POST" 
-                id="addTaskForm" 
-                name="addTaskForm" 
+                id="addProjectTaskForm" 
+                name="addProjectTaskForm" 
                 class="form-row">
 
                 <div class="input-row">
@@ -282,6 +299,7 @@
                         id="projectName"
                         name="projectName"
                         placeholder="Qual o nome do projeto?"
+                        value="<?= $selectedProject['project_name']; ?>"
                     >
                 </div>
                 <div class="input-row">
@@ -291,6 +309,7 @@
                         id="projectDescription"
                         name="projectDescription"
                         placeholder="Faça uma breve descrição do projeto..."
+                        value="<?= $selectedProject['project_description'];?>"
                     >
                 </div>
                 <div class="input-row">
@@ -299,6 +318,7 @@
                         type="date"
                         id="startDate"
                         name="startDate"
+                        value="<?= $selectedProject['start_date'];?>"
                     >
                 </div>
                 <div class="input-row">
@@ -307,6 +327,7 @@
                         type="date"
                         id="deadline"
                         name="deadline"
+                        value="<?= $selectedProject['deadline'];?>"
                     >
                 </div>
                 <div class="input-row">
@@ -322,10 +343,24 @@
                     <?php endforeach ?>
                     </select>
                 </div>
+                <div class="input-row">
+                    <label for="projectStatus">Status</label>
+                    <select
+                        id="projectStatus"
+                        name="projectStatus"
+                    >   
+                    <?php foreach($status as $item): ?>
+                        <option value="<?= $item['id']?>">
+                        <?= $item['status']?>
+                        </option>
+                    <?php endforeach ?>
+                    </select>
+                </div>
+
                 <div class="modal-footer">
                     <button
                         type="button"
-                        id="closeCreateModal"
+                        id="closeEditProjectModal"
                         class="pill-button secondary"
                     >
                         Cancelar
@@ -336,11 +371,24 @@
                         class="pill-button"
                     >
                         <i class="fa-solid fa-plus"></i>
-                        Adicionar
+                        Atualizar
                     </button>
                 </div>
             </form>
 
+        </div>
+    </div>
+
+
+    <div class="toast" id="toast" style="display:none;">
+        <div class="icon" id="icon"></div>
+        <div class="toast-text">
+            <div class="toast-header">
+                <span class="toast-title" id="toastTitle"></span>
+            </div>
+            <div class="toast-body">
+                <span class="toast-message" id="toastMessage"></span>
+            </div>
         </div>
     </div>
 

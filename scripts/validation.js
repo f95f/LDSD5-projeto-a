@@ -4,7 +4,7 @@ export const validateForm = function(fields) {
   $('.error-message').remove();
 
   fields.forEach(({ selector, errorMessage, validationFn }) => {
-      const value = $(selector).val().trim();
+      const value = $(selector).val().trim(); console.warn(" > ", value)
       if (!validationFn(value)) {
           $(selector).before(`<span class="error-message">${errorMessage}</span>`);
           isValid = false;
