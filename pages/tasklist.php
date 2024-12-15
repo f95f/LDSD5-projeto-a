@@ -297,7 +297,7 @@
 
 
                         <span class="light-text">|</span>
-                        <i class="fa-solid fa-edit light-text"></i>
+                        <!-- <i class="fa-solid fa-edit light-text"></i> -->
                         <a  role="button"
                             class="inline-button deleteTaskButton"
                             data-task-id="<?= $item['id'] ?>">

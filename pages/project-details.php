@@ -264,16 +264,16 @@
                         <span class="light-text">até</span>
                         <span><?= $item['deadline'] ?></span>
                         <span class="light-text">|</span>
-                        <i class="fa-solid fa-edit light-text"></i>
+                        <!-- <i class="fa-solid fa-edit light-text"></i> -->
                         <a  role="button"
-                            class="inline-button deleteTaskButton"
+                            class="inline-button deleteProjectTaskButton"
                             data-task-id="<?= $item['id'] ?>">
                             <i class="fa-solid fa-trash light-text"></i>
                         </a>
                     </div>
                 </div>
             <?php endforeach ?>
-            <?php if(!is_array($tasks)): ?>
+            <?php if(!sizeof($tasks)): ?>
                 <span class="light-text large">
                     Nenhuma task adicionada ao projeto...
                 </span>

@@ -100,7 +100,7 @@ $(document).ready(function () {
 
 
     
-    $('.deleteTaskButton').click(function() {
+    $('.deleteProjectTaskButton').click(function() {
         var taskId = $(this).data('task-id');
         $.ajax({
             url: '',
